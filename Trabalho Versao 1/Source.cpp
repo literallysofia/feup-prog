@@ -37,7 +37,7 @@ void FicheiroClientes() {
 		cin.clear();
 		cin.ignore(1000, '\n');
 		u.setcolor(4); cout << "> Ficheiro nao encontrado, volte a indicar o nome." << endl;
-		u.setcolor(15); cin >> clienttxt;
+		u.setcolor(3);  cout << "  { "; u.setcolor(15); cin >> clienttxt;
 	}
 
 	Store::instance()->setClientsFileName(clienttxt);
@@ -53,7 +53,7 @@ void FicheiroProdutos() {
 		cin.clear();
 		cin.ignore(1000, '\n');
 		u.setcolor(4); cout << "> Ficheiro nao encontrado, volte a indicar o nome." << endl;
-		u.setcolor(15); cin >> producttxt;
+		u.setcolor(3);  cout << "  { "; u.setcolor(15); cin >> producttxt;
 	}
 	Store::instance()->setProductsFileName(producttxt);
 }
@@ -69,7 +69,7 @@ void FicheiroTransacoes()
 		cin.clear();
 		cin.ignore(1000, '\n');
 		u.setcolor(4); cout << "> Ficheiro nao encontrado, volte a indicar o nome." << endl;
-		u.setcolor(15); cin >> transactiontxt;
+		u.setcolor(3);  cout << "  { "; u.setcolor(15); cin >> transactiontxt;
 	}
 	Store::instance()->setTransFileName(transactiontxt);
 }

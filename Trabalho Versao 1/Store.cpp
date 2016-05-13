@@ -962,159 +962,7 @@ int Store::MostrarProdutos()
 	return 0;
 }
 
-/*// funcao efetua transacao nova (adiciona a lista de transacoes uma nova) - COMPRAS
-int Comprar()
-{
-	int id, dig, op;
-	string produtos, produto, opcao;
-	string data;
-	float dinheiro = 0;
-
-	//Escolha
-	setcolor(14); cout << "> "; setcolor(15); cout << "Tendo em conta os produtos disponiveis, qual deseja comprar?" << endl;
-	setcolor(14); cout << "> "; setcolor(15); cout << "Quando terminar, por favor digite "; setcolor(11); cout << " 0"; setcolor(15); cout << ".\n\n";
-	cin.ignore();
-	while (true)
-	{
-		getline(cin, produto);
-
-		if (produto == "0")
-			break;
-		else {
-			if (ProdutoExiste(VProd, produto))
-			{
-				produtos.append(produto);
-				produtos.append(", ");
-				setcolor(7); cout << "> Produto Adicionado!\n\n"; setcolor(15);
-				for (unsigned int i = 0; i < VProd.size(); i++)
-				{
-					if (produto == VProd.at(i).prod)
-						dinheiro = dinheiro + VProd.at(i).preco;
-					else
-						dinheiro = dinheiro;
-				}
-			}
-			else { setcolor(4); cout << "> Este produto nao existe!\n\n"; setcolor(15); }
-		}
-	}
-
-	if (produtos.empty())
-	{
-		setcolor(4); cout << "> Nao introduziu nenhum produto valido." << endl; setcolor(15);
-		system("pause");
-		OpcoesProdutosDisponiveis(VClient, VTrans, VProd, clienttxt, producttxt, transactiontxt);
-	}
-	else
-	{
-		setcolor(14); cout << endl << "> "; setcolor(15); cout << "Quer comprar o(s) produto(s): "; setcolor(3); cout << "{ "; setcolor(15); cout << produtos.substr(0, produtos.size() - 2) << "." << endl;
-		setcolor(3); cout << "-----------------------------------------------------------" << endl;
-		setcolor(7); cout << "1. SIM" << "        " << "2. NAO" << endl << endl; setcolor(15);
-		cout << "Digite a sua opcao: ";  cin >> dig; cout << endl;
-
-		while ((dig != 1) && (dig != 2))
-		{
-			cin.clear();
-			cin.ignore(1000, '\n');
-			setcolor(4); cout << "> Digito invalido!" << endl;
-			setcolor(15); cout << "Volte a indicar escolha: ";
-			cin >> dig;
-		}
-
-		if (dig == 1)
-		{
-			while (!(produtos.empty()))
-			{
-				NovaTrans.prod.push_back(produtos.substr(0, produtos.find_first_of(",")));
-				produtos.erase(0, produtos.find_first_of(",") + 2);
-			}
-
-			setcolor(14); cout << endl << "> "; setcolor(15); cout << "Ja e cliente?" << endl;
-			setcolor(3); cout << "-----------------------------------------------------------" << endl;
-			setcolor(7); cout << "1. SIM" << "        " << "2. NAO" << endl << endl; setcolor(15);
-			cout << "Digite a sua opcao: ";  cin >> op; cout << endl;
-
-			while ((op != 1) && (op != 2))
-			{
-				cin.clear();
-				cin.ignore(1000, '\n');
-				setcolor(4); cout << "> Digito invalido!" << endl;
-				setcolor(15); cout << "Volte a indicar escolha: ";
-				cin >> op;
-			}
-
-			if (op == 1)
-			{
-				cout << endl << "Intruduza o ID ou Nome do cliente: "; setcolor(3); cout << "{ "; setcolor(15); cin.ignore(); getline(cin, opcao);
-
-				while ((ClienteExiste(VClient, opcao)) == false)
-				{
-					cin.clear();
-					cin.ignore(1000, '\n');
-					setcolor(4); cout << "> Este id/nome nao existe!" << endl;
-					setcolor(15); cout << "Volte a indicar: ";
-					cin >> opcao;
-				}
-
-				if (ClienteExiste(VClient, opcao))
-				{
-					if ((int)opcao.at(0) >= 48 && (int)opcao.at(0) <= 57) // verifica se o primeiro elemento da string corresponde a um inteiro no codigo ascii (entre 0 e 9)
-						id = stoi(opcao, nullptr, 10); // se a opcao for o ID
-					else id = 0;
-				}
-
-			}
-			else if (op == 2)
-			{
-				CriarCliente(VClient, VTrans, VProd, clienttxt, producttxt, transactiontxt);
-				id = VClient.back().id;
-			}
-
-			cout << endl << "Total a pagar: "; setcolor(3); cout << "{ "; setcolor(15); cout << dinheiro << " euros" << endl;
-
-			for (unsigned int i = 0; i < VClient.size(); i++)
-			{
-				if ((id == VClient.at(i).id) || (opcao == VClient.at(i).nome))
-				{
-					ExtrairClientes(VClient, clienttxt);
-					VClient.at(i).montante = VClient.at(i).montante + dinheiro;
-					id = VClient.at(i).id;
-					EscreverCliente(VClient, clienttxt);
-				}
-			}
-
-			data = DataAtual();
-			NovaTrans.id = id;
-			NovaTrans.data = data;
-			ExtrairTransacoes(VTrans, transactiontxt);
-			VTrans.push_back(NovaTrans);
-			EscreverTrans(VTrans, transactiontxt);
-			Sleep(3000);
-			OpcoesListaTransacoes(VClient, VTrans, VProd, clienttxt, producttxt, transactiontxt);
-		}
-		else {
-			if (dig == 2)
-			{
-				setcolor(4); cout << "> Compra Apagada!\n"; setcolor(15);
-				system("pause");
-				OpcoesProdutosDisponiveis(VClient, VTrans, VProd, clienttxt, producttxt, transactiontxt);
-			}
-			else
-			{
-				setcolor(4); cout << "ERRO!" << endl; setcolor(15);
-				system("pause");
-				OpcoesProdutosDisponiveis(VClient, VTrans, VProd, clienttxt, producttxt, transactiontxt);
-			}
-		}
-	}
-
-	//se houver erro
-	setcolor(4); cout << "ERRO!" << endl; setcolor(15);
-	system("pause");
-	OpcoesProdutosDisponiveis(VClient, VTrans, VProd, clienttxt, producttxt, transactiontxt);
-
-	return 0;
-}
-*/
+// funcao que efetua compras
 int Store::Compras()
 {
 	unsigned int ref, dig, op;
@@ -1133,8 +981,8 @@ int Store::Compras()
 		{
 			cin.clear();
 			cin.ignore(1000, '\n');
-			setcolor(4); cout << "> Digito invalido!" << endl;
-			cin >> ref;
+			setcolor(4); cout << "> Referencia Invalida!" << endl;
+			setcolor(15); cin >> ref;
 		}
 
 		if (ref == 0)
@@ -1246,8 +1094,6 @@ int Store::Compras()
 			}
 		}
 	}
-
-	cout << "hello" << endl;
 
 	//se houver erro
 	setcolor(4); cout << "ERRO!" << endl;  setcolor(15);
