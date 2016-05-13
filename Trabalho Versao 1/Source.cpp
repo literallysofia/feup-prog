@@ -40,6 +40,8 @@ void FicheiroClientes() {
 		u.setcolor(3);  cout << "  { "; u.setcolor(15); cin >> clienttxt;
 	}
 
+	cout << "Hello world!" << endl;
+
 	Store::instance()->setClientsFileName(clienttxt);
 }
 
