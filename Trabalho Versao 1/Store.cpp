@@ -1247,6 +1247,8 @@ int Store::Compras()
 		}
 	}
 
+	cout << "hello" << endl;
+
 	//se houver erro
 	setcolor(4); cout << "ERRO!" << endl;  setcolor(15);
 	system("pause");
