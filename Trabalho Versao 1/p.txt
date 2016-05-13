@@ -1,0 +1,7 @@
+6
+morango ; 1.5
+amora preta ; 1.2
+mirtilo ; 5.6
+framboesa ; 0.4
+abacate ; 1.6
+melancia ; 2.3
