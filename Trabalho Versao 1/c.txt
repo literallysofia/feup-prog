@@ -1,5 +1,6 @@
-4
-1 ; Diogo Picarra ; 1/03/2014 ; 49.10
-2 ; Miguel Araujo ; 23/04/2015 ; 9.20
-3 ; David Fonseca ; 15/10/2015 ; 7.50
-4 ; Antonio Zambujo ; 31/03/2016 ; 15.40
+5
+1 ; Rui Pereira ; 01/03/2008 ; 5.40
+2 ; Maria De Lurdes ; 23/04/2009 ; 0.00
+6 ; Joana Beires ; 15/10/2010 ; 7.50
+16 ; Manuela Moura ; 31/03/2016 ; 8.30
+17 ; Julieta Frade ; 14/05/2016 ; 8.60

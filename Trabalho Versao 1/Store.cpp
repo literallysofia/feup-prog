@@ -515,10 +515,25 @@ void Store::ExtrairClientes() {
 				string data = str2.substr(0, pos3);
 				string comprass = str2.substr(pos3 + 3);
 
+				size_t posd1 = data.find("/");
+				string strd1 = data.substr(posd1 + 1);
+				size_t posd2 = strd1.find("/");
+
+				string dia = data.substr(0, posd1);
+				string mes = strd1.substr(0, posd2);
+				string ano = strd1.substr(posd2+1);
+
+				if (dia.size() == 1)
+					dia = "0" + dia;
+				if (mes.size() == 1)
+					mes = "0" + mes;
+
+				string datafinal = dia + "/" + mes + "/" + ano;
+
 				int idi = stoi(ids);
 				float comprasf = stof(comprass);
 
-				VClients.push_back(Client(idi, formatarNome(nome), data, comprasf));
+				VClients.push_back(Client(idi, formatarNome(nome), datafinal, comprasf));
 
 				i++;
 			}
@@ -1062,7 +1077,6 @@ void Store::ExtrairTransacoes()
 	string line, produtos;
 	unsigned int id;
 	string data;
-	vector<string> products;
 	int i = 0;
 
 	if (transactionFile.is_open())
@@ -1071,9 +1085,26 @@ void Store::ExtrairTransacoes()
 
 		while (getline(transactionFile, line))
 		{
+			vector<string> products;
+
 			if (line.find(";") != -1) {
 				id = stoi(line.substr(0, line.find_first_of(";")), nullptr, 10); // define o id do elemento do vetor
 				data = line.substr(line.find_first_of(";") + 2, line.find_last_of(";") - line.find_first_of(";") - 3); //define a data do elemento do vetor
+
+				size_t posd1 = data.find("/");
+				string strd1 = data.substr(posd1 + 1);
+				size_t posd2 = strd1.find("/");
+
+				string dia = data.substr(0, posd1);
+				string mes = strd1.substr(0, posd2);
+				string ano = strd1.substr(posd2 + 1);
+
+				if (dia.size() == 1)
+					dia = "0" + dia;
+				if (mes.size() == 1)
+					mes = "0" + mes;
+
+				string datafinal = dia + "/" + mes + "/" + ano;
 
 				produtos = line.substr(line.find_last_of(";") + 2, line.length() - line.find_last_of(";") - 2); //define a string da lista de produtos
 				produtos.append(", ");
@@ -1083,7 +1114,7 @@ void Store::ExtrairTransacoes()
 					products.push_back(produtos.substr(0, produtos.find_first_of(",")));
 					produtos.erase(0, produtos.find_first_of(",") + 2);
 				}
-				VTrans.push_back(Transaction(id, data, products)); //cria um novo elemento no vector
+				VTrans.push_back(Transaction(id, datafinal, products)); //cria um novo elemento no vector
 				i++;
 			}
 		}

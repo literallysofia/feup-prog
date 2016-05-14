@@ -97,7 +97,7 @@ public:
 
 	////////////////Transacoes////////////////
 
-	void ExtrairTransacoes();                      //??????????
+	void ExtrairTransacoes();
 	int EscreverTrans();
 	int TransEntre();
 	int TransDia();
@@ -105,7 +105,7 @@ public:
 	int TransInd();
 	bool TransData(int dataint1);
 	int MostrarTransacoes();
-	void AdicionarTrans(int id, string produtos);   //??????????
+	void AdicionarTrans(int id, string produtos);
 
 };
 

@@ -1,7 +1,5 @@
-6
-morango ; 1.5
-amora preta ; 1.2
-mirtilo ; 5.6
-framboesa ; 0.4
-abacate ; 1.6
-melancia ; 2.3
+4
+laranja ; 1.5
+banana ; 1.2
+peixe ; 5.6
+batatas fritas ; 0.4
