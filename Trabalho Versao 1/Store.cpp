@@ -120,8 +120,9 @@ int Store::VisualizarInformacao()
 		<< "|~~                ";  setcolor(7); cout << "VISUALIZAR INFORMACAO";  setcolor(15); cout << "               ~~~|" << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 	setcolor(7);
-	cout << setw(13) << "1. Cliente" << setw(44) << "3. Clientes por odem alfabetica" << endl
-		<< setw(23) << "2. Todos os clientes" << setw(16) << "4. Transacoes" << endl;
+	cout << setw(13) << "1. Cliente" << setw(44) << "4. Clientes por odem alfabetica" << endl
+		<< setw(23) << "2. Todos os clientes" << setw(16) << "5. Transacoes" << endl
+		<< setw(15) << "3. Bottom 10" << endl;
 	setcolor(15);
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
 		<< "|~~~                                 ";  setcolor(7); cout << "< 0. Voltar >";  setcolor(15); cout << "     ~~~|" << endl
@@ -131,7 +132,7 @@ int Store::VisualizarInformacao()
 	cout << "Insira a sua escolha: ";
 	cin >> opcao;
 
-	while (cin.fail() || (opcao > 4))
+	while (cin.fail() || (opcao > 5))
 	{
 		cin.clear();
 		cin.ignore(1000, '\n');
@@ -140,7 +141,7 @@ int Store::VisualizarInformacao()
 		cin >> opcao;
 	}
 
-	if ((opcao >= 0) && (opcao <= 4))
+	if ((opcao >= 0) && (opcao <= 5))
 	{
 		if (opcao == 0)
 			return 0;
@@ -163,9 +164,12 @@ void Store::OpcoesVisualizarInformacao()
 			OpcoesListaClientes();
 			break;
 		case 3:
-			ordenarCNome();
+			Bottom10();
 			break;
 		case 4:
+			ordenarCNome();
+			break;
+		case 5:
 			OpcoesListaTransacoes();
 			break;
 		}
@@ -335,15 +339,12 @@ void Store::OpcoesGerirClientes()
 		{
 		case 1:
 			CriarCliente();
-			OpcoesGerirClientes();
 			break;
 		case 2:
 			RemoverCliente();
-			OpcoesGerirClientes();
 			break;
 		case 3:
 			AlterarCliente();
-			OpcoesGerirClientes();
 			break;
 		}
 }
@@ -426,10 +427,9 @@ int Store::MenuIniciar() {
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
 		<< "|~~~                        ";  setcolor(7); cout << "MENU";  setcolor(15); cout << "                       ~~~|" << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< setw(23) << "1. Lista de Clientes" << setw(28) << "5. Visualizar Informacao" << endl
-		<< setw(24) << "2. Gestor de Clientes" << setw(15) << "6. Bottom 10" << endl
-		<< setw(20) << "3. Efetuar Compra" << setw(35) << "7. Publicidade Personalizada" << endl
-		<< setw(16) << "4. Transacoes" << endl;
+		<< setw(23) << "1. Lista de Clientes" << setw(17) << "4. Transacoes" << endl
+		<< setw(24) << "2. Gestor de Clientes" << setw(27) << "5. Visualizar Informacao" << endl
+		<< setw(20) << "3. Efetuar Compra" << setw(35) << "6. Publicidade Personalizada" << endl;
 	setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(15);
 	cout << "|~~~                                 ";  setcolor(7); cout << "< 0. Sair >";  setcolor(15); cout << "       ~~~|" << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
@@ -438,7 +438,7 @@ int Store::MenuIniciar() {
 	cout << "Insira a sua escolha: ";
 	cin >> opcao;
 
-	while (cin.fail() || (opcao > 7))
+	while (cin.fail() || (opcao > 6))
 	{
 		cin.clear();
 		cin.ignore(1000, '\n');
@@ -447,7 +447,7 @@ int Store::MenuIniciar() {
 		cin >> opcao;
 	}
 
-	if ((opcao >= 0) && (opcao <= 7))
+	if ((opcao >= 0) && (opcao <= 6))
 	{
 		if (opcao == 0)
 			Saida();
@@ -478,9 +478,6 @@ void Store::OpcoesMenuIniciar()
 			OpcoesVisualizarInformacao();
 			break;
 		case 6:
-			Bottom10();
-			break;
-		case 7:
 			system("cls");
 			setcolor(14); cout << "< FUNCIONALIDADE EM CONSTRUCAO >" << endl << endl;  setcolor(15);
 			system("pause");
@@ -560,7 +557,6 @@ bool Store::ClienteExiste(string output)
 		{
 			if (id == VClients.at(i).GetId())
 				a = a + 1;
-			else a = a;
 		}
 	}
 	else {
@@ -568,7 +564,6 @@ bool Store::ClienteExiste(string output)
 		{
 			if (output == VClients.at(i).GetNome())
 				a = a + 1;
-			else a = a;
 		}
 	}
 	if (a > 0)
@@ -581,8 +576,6 @@ int Store::CriarCliente()
 {
 	string nome;
 	float montante = 0;
-
-	//criar novo elemento
 
 	ExtrairClientes();
 
@@ -602,50 +595,52 @@ int Store::RemoverCliente()
 
 	cout << endl << "Intruduza o ID ou o NOME do cliente que pretende eliminar: ";  cin.ignore(); getline(cin, opcao); cout << endl;
 
-	if ((int)opcao.at(0) >= 48 && (int)opcao.at(0) <= 57) // verifica se o primeiro elemento da string corresponde a um inteiro no codigo ascii (entre 0 e 9)
-		id = stoi(opcao, nullptr, 10); // se a opcao for o ID
-	else id = 0;
-
-
-	for (unsigned int i = 0; i < VClients.size(); i++)
+	if (ClienteExiste(opcao))
 	{
-		if ((id == VClients.at(i).GetId()) || (opcao == VClients.at(i).GetNome()))
-		{
-			cout << "Tem acerteza que quer eliminar o cliente:" << endl;
-			setcolor(3); cout << "-----------------------------------------------------------" << endl; setcolor(15);
-			cout << VClients.at(i).GetId();
-			cout << setw(20) << VClients.at(i).GetNome();
-			cout << setw(14) << VClients.at(i).GetData();
-			cout << setw(15) << setprecision(2) << fixed << VClients.at(i).GetMontante() << endl;
-			setcolor(3); cout << "-----------------------------------------------------------" << endl; setcolor(7);
-			cout << "1. SIM" << "        " << "2. NAO" << endl << endl; setcolor(15);
-			cout << "Digite a sua opcao: ";  cin >> dig; cout << endl;
-			while (cin.fail())
-			{
-				cin.clear();
-				cin.ignore(1000, '\n');
-				setcolor(4); cout << "> Digito invalido!" << endl;
-				setcolor(15); cout << "Volte a indicar escolha: ";
-				cin >> dig;
-			}
+		if ((int)opcao.at(0) >= 48 && (int)opcao.at(0) <= 57) // verifica se o primeiro elemento da string corresponde a um inteiro no codigo ascii (entre 0 e 9)
+			id = stoi(opcao, nullptr, 10); // se a opcao for o ID
+		else id = 0;
 
-			if (dig == 1)
+		for (unsigned int i = 0; i < VClients.size(); i++)
+		{
+			if ((id == VClients.at(i).GetId()) || (opcao == VClients.at(i).GetNome()))
 			{
-				ExtrairClientes();
-				VClients.erase(VClients.begin() + i);
-				EscreverCliente();
-				OpcoesGerirClientes();
+				cout << "Tem acerteza que quer eliminar o cliente:" << endl;
+				setcolor(3); cout << "-----------------------------------------------------------" << endl; setcolor(15);
+				cout << VClients.at(i).GetId();
+				cout << setw(20) << VClients.at(i).GetNome();
+				cout << setw(14) << VClients.at(i).GetData();
+				cout << setw(15) << setprecision(2) << fixed << VClients.at(i).GetMontante() << endl;
+				setcolor(3); cout << "-----------------------------------------------------------" << endl; setcolor(7);
+				cout << "1. SIM" << "        " << "2. NAO" << endl << endl; setcolor(15);
+				cout << "Digite a sua opcao: ";  cin >> dig; cout << endl;
+				while (cin.fail())
+				{
+					cin.clear();
+					cin.ignore(1000, '\n');
+					setcolor(4); cout << "> Digito invalido!" << endl;
+					setcolor(15); cout << "Volte a indicar escolha: ";
+					cin >> dig;
+				}
+
+				if (dig == 1)
+				{
+					ExtrairClientes();
+					VClients.erase(VClients.begin() + i);
+					EscreverCliente();
+					return 0;
+				}
+				else
+					if (dig == 2)
+						return 0;
 			}
-			else
-				if (dig == 2)
-					OpcoesGerirClientes();
 		}
 	}
-
-	//se houver erro na procura
-	setcolor(4); cout << "ERRO!" << endl; setcolor(15);
-	system("pause");
-	OpcoesGerirClientes();
+	else {
+		setcolor(4); cout << "ERRO! Cliente nao encontrado." << endl; setcolor(15);
+		system("pause");
+		return 0;
+	}
 
 	return 0;
 }
@@ -659,92 +654,96 @@ int Store::AlterarCliente()
 
 	cout << endl << "Intruduza o ID ou o NOME do cliente que pretende alterar: ";  cin.ignore(); getline(cin, opcao); cout << endl;
 
-	if ((int)opcao.at(0) >= 48 && (int)opcao.at(0) <= 57) // verifica se o primeiro elemento da string corresponde a um inteiro no codigo ascii (entre 0 e 9)
-		id = stoi(opcao, nullptr, 10); // se a opcao for o ID
-	else id = 0;
-
-	for (unsigned int i = 0; i < VClients.size(); i++)
+	if (ClienteExiste(opcao))
 	{
-		if ((id == VClients.at(i).GetId()) || (opcao == VClients.at(i).GetNome()))
+		if ((int)opcao.at(0) >= 48 && (int)opcao.at(0) <= 57) // verifica se o primeiro elemento da string corresponde a um inteiro no codigo ascii (entre 0 e 9)
+			id = stoi(opcao, nullptr, 10); // se a opcao for o ID
+		else id = 0;
+
+		for (unsigned int i = 0; i < VClients.size(); i++)
 		{
-			cout << "Tem acerteza que quer alterar o cliente:" << endl;
-			setcolor(3); cout << "-----------------------------------------------------------" << endl; setcolor(15);
-			cout << VClients.at(i).GetId();
-			cout << setw(20) << VClients.at(i).GetNome();
-			cout << setw(18) << VClients.at(i).GetData();
-			cout << setw(16) << setprecision(2) << fixed << VClients.at(i).GetMontante() << endl;
-			setcolor(3); cout << "-----------------------------------------------------------" << endl; setcolor(7);
-			cout << "1. SIM" << "        " << "2. NAO" << endl << endl; setcolor(15);
-			cout << "Digite a sua opcao: ";  cin >> dig; cout << endl;
-			while (cin.fail())
+			if ((id == VClients.at(i).GetId()) || (opcao == VClients.at(i).GetNome()))
 			{
-				cin.clear();
-				cin.ignore(1000, '\n');
-				setcolor(4); cout << "> Digito invalido!" << endl;
-				setcolor(15); cout << "Volte a indicar escolha: ";
-				cin >> dig;
-			}
+				cout << "Tem acerteza que quer alterar o cliente:" << endl;
+				setcolor(3); cout << "-----------------------------------------------------------" << endl; setcolor(15);
+				cout << VClients.at(i).GetId();
+				cout << setw(20) << VClients.at(i).GetNome();
+				cout << setw(18) << VClients.at(i).GetData();
+				cout << setw(16) << setprecision(2) << fixed << VClients.at(i).GetMontante() << endl;
+				setcolor(3); cout << "-----------------------------------------------------------" << endl; setcolor(7);
+				cout << "1. SIM" << "        " << "2. NAO" << endl << endl; setcolor(15);
+				cout << "Digite a sua opcao: ";  cin >> dig; cout << endl;
+				while (cin.fail())
+				{
+					cin.clear();
+					cin.ignore(1000, '\n');
+					setcolor(4); cout << "> Digito invalido!" << endl;
+					setcolor(15); cout << "Volte a indicar escolha: ";
+					cin >> dig;
+				}
 
-			if (dig == 1)
-			{
-				cout << endl << "Intruduza o nome do cliente: "; cin.ignore(); getline(cin >> setw(26), nome); cout << endl;
-				cout << "Introduza o montante gasto: "; cin >> montante; cout << endl;
+				if (dig == 1)
+				{
+					cout << endl << "Intruduza o nome do cliente: "; cin.ignore(); getline(cin >> setw(26), nome); cout << endl;
+					cout << "Introduza o montante gasto: "; cin >> montante; cout << endl;
 
-				ExtrairClientes();
-				VClients.at(i).SetNome(formatarNome(nome));
-				VClients.at(i).SetMontante(montante);
-				EscreverCliente();
-				OpcoesGerirClientes();
+					ExtrairClientes();
+					VClients.at(i).SetNome(formatarNome(nome));
+					VClients.at(i).SetMontante(montante);
+					EscreverCliente();
+					return 0;
+				}
+				else
+					if (dig == 2)
+						return 0;
 			}
-			else
-				if (dig == 2)
-					OpcoesGerirClientes();
 		}
 	}
-
-	//se houver erro na procura
-	setcolor(4); cout << "ERRO!" << endl; setcolor(15);
-	system("pause");
-	OpcoesGerirClientes();
-
+	else {
+		setcolor(4); cout << "ERRO! Cliente nao encontrado." << endl; setcolor(15);
+		system("pause");
+		return 0;
+	}
 	return 0;
 }
 
 // funcao que mostra a informacao de um respetivo cliente
-int Store::InfoInd() //mostra informacao de um cliente individual
+int Store::InfoInd()
 {
 	int id;
 	string opcao;
 
 	cout << endl << "Intruduza o ID ou o NOME do cliente que pretende visualizar: ";  cin.ignore(); getline(cin, opcao); cout << endl;
 
-	if ((int)opcao.at(0) >= 48 && (int)opcao.at(0) <= 57) // verifica se o primeiro elemento da string corresponde a um inteiro no codigo ascii (entre 0 e 9)
-		id = stoi(opcao, nullptr, 10); // se a opcao for o ID
-	else id = 0;
-
-	for (unsigned int i = 0; i < VClients.size(); i++)
+	if (ClienteExiste(opcao))
 	{
-		if ((id == VClients.at(i).GetId()) || (opcao == VClients.at(i).GetNome()))
+		if ((int)opcao.at(0) >= 48 && (int)opcao.at(0) <= 57) // verifica se o primeiro elemento da string corresponde a um inteiro no codigo ascii (entre 0 e 9)
+			id = stoi(opcao, nullptr, 10); // se a opcao for o ID
+		else id = 0;
+
+		for (unsigned int i = 0; i < VClients.size(); i++)
 		{
-			system("cls");
-			setcolor(14); cout << "> "; setcolor(15); cout << "Informacao do cliente: " << VClients.at(i).GetNome() << endl << endl;
-			setcolor(7); cout << setw(5) << "ID" << setw(20) << "Nome do Cliente" << setw(13) << "Data Adesao" << setw(16) << "Montante Gasto" << endl;
-			setcolor(3); cout << "-----------------------------------------------------------" << endl; setcolor(15);
-			cout << setw(5) << VClients.at(i).GetId();
-			cout << setw(20) << VClients.at(i).GetNome();
-			cout << setw(14) << VClients.at(i).GetData();
-			cout << setw(15) << setprecision(2) << fixed << VClients.at(i).GetMontante() << endl;
-			setcolor(3); cout << "-----------------------------------------------------------" << endl; setcolor(15);
-			system("pause");
-			OpcoesVisualizarInformacao();
+			if ((id == VClients.at(i).GetId()) || (opcao == VClients.at(i).GetNome()))
+			{
+				system("cls");
+				setcolor(14); cout << "> "; setcolor(15); cout << "Informacao do cliente: " << VClients.at(i).GetNome() << endl << endl;
+				setcolor(7); cout << setw(5) << "ID" << setw(20) << "Nome do Cliente" << setw(18) << "Data Adesao" << setw(12) << "Total" << endl;
+				setcolor(3); cout << "-----------------------------------------------------------" << endl; setcolor(15);
+				cout << setw(5) << VClients.at(i).GetId();
+				cout << setw(20) << VClients.at(i).GetNome();
+				cout << setw(18) << VClients.at(i).GetData();
+				cout << setw(12) << setprecision(2) << fixed << VClients.at(i).GetMontante() << endl;
+				setcolor(3); cout << "-----------------------------------------------------------" << endl; setcolor(15);
+				system("pause");
+				return 0;
+			}
 		}
 	}
-
-	//se houver erro na procura
-	setcolor(4); cout << "ERRO!" << endl; setcolor(15);
-	system("pause");
-	OpcoesVisualizarInformacao();
-
+	else {
+		setcolor(4); cout << "> ERRO! Cliente nao encontrado." << endl; setcolor(15);
+		system("pause");
+		return 0;
+	}
 	return 0;
 }
 
@@ -790,7 +789,8 @@ int Store::ordenarCNome()
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
 		<< "|~~~               "; setcolor(3); cout << "Supermercado  Vende++"; setcolor(15); cout << "               ~~~| " << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~           "; setcolor(7); cout << "CLIENTES POR ORDEM ALFABETICA"; setcolor(15); cout << "           ~~~|" << endl
+		<< "|~~~                 "; setcolor(7); cout << "LISTA DE CLIENTES"; setcolor(15); cout << "                 ~~~|" << endl
+		<< "|~~~               por ordem  alfabetica               ~~~|" << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 	setcolor(7); cout << setw(5) << "ID" << setw(20) << "Nome do Cliente" << setw(18) << "Data Adesao" << setw(12) << "Total" << endl;
 	setcolor(3); cout << "-----------------------------------------------------------" << endl;
@@ -804,31 +804,8 @@ int Store::ordenarCNome()
 			cout << setw(12) << setprecision(2) << fixed << VO.at(i).GetMontante() << endl;
 		}
 	}
-	setcolor(3); cout << "-----------------------------------------------------------" << endl; setcolor(7);
-	cout << setw(32) << "1. Ir para gestor de clientes" << endl; setcolor(15);
-	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~                                 "; setcolor(7); cout << "< 0. Voltar >"; setcolor(15); cout << "     ~~~|" << endl
-		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
-
-	unsigned short int opcao;
-	cout << "Insira a sua escolha: ";
-	cin >> opcao;
-
-	if ((opcao >= 0) && (opcao <= 1))
-	{
-		if (opcao == 0)
-			return 0;
-		return opcao;
-	}
-
-	while (cin.fail() || (opcao > 1))
-	{
-		cin.clear();
-		cin.ignore(1000, '\n');
-		setcolor(4); cout << "> Digito invalido!" << endl;
-		setcolor(15); cout << "Volte a indicar escolha: ";
-		cin >> opcao;
-	}
+	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+	system("pause");
 	return 0;
 }
 
@@ -861,37 +838,14 @@ int Store::Bottom10()
 			cout << setw(12) << setprecision(2) << fixed << VO.at(i).GetMontante() << endl;
 		}
 	}
-
+	setcolor(3); cout << "-----------------------------------------------------------" << endl; setcolor(7);
 	if (VO.size() < 10)
 	{
-		cout << endl << "  NOTA: Ha menos de 10 clientes registados" << endl;
+		cout << endl << "     ATENCAO: Existem menos de 10 clientes registados." << endl;
 	}
-
-	setcolor(3); cout << "-----------------------------------------------------------" << endl; setcolor(7);
-	cout << setw(32) << "1. Ir para gestor de clientes" << endl; setcolor(15);
-	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~                                 "; setcolor(7); cout << "< 0. Voltar >"; setcolor(15); cout << "     ~~~|" << endl
-		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
-
-	unsigned short int opcao;
-	cout << "Insira a sua escolha: ";
-	cin >> opcao;
-
-	if ((opcao >= 0) && (opcao <= 1))
-	{
-		if (opcao == 0)
-			return 0;
-		return opcao;
-	}
-
-	while (cin.fail() || (opcao > 1))
-	{
-		cin.clear();
-		cin.ignore(1000, '\n');
-		setcolor(4); cout << "> Digito invalido!" << endl;
-		setcolor(15); cout << "Volte a indicar escolha: ";
-		cin >> opcao;
-	}
+	setcolor(15);
+	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
+	system("Pause");
 	return 0;
 }
 
@@ -988,7 +942,7 @@ int Store::Compras()
 		if (ref == 0)
 			break;
 		else {
-			if (VProducts.size() >= ref)
+			if (ref <= VProducts.size())
 			{
 				produtos.append(VProducts.at(ref - 1).GetProd());
 				produtos.append(", ");
@@ -1003,7 +957,7 @@ int Store::Compras()
 	{
 		setcolor(4); cout << "> Nao introduziu nenhum produto valido." << endl;  setcolor(15);
 		system("pause");
-		OpcoesProdutosDisponiveis();
+		return 0;
 	}
 	else
 	{
@@ -1074,31 +1028,26 @@ int Store::Compras()
 					EscreverCliente();
 				}
 			}
-
 			AdicionarTrans(id, produtos);
+			setcolor(4); cout << "\n> Compra Efetuada!\n";  setcolor(15);
 			Sleep(3000);
-			OpcoesListaTransacoes();
+			return 0;
 		}
 		else {
 			if (dig == 2)
 			{
 				setcolor(4); cout << "> Compra Apagada!\n";  setcolor(15);
 				system("pause");
-				OpcoesProdutosDisponiveis();
+				return 0;
 			}
 			else
 			{
 				setcolor(4); cout << "ERRO!" << endl;  setcolor(15);
 				system("pause");
-				OpcoesProdutosDisponiveis();
+				return 0;
 			}
 		}
 	}
-
-	//se houver erro
-	setcolor(4); cout << "ERRO!" << endl;  setcolor(15);
-	system("pause");
-	OpcoesProdutosDisponiveis();
 
 	return 0;
 
@@ -1142,8 +1091,6 @@ void Store::ExtrairTransacoes()
 	}
 	else { setcolor(4); cout << "Impossivel abrir ficheiro" << endl;  setcolor(15); }
 }
-
-
 
 // funcao que escreve uma nova transacao no ficheiro das transacoes
 int Store::EscreverTrans()
@@ -1282,10 +1229,15 @@ int Store::TransEntre()
 	}
 	setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(15);
 	system("pause");
-	OpcoesListaTransacoes();
-
 	return 0;
 }
+
+/*
+DATA
+DA
+FUCKING
+MAL
+AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII*/
 
 // funcao que mostra as transacoes efetuadas num determinado dia
 int Store::TransDia()
@@ -1372,22 +1324,31 @@ int Store::TransDia()
 		}
 		setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(15);
 		system("pause");
-		OpcoesListaTransacoes();
+		return 0;
 	}
 	else
 	{
 		cout << endl;
-		setcolor(4); cout << "Nao foi efetuada nenhuma transacao neste dia." << endl;  setcolor(15);
+		setcolor(4); cout << "> Nao foi efetuada nenhuma transacao neste dia." << endl;  setcolor(15);
 		system("pause");
-		OpcoesListaTransacoes();
+		return 0;
 	}
-
-	//se houver erro na procura
-	setcolor(4); cout << "ERRO!" << endl;  setcolor(15);
-	system("pause");
-	OpcoesListaTransacoes();
-
 	return 0;
+}
+
+// booleano que verifica se a transacao com determinado ID existe
+bool Store::TransExiste(unsigned int id)
+{
+	int a = 0;
+
+	for (unsigned int i = 0; i < VTrans.size(); i++)
+	{
+		if (id == VTrans.at(i).GetId())
+			a = a + 1;
+	}
+	if (a > 0)
+		return true;
+	else return false;
 }
 
 // funcao que mostra as transacoes efetuadas por um determinado cliente
@@ -1396,59 +1357,64 @@ int Store::TransInd()
 	int id;
 	string opcao, produtos;
 
-	cout << endl << "Intruduza o ID ou o NOME do cliente que pretende visualizar: ";  cin.ignore(); getline(cin, opcao); cout << endl;
+	cout << endl << "Intruduza o ID do cliente que pretende visualizar: ";  cin >> id; cout << endl;
 
-	if ((int)opcao.at(0) >= 48 && (int)opcao.at(0) <= 57) // verifica se o primeiro elemento da string corresponde a um inteiro no codigo ascii (entre 0 e 9)
-		id = stoi(opcao, nullptr, 10); // se a opcao for o ID
-	else id = 0;
-
-
-	for (unsigned int i = 0; i < VClients.size(); i++)
+	if (TransExiste(id))
 	{
-		if ((id == VClients.at(i).GetId()) || (opcao == VClients.at(i).GetNome()))
+		if (ClienteExiste(to_string(id)))
 		{
-			system("cls");
-			setcolor(14); cout << "> ";  setcolor(15); cout << "Transacoes do cliente: " << VClients.at(i).GetNome() << endl << endl;
-			setcolor(7);  cout << setw(5) << "ID" << setw(14) << "Data" << setw(28) << "Produtos" << endl;
-			setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(15);
-			id = VClients.at(i).GetId();
-
-			for (unsigned int w = 0; w < VTrans.size(); w++)
+			for (unsigned int i = 0; i < VClients.size(); i++)
 			{
-				if (id == VTrans.at(w).GetId())
+				if ((id == VClients.at(i).GetId()) || (opcao == VClients.at(i).GetNome()))
 				{
-					cout << setw(5) << VTrans.at(w).GetId();
-					cout << setw(15) << VTrans.at(w).GetDate();
-					produtos = "";
-
-					for (unsigned int j = 0; j < VTrans.at(w).GetProds().size(); j++)
-					{
-						if (j == VTrans.at(w).GetProds().size() - 1)
-						{
-							produtos.append(VTrans.at(w).GetProds().at(j));
-						}
-						else
-						{
-							produtos.append(VTrans.at(i).GetProds().at(j));
-							produtos.append(", ");
-						}
-
-					}
-					cout << setw(34) << produtos << endl;
+					system("cls");
+					setcolor(14); cout << "> ";  setcolor(15); cout << "Transacoes do cliente: " << VClients.at(i).GetNome() << endl << endl;
+					setcolor(7);  cout << setw(5) << "ID" << setw(14) << "Data" << setw(28) << "Produtos" << endl;
+					setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(15);
 				}
 			}
-			setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(15);
-			system("pause");
-			OpcoesListaTransacoes();
-
 		}
+		else
+		{
+			system("cls");
+			setcolor(14); cout << "> ";  setcolor(15); cout << "Transacoes de um cliente eliminado." << endl << endl;
+			setcolor(7);  cout << setw(5) << "ID" << setw(14) << "Data" << setw(28) << "Produtos" << endl;
+			setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(15);
+		}
+
+		for (unsigned int w = 0; w < VTrans.size(); w++)
+		{
+			if (id == VTrans.at(w).GetId())
+			{
+				cout << setw(5) << VTrans.at(w).GetId();
+				cout << setw(15) << VTrans.at(w).GetDate();
+				produtos = "";
+
+				for (unsigned int j = 0; j < VTrans.at(w).GetProds().size(); j++)
+				{
+					if (j == VTrans.at(w).GetProds().size() - 1)
+					{
+						produtos.append(VTrans.at(w).GetProds().at(j));
+					}
+					else
+					{
+						produtos.append(VTrans.at(w).GetProds().at(j));
+						produtos.append(", ");
+					}
+
+				}
+				cout << setw(34) << produtos << endl;
+			}
+		}
+		setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(15);
+		system("pause");
+		return 0;
 	}
-
-	//se houver erro na procura
-	setcolor(4); cout << "ERRO!" << endl;  setcolor(15);
-	system("pause");
-	OpcoesListaTransacoes();
-
+	else {
+		setcolor(4); cout << "> Nao existe nenhuma transacao com este ID." << endl;  setcolor(15);
+		system("pause");
+		return 0;
+	}
 	return 0;
 }
 
@@ -1506,7 +1472,7 @@ int Store::MostrarTransacoes()
 }
 
 
-int Store::AdicionarTrans(int id, string produtos)
+void Store::AdicionarTrans(int id, string produtos)
 {
 	vector<string> products;
 	while (!(produtos.empty()))
@@ -1519,6 +1485,6 @@ int Store::AdicionarTrans(int id, string produtos)
 	VTrans.push_back(Transaction(id, DataAtual(), products));
 	EscreverTrans();
 
-	return 0;
+	return;
 }
 

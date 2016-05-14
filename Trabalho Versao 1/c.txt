@@ -1,6 +1,5 @@
-5
-1 ; Diogo Picarra ; 1/03/2014 ; 25.90
-2 ; Miguel Araujo ; 23/04/2015 ; 6.50
+4
+1 ; Diogo Picarra ; 1/03/2014 ; 49.10
+2 ; Miguel Araujo ; 23/04/2015 ; 9.20
 3 ; David Fonseca ; 15/10/2015 ; 7.50
 4 ; Antonio Zambujo ; 31/03/2016 ; 15.40
-5 ; Btvecdw ; 13/05/2016 ; 0.00

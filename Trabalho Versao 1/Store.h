@@ -76,11 +76,6 @@ public:
 		return singleton_instance;
 	}
 
-	void teste()
-	{
-		cout << "hello world" << endl;
-	}
-
 	void ExtrairClientes();
 	int EscreverCliente();
 	bool ClienteExiste(string output);
@@ -102,15 +97,15 @@ public:
 
 	////////////////Transacoes////////////////
 
-	void FicheiroTransacoes();
 	void ExtrairTransacoes();                      //??????????
 	int EscreverTrans();
 	int TransEntre();
 	int TransDia();
+	bool TransExiste(unsigned int id);
 	int TransInd();
 	bool TransData(int dataint1);
 	int MostrarTransacoes();
-	int AdicionarTrans(int id, string produtos);   //??????????
+	void AdicionarTrans(int id, string produtos);   //??????????
 
 };
 
