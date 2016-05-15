@@ -1,8 +1,5 @@
-7
-1 ; 01/01/2016 ; laranja, banana
-1 ; 03/01/2016 ; peixe, carne, batatas fritas
-16 ; 15/03/2016 ; banana, laranja, peixe
-6 ; 20/05/2016 ; peixe, batatas fritas, laranja
-1 ; 14/05/2016 ; laranja, banana
-17 ; 14/05/2016 ; laranja, peixe
-17 ; 14/05/2016 ; laranja
+4
+1 ; 01/01/2016 ; morangos, melancia
+1 ; 03/01/2016 ; mirtilos, abacate, morangos
+6 ; 20/05/2016 ; framboesas, mirtilos
+1 ; 14/05/2016 ; abacate, melancia

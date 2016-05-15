@@ -18,10 +18,12 @@ class Store
 private:
 	static Store* singleton_instance;
 
+	//Nomes dos ficheiros
 	string FClient;
 	string FProd;
 	string FTrans;
 
+	//Vetores
 	vector<Client> VClients;
 	vector<Product> VProducts;
 	vector<Transaction> VTrans;
@@ -30,27 +32,30 @@ public:
 	Store();
 	~Store();
 
-	//Nome dos Ficheiros//
+	static Store* instance()
+	{
+		if (!singleton_instance)
+			singleton_instance = new Store;
+
+		return singleton_instance;
+	}
+
+	//Nome dos Ficheiros
 	void setClientsFileName(string clienttxt);
-
 	void setProductsFileName(string producttxt);
-
 	void setTransFileName(string transactiontxt);
 
-	///////////////Datas////////////////
-
+	//Datas
 	string DataAtual();
 	bool Bisexto(int ano);
 	int Dias(int mes, int ano);
 	bool DataValida(int Dia, int Mes, int Ano);
 
-	
-	////////////////Utilidades////////////////
+	//Utilidades
 
 	void setcolor(int ForgC);
 
-	////////////////Menus////////////////
-
+	//Menus
 	int VisualizarInformacao();
 	void OpcoesVisualizarInformacao();
 	int ListaTransacoes();
@@ -65,17 +70,7 @@ public:
 	int MenuIniciar();
 	void OpcoesMenuIniciar();
 
-
-	////////////////Clientes////////////////
-
-	static Store* instance()
-	{
-		if (!singleton_instance)
-			singleton_instance = new Store;
-
-		return singleton_instance;
-	}
-
+	//Clientes
 	void ExtrairClientes();
 	int EscreverCliente();
 	bool ClienteExiste(string output);
@@ -88,15 +83,13 @@ public:
 	int Bottom10();
 	int MostrarClientes();
 
-	////////////////Produtos////////////////
-
+	//Produtos
 	void ExtrairProdutos();
 	int EscreverProduto();
 	int MostrarProdutos();
 	int Compras();
 
-	////////////////Transacoes////////////////
-
+	//Transacoes
 	void ExtrairTransacoes();
 	int EscreverTrans();
 	int TransEntre();
@@ -106,6 +99,5 @@ public:
 	bool TransData(int dataint1);
 	int MostrarTransacoes();
 	void AdicionarTrans(int id, string produtos);
-
 };
 

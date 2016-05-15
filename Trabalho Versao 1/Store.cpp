@@ -8,6 +8,7 @@ Store::~Store()
 {
 }
 
+//Nomes dos ficheiros
 void Store::setClientsFileName(string clienttxt)
 {
 	FClient = clienttxt;
@@ -23,9 +24,9 @@ void Store::setTransFileName(string transactiontxt)
 	FTrans = transactiontxt;
 }
 
-////////////////Datas////////////////
+//Datas
 
-// retorna a data atual em string
+//Retorna a data atual em string
 string Store::DataAtual() {
 	string dia, mes, ano, Data;
 	time_t timeNow = time(NULL);
@@ -47,7 +48,8 @@ string Store::DataAtual() {
 	return Data;
 }
 
-bool Store::Bisexto(int ano) // verifica se o ano é bisexto ou nao
+//Verifica se o ano é bisexto
+bool Store::Bisexto(int ano)
 {
 	if ((ano % 400 == 0) && (ano % 100 == 0))
 		return true;
@@ -57,7 +59,8 @@ bool Store::Bisexto(int ano) // verifica se o ano é bisexto ou nao
 		else return false;
 }
 
-int Store::Dias(int mes, int ano) // retorna quantos dias tem o mes de um determinado ano
+//Retorna total de dias do mes de um determinado ano
+int Store::Dias(int mes, int ano)
 {
 	bool B = Bisexto(ano);
 
@@ -74,7 +77,8 @@ int Store::Dias(int mes, int ano) // retorna quantos dias tem o mes de um determ
 		return 0;
 }
 
-bool Store::DataValida(int Dia, int Mes, int Ano) // verifica se a data introduzida é valida
+//Verifica se a data é valida
+bool Store::DataValida(int Dia, int Mes, int Ano)
 {
 	int DTotal;
 	bool B = Bisexto(Ano);
@@ -89,7 +93,7 @@ bool Store::DataValida(int Dia, int Mes, int Ano) // verifica se a data introduz
 	else return false;
 }
 
-////////////////Utilidades////////////////
+//Utilidades
 
 void Store::setcolor(int ForgC)
 {
@@ -98,19 +102,17 @@ void Store::setcolor(int ForgC)
 	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 
-	//We use csbi for the wAttributes word.
 	if (GetConsoleScreenBufferInfo(hStdOut, &csbi))
 	{
-		//Mask out all but the background attribute, and add in the forgournd color
 		wColor = (csbi.wAttributes & 0xF0) + (ForgC & 0x0F);
 		SetConsoleTextAttribute(hStdOut, wColor);
 	}
 	return;
 }
 
-////////////////Menus////////////////
+//Menus
 
-// MENU - Visualizar Informacao //
+//MENU - Visualizar Informacao
 int Store::VisualizarInformacao()
 {
 	system("cls");
@@ -175,7 +177,7 @@ void Store::OpcoesVisualizarInformacao()
 		}
 }
 
-// MENU - Lista de Transacoes //
+//MENU - Transacoes
 int Store::ListaTransacoes()
 {
 	system("cls");
@@ -235,7 +237,7 @@ void Store::OpcoesListaTransacoes()
 		}
 }
 
-// MENU - Produtos Disponiveis //
+//MENU - Produtos Disponiveis
 int Store::ProdutosDisponiveis()
 {
 	system("cls");
@@ -289,7 +291,7 @@ void Store::OpcoesProdutosDisponiveis()
 		}
 }
 
-// MENU - Gerir Clientes //
+//MENU - Gerir Clientes
 int Store::GerirClientes()
 {
 	system("cls");
@@ -349,7 +351,7 @@ void Store::OpcoesGerirClientes()
 		}
 }
 
-// MENU - Lista de Clientes //
+//MENU - Lista de Clientes
 int Store::ListaClientes()
 {
 	system("cls");
@@ -402,7 +404,7 @@ void Store::OpcoesListaClientes()
 		}
 }
 
-// MENU - Saida //
+//MENU - Saida
 int Store::Saida()
 {
 	system("cls");
@@ -419,7 +421,7 @@ int Store::Saida()
 	exit(0);
 }
 
-// MENU - Menu Inicial //
+//MENU - Menu Inicial
 int Store::MenuIniciar() {
 	system("cls");
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
@@ -487,9 +489,9 @@ void Store::OpcoesMenuIniciar()
 
 }
 
-////////////////Clientes////////////////
+//Clientes
 
-// funcao que extrai informacao do ficheiro dos clientes para um vetor
+//Extrai informacao do ficheiro dos clientes para um vetor (VClient)
 void Store::ExtrairClientes() {
 	ifstream Clientfile(FClient);
 	string line;
@@ -543,7 +545,7 @@ void Store::ExtrairClientes() {
 	else { setcolor(4); cout << "Impossivel abrir ficheiro" << endl; setcolor(15); }
 }
 
-// funcao que escreve no ficheiro
+//Escreve vetor VClient no ficheiro dos clientes
 int Store::EscreverCliente()
 {
 	ofstream Clientfile(FClient);
@@ -560,7 +562,7 @@ int Store::EscreverCliente()
 	return 0;
 }
 
-// booleano que verifica se o cliente existe
+//Verifica se o cliente existe
 bool Store::ClienteExiste(string output)
 {
 	int id;
@@ -586,7 +588,7 @@ bool Store::ClienteExiste(string output)
 	else return false;
 }
 
-// funcao que cria cliente
+//Cria cliente
 int Store::CriarCliente()
 {
 	string nome;
@@ -602,7 +604,7 @@ int Store::CriarCliente()
 	return 0;
 }
 
-// funcao que remove cliente
+//Remove cliente
 int Store::RemoverCliente()
 {
 	int id, dig;
@@ -660,7 +662,7 @@ int Store::RemoverCliente()
 	return 0;
 }
 
-// funcao que altera clientes
+//Altera cliente
 int Store::AlterarCliente()
 {
 	int id, dig;
@@ -722,7 +724,7 @@ int Store::AlterarCliente()
 	return 0;
 }
 
-// funcao que mostra a informacao de um respetivo cliente
+//Mostra a informacao de um respetivo cliente
 int Store::InfoInd()
 {
 	int id;
@@ -762,7 +764,7 @@ int Store::InfoInd()
 	return 0;
 }
 
-//funçao que muda a primeira letra de cada palavra de uma string para maiuscula e as restantes para minusculas
+//Muda a primeira letra de cada palavra de uma string para maiuscula e as restantes para minusculas - formata os nomes
 string Store::formatarNome(string nome)
 {
 	string NomeAlterado = nome;
@@ -793,7 +795,7 @@ string Store::formatarNome(string nome)
 
 
 
-// mostra clientes por ordem alfabética
+//Mostra clientes por ordem alfabética
 int Store::ordenarCNome()
 {
 	vector <Client> VO = VClients;
@@ -826,7 +828,7 @@ int Store::ordenarCNome()
 
 // BOTTOM 10 //
 
-//mostra os piores 10 clientes
+//Mostra os piores 10 clientes
 int Store::Bottom10()
 {
 	vector<Client> VO = VClients;
@@ -877,9 +879,9 @@ int Store::MostrarClientes() {
 }
 
 
-////////////////Produtos////////////////
+//Produtos
 
-// funcao que extrai os vetores com os produtos disponiveis do ficheiro txt
+//Extrai informacao do ficheiro dos produtos para um vetor (VProd)
 void Store::ExtrairProdutos()
 {
 	ifstream Prodfile(FProd);
@@ -892,9 +894,6 @@ void Store::ExtrairProdutos()
 		while (getline(Prodfile, line))
 		{
 			if (line.find(";") != -1) {
-
-				//VProducts.at(i).preco = stof(line.substr(line.find_last_of(";") + 2, line.length() - line.find_last_of(";") - 2)); // define o montante gasto do elemento do vetor
-
 				VProducts.push_back(Product(line.substr(0, line.find_first_of(";") - 1), stof(line.substr(line.find_last_of(";") + 2, line.length() - line.find_last_of(";") - 2))));
 				i++;
 			}
@@ -904,7 +903,7 @@ void Store::ExtrairProdutos()
 	else { setcolor(4); cout << "Impossivel abrir ficheiro" << endl;  setcolor(15); }
 }
 
-// funcao que escreve um novo produto no ficheiro dos produtos
+//Escreve vetor VProd no ficheiro dos produtos
 int Store::EscreverProduto()
 {
 	ofstream Prodfile(FProd);
@@ -921,7 +920,7 @@ int Store::EscreverProduto()
 	return 0;
 }
 
-// funcao que mostra o ficheiro dos produtos
+//Mostra o ficheiro dos produtos
 int Store::MostrarProdutos()
 {
 	for (unsigned int i = 0; i < VProducts.size(); i++)
@@ -931,7 +930,7 @@ int Store::MostrarProdutos()
 	return 0;
 }
 
-// funcao que efetua compras
+//Efetua compras, adiciona transacao, adiciona montante gasta ao total do cliente, e caso seja necessario, cria cliente
 int Store::Compras()
 {
 	unsigned int ref, dig, op;
@@ -942,6 +941,8 @@ int Store::Compras()
 
 	setcolor(14); cout << "> ";  setcolor(15); cout << "Tendo em conta os produtos disponiveis, qual deseja comprar?" << endl;
 	setcolor(14); cout << "> ";  setcolor(15); cout << "Quando terminar, por favor digite ";  setcolor(11); cout << " 0";  setcolor(15); cout << ".\n\n";
+	
+	//selecao de produtos a comprar
 	while (true)
 	{
 		cin >> ref;
@@ -968,14 +969,18 @@ int Store::Compras()
 		}
 	}
 
+	//caso nao tenha inserido nenhum produto valido, ou apenas tenha desistido de comprar
 	if (produtos.empty())
 	{
 		setcolor(4); cout << "> Nao introduziu nenhum produto valido." << endl;  setcolor(15);
 		system("pause");
 		return 0;
 	}
+
+	//caso tenha inserido produtos validos
 	else
 	{
+		//confirmacao da compra
 		setcolor(14); cout << endl << "> ";  setcolor(15); cout << "Quer comprar o(s) produto(s): ";  setcolor(3); cout << "{ ";  setcolor(15); cout << produtos.substr(0, produtos.size() - 2) << "." << endl;
 		setcolor(3); cout << "-----------------------------------------------------------" << endl;
 		setcolor(7); cout << "1. SIM" << "        " << "2. NAO" << endl << endl;  setcolor(15);
@@ -991,6 +996,7 @@ int Store::Compras()
 		}
 		if (dig == 1)
 		{
+			//selecao do cliente a efetuar a compra
 			setcolor(14); cout << endl << "> ";  setcolor(15); cout << "Ja e cliente?" << endl;
 			setcolor(3); cout << "-----------------------------------------------------------" << endl;
 			setcolor(7); cout << "1. SIM" << "        " << "2. NAO" << endl << endl;  setcolor(15);
@@ -1031,8 +1037,10 @@ int Store::Compras()
 				id = VClients.back().GetId();
 			}
 
+			//Display da montante total a pagar
 			cout << endl << "Total a pagar: ";  setcolor(3); cout << "{ ";  setcolor(15); cout << total << " euros" << endl;
 
+			//Ajuste da montante no cliente
 			for (unsigned int i = 0; i < VClients.size(); i++)
 			{
 				if ((id == VClients.at(i).GetId()) || (opcao == VClients.at(i).GetNome()))
@@ -1063,14 +1071,12 @@ int Store::Compras()
 			}
 		}
 	}
-
 	return 0;
-
 }
 
-////////////////Transacoes////////////////
+//Transacoes
 
-// funcao que extrai os vetores com informacao das transacoes (id, nome, montante) do ficheiro txt
+//Extrai informacao do ficheiro das transacoes para um vetor (VTrans)
 void Store::ExtrairTransacoes()
 {
 	ifstream transactionFile(FTrans);
@@ -1123,7 +1129,7 @@ void Store::ExtrairTransacoes()
 	else { setcolor(4); cout << "Impossivel abrir ficheiro" << endl;  setcolor(15); }
 }
 
-// funcao que escreve uma nova transacao no ficheiro das transacoes
+//Escreve o vetor VTrans no ficheiro de transacoes
 int Store::EscreverTrans()
 {
 	ofstream TransFile(FTrans);
@@ -1150,7 +1156,7 @@ int Store::EscreverTrans()
 	return 0;
 }
 
-// funcao que mostra as transacoes efetuadas num intervalo de datas
+//Mostra as transacoes efetuadas num intervalo de datas
 int Store::TransEntre()
 {
 	int dia1, mes1, ano1, dia2, mes2, ano2;
@@ -1158,12 +1164,14 @@ int Store::TransEntre()
 	string data1, data2, datadig1, datadig2, produtos;
 	int dataint1, dataint2, DataInteira;
 	string DataDigitos, DataCompleta;
+	int c=0; //contador
 
 	cout << endl;
 	setcolor(14); cout << "> ";  setcolor(15); cout << "Tera que escolher duas datas para visualizar as transacoes efetuadas nesse intervalo." << endl;
 	setcolor(14); cout << "> ";  setcolor(15); cout << "Introduza a primeira data:" << endl << endl;
 	cout << "> Dia: "; cin >> dia1; cout << "> Mes: "; cin >> mes1; cout << "> Ano: "; cin >> ano1;
 
+	//Verifica se a primeira data é valida
 	if (DataValida(dia1, mes1, ano1))
 	{
 		setcolor(7); cout << "Data Valida!\n";  setcolor(15);
@@ -1179,6 +1187,7 @@ int Store::TransEntre()
 	setcolor(14); cout << "> ";  setcolor(15); cout << "Introduza a segunda data: " << endl;
 	cout << "> Dia: "; cin >> dia2; cout << "> Mes: "; cin >> mes2; cout << "> Ano: "; cin >> ano2;
 
+	//Verifica se a segunda data é valida
 	if (DataValida(dia2, mes2, ano2))
 	{
 		setcolor(7); cout << "Data Valida!\n";  setcolor(15);
@@ -1191,6 +1200,7 @@ int Store::TransEntre()
 		OpcoesListaTransacoes();
 	}
 
+	//Formata datas para DD/MM/AAAA
 	d1 = to_string(dia1);
 	m1 = to_string(mes1);
 	a1 = to_string(ano1);
@@ -1211,13 +1221,13 @@ int Store::TransEntre()
 	data1.append(d1); data1.append("/"); data1.append(m1); data1.append("/"); data1.append(a1);
 	data2.append(d2); data2.append("/"); data2.append(m2); data2.append("/"); data2.append(a2);
 
-	//converte a data1 num inteiro
+	//converte a primeira data para um numero inteiro, invertido
 	datadig1 = data1.substr(data1.find_last_of("/") + 1, data1.size() - data1.find_last_of("/") - 1);  //ano
 	datadig1.append(data1.substr(data1.find_first_of("/") + 1, data1.find_last_of("/") - data1.find_first_of("/") - 1));  //adiciona mes ao fim do ano
 	datadig1.append(data1.substr(0, data1.find_first_of("/"))); //adiciona dia ao fim do ano|mes : ficando anomesdia
 	dataint1 = stoi(datadig1, nullptr, 10); //converte a string data digitos para um inteiro
 
-											//converte a data2 num inteiro
+	//converte a segunda data para um numero inteiro, invertido
 	datadig2 = data2.substr(data2.find_last_of("/") + 1, data2.size() - data2.find_last_of("/") - 1);  //ano
 	datadig2.append(data2.substr(data2.find_first_of("/") + 1, data2.find_last_of("/") - data2.find_first_of("/") - 1));  //adiciona mes ao fim do ano
 	datadig2.append(data2.substr(0, data2.find_first_of("/"))); //adiciona dia ao fim do ano|mes : ficando anomesdia
@@ -1228,6 +1238,7 @@ int Store::TransEntre()
 	setcolor(7);  cout << setw(5) << "ID" << setw(14) << "Data" << setw(28) << "Produtos" << endl;
 	setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(15);
 
+	//Display das transacoes
 	for (unsigned int i = 0; i < VTrans.size(); i++)
 	{
 		DataCompleta = VTrans.at(i).GetDate(); // data completa
@@ -1238,6 +1249,7 @@ int Store::TransEntre()
 
 		if ((DataInteira >= dataint1) && (DataInteira <= dataint2))
 		{
+			c += 1;
 			cout << setw(5) << VTrans.at(i).GetId();
 			cout << setw(15) << VTrans.at(i).GetDate();
 			produtos = "";
@@ -1259,18 +1271,15 @@ int Store::TransEntre()
 		}
 	}
 	setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(15);
+	if (c == 0)
+	{
+		setcolor(7); cout << endl << "ATENCAO: "; setcolor(15); cout << "Nao existe nenhuma transacao efetuada \n         entre estas datas.\n" << endl;
+	}
 	system("pause");
 	return 0;
 }
 
-/*
-DATA
-DA
-FUCKING
-MAL
-AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII*/
-
-// funcao que mostra as transacoes efetuadas num determinado dia
+//Mostra as transacoes efetuadas num determinado dia
 int Store::TransDia()
 {
 	int dia1, mes1, ano1;
@@ -1367,7 +1376,7 @@ int Store::TransDia()
 	return 0;
 }
 
-// booleano que verifica se a transacao com determinado ID existe
+//Verifica se a transacao com determinado ID existe
 bool Store::TransExiste(unsigned int id)
 {
 	int a = 0;
@@ -1382,7 +1391,7 @@ bool Store::TransExiste(unsigned int id)
 	else return false;
 }
 
-// funcao que mostra as transacoes efetuadas por um determinado cliente
+//Mostra as transacoes efetuadas por um determinado cliente
 int Store::TransInd()
 {
 	int id;
@@ -1449,7 +1458,7 @@ int Store::TransInd()
 	return 0;
 }
 
-
+//Verifica se existe alguma transacao efetuada com esta data
 bool Store::TransData(int dataint1)
 {
 	string DataDigitos, DataCompleta;
@@ -1465,7 +1474,6 @@ bool Store::TransData(int dataint1)
 
 		if (DataInteira == dataint1)
 			a = a + 1;
-		else a = a;
 	}
 
 	if (a > 0)
@@ -1473,7 +1481,7 @@ bool Store::TransData(int dataint1)
 	else return false;
 }
 
-// funcao que mostra o ficheiro das transacoes
+//Mostra o ficheiro das transacoes
 int Store::MostrarTransacoes()
 {
 	string produtos;
@@ -1502,7 +1510,7 @@ int Store::MostrarTransacoes()
 	return 0;
 }
 
-
+//Cria transacao
 void Store::AdicionarTrans(int id, string produtos)
 {
 	vector<string> products;
@@ -1518,4 +1526,3 @@ void Store::AdicionarTrans(int id, string produtos)
 
 	return;
 }
-
