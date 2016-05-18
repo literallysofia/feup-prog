@@ -573,7 +573,7 @@ void Store::ExtrairClientes() {
 
 				string dia = data.substr(0, posd1);
 				string mes = strd1.substr(0, posd2);
-				string ano = strd1.substr(posd2+1);
+				string ano = strd1.substr(posd2 + 1);
 
 				if (dia.size() == 1)
 					dia = "0" + dia;
@@ -991,7 +991,7 @@ int Store::Compras()
 
 	setcolor(14); cout << "> ";  setcolor(15); cout << "Tendo em conta os produtos disponiveis, qual deseja comprar?" << endl;
 	setcolor(14); cout << "> ";  setcolor(15); cout << "Quando terminar, por favor digite ";  setcolor(11); cout << " 0";  setcolor(15); cout << ".\n\n";
-	
+
 	//selecao de produtos a comprar
 	while (true)
 	{
@@ -1214,7 +1214,7 @@ int Store::TransEntre()
 	string data1, data2, datadig1, datadig2, produtos;
 	int dataint1, dataint2, DataInteira;
 	string DataDigitos, DataCompleta;
-	int c=0; //contador
+	int c = 0; //contador
 
 	cout << endl;
 	setcolor(14); cout << "> ";  setcolor(15); cout << "Tera que escolher duas datas para visualizar as transacoes efetuadas nesse intervalo." << endl;
@@ -1622,33 +1622,35 @@ int Store::PubIndividual()
 	for (int i = 0; i < VTrans.size(); i++)
 	{
 
-		Trans_IdIx.insert(make_pair(VTrans.at(i).GetId(),i)); //preenche o map de transacoes com os index das transacoes dos clientes existentes no vetor
+		Trans_IdIx.insert(make_pair(VTrans.at(i).GetId(), i)); //preenche o map de transacoes com os index das transacoes dos clientes existentes no vetor
 	}
 
 	vector<vector<bool>> andreia_jesseeca_bernardo(all_clients.size(), vector<bool>(VProducts.size(), false));
-	
+
 
 	for (int i = 0; i < VTrans.size(); i++)
 	{
-		
-			for (int a = 0; a < VTrans.at(i).GetProds().size(); a++)
-			{
-				
-				andreia_jesseeca_bernardo[Client_IdIx[VTrans[i].GetId()]][Prod_Ix[VTrans[i].GetProds().at(a)]] = true;
-				
-				
-			}
+
+		for (int a = 0; a < VTrans.at(i).GetProds().size(); a++)
+		{
+
+			andreia_jesseeca_bernardo[Client_IdIx[VTrans[i].GetId()]][Prod_Ix[VTrans[i].GetProds().at(a)]] = true;
+
+
+		}
 	}
 
 
-	
+
 	// Parte para usar o id do cliente a recomendar
 
+	vector <bool> auxtocompare = vector<bool>(VProducts.size(), false);
 
 	if (find(all_clients.begin(), all_clients.end(), id) != all_clients.end())
 	{
 		vector<bool> client_recommend;
 		vector<string> products_recommend;
+
 
 		for (int i = 0; i < andreia_jesseeca_bernardo.size(); i++)
 		{
@@ -1662,18 +1664,33 @@ int Store::PubIndividual()
 		{
 			for (int a = 0; a < andreia_jesseeca_bernardo[i].size(); a++)
 			{
+
 				if (andreia_jesseeca_bernardo[i][a] != client_recommend[a])
 				{
+					int c = 0;
+
 					if (andreia_jesseeca_bernardo[i][a] == true)
 					{
-						products_recommend.push_back(VProducts[a]);
+						products_recommend.push_back(VProducts.at(a).GetProd());
+						c++;
 					}
+
+					if (andreia_jesseeca_bernardo[i][a] == false)
+					{
+						products_recommend.erase(products_recommend.end() - c, products_recommend.end());
+					}
+
 				}
 			}
 		}
 
+
+		for (int i = 0; i < products_recommend.size(); ++i)
+			cout << products_recommend.at(i) << endl;
+
 	}
 
+	cout << endl;
 
 	for (int i = 0; i < andreia_jesseeca_bernardo.size(); i++)
 	{
@@ -1686,9 +1703,6 @@ int Store::PubIndividual()
 
 
 	getchar();
-
-
-
 
 	return 0;
 }
