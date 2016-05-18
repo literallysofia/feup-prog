@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <iomanip>
+#include <map>
 #include <Windows.h>
 #include <algorithm>
 #include "Client.h"
@@ -27,6 +28,12 @@ private:
 	vector<Client> VClients;
 	vector<Product> VProducts;
 	vector<Transaction> VTrans;
+
+	//Maps
+	map<unsigned int, unsigned int> Client_IdIx;   //map<id_cliente, posicao_cliente>
+	map<string, unsigned int> Prod_Ix;				//map<nome_produto, posicao_produto>
+	vector<unsigned int> Trans_pos;
+	multimap<unsigned int, unsigned int> Trans_IdIx;    //map<id_cliente, vetor de posicoes das transacoes>
 
 public:
 	Store();
@@ -54,6 +61,10 @@ public:
 	//Utilidades
 
 	void setcolor(int ForgC);
+
+	int PublicidadePersonalizada();
+
+	void OpcoesPublicidadePersonalizada();
 
 	//Menus
 	int VisualizarInformacao();
@@ -99,5 +110,8 @@ public:
 	bool TransData(int dataint1);
 	int MostrarTransacoes();
 	void AdicionarTrans(int id, string produtos);
+
+	//Publicidade
+	int PubIndividual();
 };
 

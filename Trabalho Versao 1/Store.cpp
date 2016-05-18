@@ -112,6 +112,59 @@ void Store::setcolor(int ForgC)
 
 //Menus
 
+//MENU - Publicidade Personalizada
+int Store::PublicidadePersonalizada()
+{
+	system("cls");
+	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
+		<< "|~~~               ";  setcolor(3); cout << "Supermercado  Vende++";  setcolor(15); cout << "               ~~~| " << endl
+		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
+		<< "|~~                ";  setcolor(7); cout << "PUBLICIDADE";  setcolor(15); cout << "               ~~~|" << endl
+		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+	setcolor(7);
+	cout << setw(13) << "1. Individual" << setw(44) << "2. Bottom 10" << endl;
+	setcolor(15);
+	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
+		<< "|~~~                                 ";  setcolor(7); cout << "< 0. Voltar >";  setcolor(15); cout << "     ~~~|" << endl
+		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
+
+	unsigned short int opcao;
+	cout << "Insira a sua escolha: ";
+	cin >> opcao;
+
+	while (cin.fail() || (opcao > 5))
+	{
+		cin.clear();
+		cin.ignore(1000, '\n');
+		setcolor(4); cout << "> Digito invalido!" << endl;
+		setcolor(15); cout << "Volte a indicar escolha: ";
+		cin >> opcao;
+	}
+
+	if ((opcao >= 0) && (opcao <= 2))
+	{
+		if (opcao == 0)
+			return 0;
+		return opcao;
+	}
+	return 0;
+}
+
+void Store::OpcoesPublicidadePersonalizada()
+{
+	unsigned short int opcao;
+
+	while (opcao = PublicidadePersonalizada())
+		switch (opcao)
+		{
+		case 1:
+			PubIndividual();
+			break;
+		case 2:
+			break;
+		}
+}
+
 //MENU - Visualizar Informacao
 int Store::VisualizarInformacao()
 {
@@ -480,10 +533,7 @@ void Store::OpcoesMenuIniciar()
 			OpcoesVisualizarInformacao();
 			break;
 		case 6:
-			system("cls");
-			setcolor(14); cout << "< FUNCIONALIDADE EM CONSTRUCAO >" << endl << endl;  setcolor(15);
-			system("pause");
-			OpcoesMenuIniciar();
+			OpcoesPublicidadePersonalizada();
 			break;
 		}
 
@@ -1525,4 +1575,120 @@ void Store::AdicionarTrans(int id, string produtos)
 	EscreverTrans();
 
 	return;
+}
+
+//Publicidade ///////////////////
+int Store::PubIndividual()
+{
+	int id;
+	string opcao;
+	cout << endl << "Intruduza o ID ou o NOME do cliente: ";  cin.ignore(); getline(cin, opcao); cout << endl;
+
+	if (ClienteExiste(opcao))
+	{
+		if ((int)opcao.at(0) >= 48 && (int)opcao.at(0) <= 57) // verifica se o primeiro elemento da string corresponde a um inteiro no codigo ascii (entre 0 e 9)
+			id = stoi(opcao, nullptr, 10); // se a opcao for o ID
+		else
+		{
+			for (unsigned int i = 0; i < VClients.size(); i++)
+			{
+				if (opcao == VClients.at(i).GetNome())
+					id = VClients.at(i).GetId();
+			}
+		}
+	}
+	vector<unsigned int> all_clients;    //vetor com os clientes existentes e os que ja foram apagados mas possuem transacooes
+
+	for (int i = 0; i < VTrans.size(); i++)
+	{
+		if (find(all_clients.begin(), all_clients.end(), VTrans[i].GetId()) == all_clients.end())
+		{
+			all_clients.push_back(VTrans[i].GetId());
+		}
+
+	}
+
+
+	for (int i = 0; i < all_clients.size(); i++)
+	{
+		Client_IdIx.insert(make_pair(all_clients.at(i), i)); //preenche o map de clientes com os clientes existentes no vetor
+	}
+
+	for (int i = 0; i < VProducts.size(); i++)
+	{
+		Prod_Ix.insert(make_pair(VProducts.at(i).GetProd(), i)); //preenche o map de produtos com os produtos existentes no vetor
+	}
+
+	for (int i = 0; i < VTrans.size(); i++)
+	{
+
+		Trans_IdIx.insert(make_pair(VTrans.at(i).GetId(),i)); //preenche o map de transacoes com os index das transacoes dos clientes existentes no vetor
+	}
+
+	vector<vector<bool>> andreia_jesseeca_bernardo(all_clients.size(), vector<bool>(VProducts.size(), false));
+	
+
+	for (int i = 0; i < VTrans.size(); i++)
+	{
+		
+			for (int a = 0; a < VTrans.at(i).GetProds().size(); a++)
+			{
+				
+				andreia_jesseeca_bernardo[Client_IdIx[VTrans[i].GetId()]][Prod_Ix[VTrans[i].GetProds().at(a)]] = true;
+				
+				
+			}
+	}
+
+
+	
+	// Parte para usar o id do cliente a recomendar
+
+
+	if (find(all_clients.begin(), all_clients.end(), id) != all_clients.end())
+	{
+		vector<bool> client_recommend;
+		vector<string> products_recommend;
+
+		for (int i = 0; i < andreia_jesseeca_bernardo.size(); i++)
+		{
+			if (i == Client_IdIx[id])
+			{
+				client_recommend = andreia_jesseeca_bernardo[i];
+			}
+		}
+
+		for (int i = 0; i < andreia_jesseeca_bernardo.size(); i++)
+		{
+			for (int a = 0; a < andreia_jesseeca_bernardo[i].size(); a++)
+			{
+				if (andreia_jesseeca_bernardo[i][a] != client_recommend[a])
+				{
+					if (andreia_jesseeca_bernardo[i][a] == true)
+					{
+						products_recommend.push_back(VProducts[a]);
+					}
+				}
+			}
+		}
+
+	}
+
+
+	for (int i = 0; i < andreia_jesseeca_bernardo.size(); i++)
+	{
+		for (int a = 0; a < andreia_jesseeca_bernardo[i].size(); a++)
+		{
+			cout << andreia_jesseeca_bernardo[i][a];
+		}
+		cout << endl;
+	}
+
+
+	getchar();
+
+
+
+
+	return 0;
 }
