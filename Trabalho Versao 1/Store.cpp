@@ -1843,7 +1843,7 @@ void Store::criarTrans(int id, string produtos)
 //Publicidade
 
 // estrutura para o vetor de produtos recomendados
-struct ProdutosRecomendados
+struct ProdutosFrequencia
 {
 	string produto;
 	int total;
@@ -1964,7 +1964,7 @@ int Store::pubIndividual()
 
 			else {
 				// cria um vetor de produtos recomendados com a estrutura (nome do produto, numero de vezes que aparece)
-				vector<ProdutosRecomendados> VPR;
+				vector<ProdutosFrequencia> VPR;
 
 				for (int i = 0; i < products_recommend.size(); i++)
 				{
@@ -1974,7 +1974,7 @@ int Store::pubIndividual()
 						if (products_recommend.at(i) == products_recommend.at(j))
 							t++;
 					}
-					ProdutosRecomendados novoelem; //criacao novo elemento
+					ProdutosFrequencia novoelem; //criacao novo elemento
 					novoelem.produto = products_recommend.at(i);
 					novoelem.total = t;
 					VPR.push_back(novoelem);
@@ -2060,14 +2060,143 @@ int Store::pubIndividual()
 
 int Store::pubBottom10()
 {
+	vector<string> produtos_maisfrequentes; //vetor com o produto, ou produtos, mais frequentes do bottom 10
+
+	vector <Client> VNB10; // vetor de clientes menos os do bottom 10 (Vector Not Bottom 10)
 	vector <Client> VB10 = VClients; //VB10 é um vetor igual ao VClients que vai ser ordenado
 	sort(VB10.begin(), VB10.end(), [](Client &a, Client &b) {return a.GetMontante() < b.GetMontante(); }); //ordena o vetor VB10
 	VB10.erase(VB10.begin() + 10, VB10.end()); //VB10 passa a ser um vetor com apenas os 10 primeiros elementos de VClients
 
-	for (int i = 0; i < VB10.size(); i++)
+	//vetor com os id's dos clientes presentes no bottom 10
+	vector<unsigned int> VB10_id;
+	for (unsigned int i = 0; i < VB10.size(); i++)
 	{
-		cout << VB10.at(i).GetId() << VB10.at(i).GetNome() << VB10.at(i).GetData() << VB10.at(i).GetMontante() << endl;
+		VB10_id.push_back(VB10.at(i).GetId());
 	}
+
+	//remocao dos vetores do bottom 10 ao vetor de todos os clientes, ficando estes em VNB10
+	for (unsigned int i = 0; i < VClients.size(); i++)
+	{
+		if (find(VB10_id.begin(), VB10_id.end(), VClients.at(i).GetId()) == VB10_id.end())
+			VNB10.push_back(Client(VClients.at(i).GetId(), VClients.at(i).GetNome(), VClients.at(i).GetData(), VClients.at(i).GetMontante()));
+	}
+
+	vector <Transaction> TB10; //vetor das transacoes do Bottom 10
+	//retira as transacoes dos clientes presentes no bottom 10 e adiciona ao vetor TB10
+	for (unsigned int i = 0; i < VB10.size(); i++)
+	{
+		for (unsigned int j = 0; j < VTrans.size(); j++)
+		{
+			if (VB10.at(i).GetId() == VTrans.at(j).GetId())
+				TB10.push_back(Transaction(VTrans.at(j).GetId(), VTrans.at(j).GetDate(), VTrans.at(j).GetProds()));
+		}
+	}
+
+	vector <Transaction> TNB10; //vetor das transacoes de todos os clientes, menos Bottom 10 (Transactions Not Bottom 10)
+	//retira as transacoes de todos os clientes, menos bottom 10, e adiciona ao vetor TNB10
+	for (unsigned int i = 0; i < VNB10.size(); i++)
+	{
+		for (unsigned int j = 0; j < VTrans.size(); j++)
+		{
+			if (VNB10.at(i).GetId() == VTrans.at(j).GetId())
+				TNB10.push_back(Transaction(VTrans.at(j).GetId(), VTrans.at(j).GetDate(), VTrans.at(j).GetProds()));
+		}
+	}
+
+	vector<string> produtos_TB10; //vetor com todos os produtos comprados pelo bottom 10
+	//preenche vetor
+	for (unsigned int i = 0; i < TB10.size(); i++)
+	{
+		for (unsigned int j = 0; j < TB10.at(i).GetProds().size(); j++)
+		{
+			produtos_TB10.push_back(TB10.at(i).GetProds().at(j));
+		}
+	}
+
+	//PREENCHE VETOR DOS PRODUTOS MAIS FREQUENTES DO BOTTOM 10//
+	if (produtos_TB10.size() > 1)
+	{
+		// cria um vetor com a estrutura (nome do produto, numero de vezes que aparece - frequencia)
+		vector<ProdutosFrequencia> VPFreq;
+
+		for (int i = 0; i < produtos_TB10.size(); i++)
+		{
+			int t = 0; //numero de vezes que cada produto repete
+			for (int j = 0; j < produtos_TB10.size(); j++)
+			{
+				if (produtos_TB10.at(i) == produtos_TB10.at(j))
+					t++;
+			}
+			ProdutosFrequencia novoelem; //criacao novo elemento
+			novoelem.produto = produtos_TB10.at(i);
+			novoelem.total = t;
+			VPFreq.push_back(novoelem);
+		}
+
+		// elimina os produtos repetidos, de maneira a ficar apenas uma vez cada produto
+		if (VPFreq.size() > 1)
+		{
+			for (int i = 0; i < VPFreq.size(); i++)
+			{
+				for (int j = 1; j < VPFreq.size(); j++)
+				{
+					if (VPFreq.at(i).produto == VPFreq.at(j).produto)
+						VPFreq.erase(VPFreq.begin() + j);
+				}
+			}
+
+			if (VPFreq.size() > 1)
+			{
+				// cria um vetor com todos os totais dos produtos, de maneira a calcular o total maximo, ou seja, o produto mais frequente
+				vector<int> Totais;
+				vector<int>::iterator result;
+				int totalMaximo;
+				for (int i = 0; i < VPFreq.size(); i++)
+				{
+					Totais.push_back(VPFreq.at(i).total);
+				}
+				result = std::max_element(Totais.begin(), Totais.end()); // retorna a posicao do maior elemento (comecando em 1)
+				totalMaximo = Totais.at(std::distance(Totais.begin(), result) + 1);
+
+				for (int i = 0; i < VPFreq.size(); i++)
+				{
+					if (totalMaximo == VPFreq.at(i).total)
+					{
+						produtos_maisfrequentes.push_back(VPFreq.at(i).produto);
+					}
+				}
+			}
+			else
+			{
+				for (int i = 0; i < VPFreq.size(); i++)
+				{
+					produtos_maisfrequentes.push_back(VPFreq.at(i).produto);
+				}
+			}
+		}
+		else
+		{
+			for (int i = 0; i < VPFreq.size(); i++)
+			{
+				produtos_maisfrequentes.push_back(VPFreq.at(i).produto);
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < produtos_TB10.size(); i++)
+		{
+			produtos_maisfrequentes.push_back(produtos_TB10.at(i));
+		}
+	}
+
+	//mais ceninhas wooooooo
+
+
+
+
+
+
 	getchar(); getchar();
 	return 0;
 }
