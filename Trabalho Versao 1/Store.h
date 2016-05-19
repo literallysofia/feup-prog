@@ -33,7 +33,6 @@ private:
 	map<unsigned int, unsigned int> Client_IdIx;   //map<id_cliente, posicao_cliente>
 	map<string, unsigned int> Prod_Ix;				//map<nome_produto, posicao_produto>
 	vector<unsigned int> Trans_pos;
-	multimap<unsigned int, unsigned int> Trans_IdIx;    //map<id_cliente, vetor de posicoes das transacoes>
 
 public:
 	Store();

@@ -1629,13 +1629,8 @@ int Store::pubIndividual()
 		{
 			Prod_Ix.insert(make_pair(VProducts.at(i).GetProd(), i)); //preenche o map de produtos com os produtos existentes no vetor e a sua posiçao
 		}
-
-		for (int i = 0; i < VTrans.size(); i++)
-		{
-
-			Trans_IdIx.insert(make_pair(VTrans.at(i).GetId(), i)); //preenche o map de transacoes com os ids e a posiçao das transacoes 
-		}
-
+		
+			
 		//criacao da matriz
 		vector<vector<bool>> matrix_taget(all_clients.size(), vector<bool>(VProducts.size(), false)); //inicia a matriz a false
 		
