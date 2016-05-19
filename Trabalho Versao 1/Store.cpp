@@ -1605,70 +1605,54 @@ ForwardIterator max_element(ForwardIterator first, ForwardIterator last)
 int Store::pubIndividual()
 {
 	int id;
-	/*string opcao;
-	cout << endl << "Intruduza o ID ou o NOME do cliente: ";  cin.ignore(); getline(cin, opcao); cout << endl;
-
-	if (ClienteExiste(opcao))
-	{
-		if ((int)opcao.at(0) >= 48 && (int)opcao.at(0) <= 57) // verifica se o primeiro elemento da string corresponde a um inteiro no codigo ascii (entre 0 e 9)
-			id = stoi(opcao, nullptr, 10); // se a opcao for o ID
-		else
-		{
-			for (unsigned int i = 0; i < VClients.size(); i++)
-			{
-				if (opcao == VClients.at(i).GetNome())
-					id = VClients.at(i).GetId();
-			}
-		}
-	}*/
 
 	cout << endl << "Intruduza o ID do cliente: ";  cin >> id;
 
-	if (transExisteID(id))
+	if (transExisteID(id)) //verifica se o cliente realizou transacoes
 	{
-		vector<unsigned int> all_clients;    //vetor com os clientes existentes e os que ja foram apagados mas possuem transacooes
-		for (int i = 0; i < VTrans.size(); i++)
+		vector<unsigned int> all_clients;    //vetor com os id clientes existentes e os que ja foram apagados mas possuem transacooes
+		
+		for (int i = 0; i < VTrans.size(); i++) //percorre o vetor de transacoes
 		{
-			if (find(all_clients.begin(), all_clients.end(), VTrans[i].GetId()) == all_clients.end())
+			if (find(all_clients.begin(), all_clients.end(), VTrans[i].GetId()) == all_clients.end()) //verifica se o id da transaçao na posiçao i ja existe no vetor all_clients
 			{
-				all_clients.push_back(VTrans[i].GetId());
+				all_clients.push_back(VTrans[i].GetId()); //adiciona se nao existir
 			}
 		}
 
 		for (int i = 0; i < all_clients.size(); i++)
 		{
-			Client_IdIx.insert(make_pair(all_clients.at(i), i)); //preenche o map de clientes com os clientes existentes no vetor
+			Client_IdIx.insert(make_pair(all_clients.at(i), i)); //preenche o map de clientes com os clientes existentes no vetor all_clients e a sua posiçao
 		}
 
 		for (int i = 0; i < VProducts.size(); i++)
 		{
-			Prod_Ix.insert(make_pair(VProducts.at(i).GetProd(), i)); //preenche o map de produtos com os produtos existentes no vetor
+			Prod_Ix.insert(make_pair(VProducts.at(i).GetProd(), i)); //preenche o map de produtos com os produtos existentes no vetor e a sua posiçao
 		}
 
 		for (int i = 0; i < VTrans.size(); i++)
 		{
 
-			Trans_IdIx.insert(make_pair(VTrans.at(i).GetId(), i)); //preenche o map de transacoes com os index das transacoes dos clientes existentes no vetor
+			Trans_IdIx.insert(make_pair(VTrans.at(i).GetId(), i)); //preenche o map de transacoes com os ids e a posiçao das transacoes 
 		}
 
 		//criacao da matriz
-		vector<vector<bool>> matrix_taget(all_clients.size(), vector<bool>(VProducts.size(), false));
-
-		for (int i = 0; i < VTrans.size(); i++)
+		vector<vector<bool>> matrix_taget(all_clients.size(), vector<bool>(VProducts.size(), false)); //inicia a matriz a false
+		
+		for (int i = 0; i < VTrans.size(); i++) //percorre o vetor produtos
 		{
-			for (int a = 0; a < VTrans.at(i).GetProds().size(); a++)
+			for (int a = 0; a < VTrans.at(i).GetProds().size(); a++) //percorre o vetor de produtos em casa transacao
 			{
-				matrix_taget[Client_IdIx[VTrans[i].GetId()]][Prod_Ix[VTrans[i].GetProds().at(a)]] = true;
+				matrix_taget[Client_IdIx[VTrans[i].GetId()]][Prod_Ix[VTrans[i].GetProds().at(a)]] = true; // identifique o cliente de casa transacao e na linha desse cliente na matriz coloque a true os produtos registados nessa transação
 			}
 		}
 
 		// Parte para usar o id do cliente a recomendar
-		vector <bool> auxtocompare = vector<bool>(VProducts.size(), false);
 
-		if (find(all_clients.begin(), all_clients.end(), id) != all_clients.end())
+		if (find(all_clients.begin(), all_clients.end(), id) != all_clients.end()) //percorre o vetor all clients enquanto nao chega ao fim
 		{
-			vector<bool> client_recommend;
-			vector<string> products_recommend;
+			vector<bool> client_recommend; //vetor igual à linha da matriz do cliente alvo
+			vector<string> products_recommend; //vetor de potenciais produtos para recomendar
 
 			for (int i = 0; i < matrix_taget.size(); i++)
 			{
@@ -1678,24 +1662,24 @@ int Store::pubIndividual()
 				}
 			}
 
-			for (int i = 0; i < matrix_taget.size(); i++)
+			for (int i = 0; i < matrix_taget.size(); i++) //percorre todos os clientes da matriz
 			{
-				for (int a = 0; a < matrix_taget[i].size(); a++)
+				for (int a = 0; a < matrix_taget[i].size(); a++) //percorre cada produto de cada cliente
 				{
 
-					if (matrix_taget[i][a] != client_recommend[a])
+					if (matrix_taget[i][a] != client_recommend[a]) //se o bool do produto do cliente que esta a ser analizado for diferente do bool do mesmo produto do cliente alvo
 					{
-						int c = 0;
+						int c = 0; //contador de produtos adicionados em cada cliente ao vetor de potenciais produtos a recomendar
 
-						if (matrix_taget[i][a] == true)
+						if (matrix_taget[i][a] == true) // se o cliente que esta a ser analizado comprou o produto
 						{
-							products_recommend.push_back(VProducts.at(a).GetProd());
-							c++;
+							products_recommend.push_back(VProducts.at(a).GetProd()); //adiciona o produto à lista de potencias produtos
+							c++; //adiciona ao contador
 						}
 
-						if (matrix_taget[i][a] == false)
+						if (matrix_taget[i][a] == false) //se o cliente alvo comprou o produto e o cliente que esta a ser analizado nao comprou
 						{
-							products_recommend.erase(products_recommend.end() - c, products_recommend.end());
+							products_recommend.erase(products_recommend.end() - c, products_recommend.end()); //apaga os produtos adicinados ao vetor potencias produtos a reocmendar deste cliente
 						}
 					}
 				}
@@ -1703,6 +1687,7 @@ int Store::pubIndividual()
 
 			// cria um vetor de produtos recomendados com a estrutura (nome do produto, numero de vezes que aparece)
 			vector<ProdutosRecomendados> VPR;
+
 			for (int i = 0; i < products_recommend.size(); i++)
 			{
 				int t = 0; //numero de vezes que cada produto repete
