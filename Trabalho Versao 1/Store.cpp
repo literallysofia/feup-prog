@@ -1728,23 +1728,33 @@ int Store::PubIndividual()
 							VPR.erase(VPR.begin() + j);
 					}
 				}
-
-				// cria um vetor com todos os totais dos produtos, de maneira a calcular o total maximo, ou seja, o produto mais frequente
-				vector<int> Totais;
-				vector<int>::iterator result;
-				int totalMaximo;
-				for (int i = 0; i < VPR.size(); i++)
+				if (VPR.size() > 1)
 				{
-					Totais.push_back(VPR.at(i).total);
+					// cria um vetor com todos os totais dos produtos, de maneira a calcular o total maximo, ou seja, o produto mais frequente
+					vector<int> Totais;
+					vector<int>::iterator result;
+					int totalMaximo;
+					for (int i = 0; i < VPR.size(); i++)
+					{
+						Totais.push_back(VPR.at(i).total);
+					}
+					result = std::max_element(Totais.begin(), Totais.end()); // retorna a posicao do maior elemento
+					totalMaximo = Totais.at(std::distance(Totais.begin(), result) + 1);
+
+					//display dos produtos recomendados, os mais frequentes
+					setcolor(14); cout << "\n> ";  setcolor(15); cout << "Produto(s) recomendado(s):\n";
+					for (int i = 0; i < VPR.size(); i++)
+					{
+						if (totalMaximo == VPR.at(i).total)
+						{
+							setcolor(11); cout << "   - ";  setcolor(15); cout << VPR.at(i).produto << endl;
+						}
+					}
 				}
-				result = std::max_element(Totais.begin(), Totais.end()); // retorna a posicao do maior elemento
-				totalMaximo = Totais.at(std::distance(Totais.begin(), result) + 1);
-
-				//display dos produtos recomendados, os mais frequentes
-				setcolor(14); cout << "\n> ";  setcolor(15); cout << "Produto(s) recomendado(s):\n";
-				for (int i = 0; i < VPR.size(); i++)
+				else
 				{
-					if (totalMaximo == VPR.at(i).total)
+					setcolor(14); cout << "\n> ";  setcolor(15); cout << "Produto(s) recomendado(s):\n";
+					for (int i = 0; i < VPR.size(); i++)
 					{
 						setcolor(11); cout << "   - ";  setcolor(15); cout << VPR.at(i).produto << endl;
 					}
