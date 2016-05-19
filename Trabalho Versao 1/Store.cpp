@@ -119,10 +119,10 @@ int Store::PublicidadePersonalizada()
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
 		<< "|~~~               ";  setcolor(3); cout << "Supermercado  Vende++";  setcolor(15); cout << "               ~~~| " << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~                ";  setcolor(7); cout << "PUBLICIDADE";  setcolor(15); cout << "               ~~~|" << endl
+		<< "|~~                     ";  setcolor(7); cout << "PUBLICIDADE";  setcolor(15); cout << "                    ~~~|" << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 	setcolor(7);
-	cout << setw(13) << "1. Individual" << setw(44) << "2. Bottom 10" << endl;
+	cout << setw(20) << "1. Individual" << setw(31) << "2. Bottom 10" << endl;
 	setcolor(15);
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
 		<< "|~~~                                 ";  setcolor(7); cout << "< 0. Voltar >";  setcolor(15); cout << "     ~~~|" << endl
@@ -175,7 +175,7 @@ int Store::VisualizarInformacao()
 		<< "|~~                ";  setcolor(7); cout << "VISUALIZAR INFORMACAO";  setcolor(15); cout << "               ~~~|" << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 	setcolor(7);
-	cout << setw(13) << "1. Cliente" << setw(44) << "4. Clientes por odem alfabetica" << endl
+	cout << setw(13) << "1. Cliente" << setw(43) << "4. Clientes (ordem alfabetica)" << endl
 		<< setw(23) << "2. Todos os clientes" << setw(16) << "5. Transacoes" << endl
 		<< setw(15) << "3. Bottom 10" << endl;
 	setcolor(15);
@@ -705,7 +705,7 @@ int Store::RemoverCliente()
 	}
 	else {
 		setcolor(4); cout << "ERRO! Cliente nao encontrado." << endl; setcolor(15);
-		system("pause");
+		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
 		return 0;
 	}
 
@@ -768,7 +768,7 @@ int Store::AlterarCliente()
 	}
 	else {
 		setcolor(4); cout << "ERRO! Cliente nao encontrado." << endl; setcolor(15);
-		system("pause");
+		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
 		return 0;
 	}
 	return 0;
@@ -801,14 +801,14 @@ int Store::InfoInd()
 				cout << setw(18) << VClients.at(i).GetData();
 				cout << setw(12) << setprecision(2) << fixed << VClients.at(i).GetMontante() << endl;
 				setcolor(3); cout << "-----------------------------------------------------------" << endl; setcolor(15);
-				system("pause");
+				setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
 				return 0;
 			}
 		}
 	}
 	else {
 		setcolor(4); cout << "> ERRO! Cliente nao encontrado." << endl; setcolor(15);
-		system("pause");
+		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
 		return 0;
 	}
 	return 0;
@@ -872,7 +872,7 @@ int Store::ordenarCNome()
 		}
 	}
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-	system("pause");
+	setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar(); getchar();
 	return 0;
 }
 
@@ -912,7 +912,9 @@ int Store::Bottom10()
 	}
 	setcolor(15);
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
-	system("Pause");
+	setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); 
+	getchar();
+	getchar();
 	return 0;
 }
 
@@ -1023,7 +1025,7 @@ int Store::Compras()
 	if (produtos.empty())
 	{
 		setcolor(4); cout << "> Nao introduziu nenhum produto valido." << endl;  setcolor(15);
-		system("pause");
+		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
 		return 0;
 	}
 
@@ -1110,13 +1112,13 @@ int Store::Compras()
 			if (dig == 2)
 			{
 				setcolor(4); cout << "> Compra Apagada!\n";  setcolor(15);
-				system("pause");
+				setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
 				return 0;
 			}
 			else
 			{
 				setcolor(4); cout << "ERRO!" << endl;  setcolor(15);
-				system("pause");
+				setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
 				return 0;
 			}
 		}
@@ -1229,7 +1231,7 @@ int Store::TransEntre()
 	else
 	{
 		setcolor(4); cout << "Data Invalida\n";  setcolor(15);
-		system("pause");
+		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
 		OpcoesListaTransacoes();
 	}
 	cout << endl;
@@ -1241,12 +1243,12 @@ int Store::TransEntre()
 	if (DataValida(dia2, mes2, ano2))
 	{
 		setcolor(7); cout << "Data Valida!\n";  setcolor(15);
-		system("pause");
+		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
 	}
 	else
 	{
 		setcolor(4); cout << "Data Invalida\n";  setcolor(15);
-		system("pause");
+		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
 		OpcoesListaTransacoes();
 	}
 
@@ -1325,7 +1327,7 @@ int Store::TransEntre()
 	{
 		setcolor(7); cout << endl << "ATENCAO: "; setcolor(15); cout << "Nao existe nenhuma transacao efetuada \n         entre estas datas.\n" << endl;
 	}
-	system("pause");
+	setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
 	return 0;
 }
 
@@ -1349,7 +1351,7 @@ int Store::TransDia()
 	else
 	{
 		setcolor(4); cout << "Data Invalida\n";  setcolor(15);
-		system("pause");
+		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
 		OpcoesListaTransacoes();
 	}
 
@@ -1376,7 +1378,7 @@ int Store::TransDia()
 	{
 		cout << endl;
 		setcolor(7); cout << "Foi efetuada alguma transacao neste dia." << endl;  setcolor(15);
-		system("pause");
+		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
 		system("cls");
 		setcolor(14); cout << "> ";  setcolor(15); cout << "Transacoes do dia: " << data1 << endl << endl;
 		setcolor(7); cout << setw(5) << "ID" << setw(14) << "Data" << setw(28) << "Produtos" << endl;
@@ -1413,14 +1415,14 @@ int Store::TransDia()
 			}
 		}
 		setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(15);
-		system("pause");
+		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
 		return 0;
 	}
 	else
 	{
 		cout << endl;
 		setcolor(4); cout << "> Nao foi efetuada nenhuma transacao neste dia." << endl;  setcolor(15);
-		system("pause");
+		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
 		return 0;
 	}
 	return 0;
@@ -1497,14 +1499,13 @@ int Store::TransInd()
 			}
 		}
 		setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(15);
-		system("pause");
-		return 0;
+		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
 	}
 	else {
 		setcolor(4); cout << "> Nao existe nenhuma transacao com este ID." << endl;  setcolor(15);
-		system("pause");
-		return 0;
+		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
 	}
+	getchar();
 	return 0;
 }
 
@@ -1578,10 +1579,33 @@ void Store::AdicionarTrans(int id, string produtos)
 }
 
 //Publicidade ///////////////////
+
+// estrutura para o vetor de produtos recomendados
+struct ProdutosRecomendados
+{
+	string produto;
+	int total;
+};
+
+// algoritmo que obtem o valor maximo de um vetor de inteiros
+template <class ForwardIterator>
+ForwardIterator max_element(ForwardIterator first, ForwardIterator last)
+{
+	if (first == last) return last;
+	ForwardIterator largest = first;
+
+	while (++first != last)
+		if (*largest < *first)    // or: if (comp(*largest,*first)) for version (2)
+			largest = first;
+	return largest;
+}
+
+
+// publicidade para um cliente alvo
 int Store::PubIndividual()
 {
 	int id;
-	string opcao;
+	/*string opcao;
 	cout << endl << "Intruduza o ID ou o NOME do cliente: ";  cin.ignore(); getline(cin, opcao); cout << endl;
 
 	if (ClienteExiste(opcao))
@@ -1596,113 +1620,164 @@ int Store::PubIndividual()
 					id = VClients.at(i).GetId();
 			}
 		}
-	}
-	vector<unsigned int> all_clients;    //vetor com os clientes existentes e os que ja foram apagados mas possuem transacooes
+	}*/
 
-	for (int i = 0; i < VTrans.size(); i++)
+	cout << endl << "Intruduza o ID do cliente: ";  cin >> id;
+
+	if (TransExiste(id))
 	{
-		if (find(all_clients.begin(), all_clients.end(), VTrans[i].GetId()) == all_clients.end())
+		vector<unsigned int> all_clients;    //vetor com os clientes existentes e os que ja foram apagados mas possuem transacooes
+		for (int i = 0; i < VTrans.size(); i++)
 		{
-			all_clients.push_back(VTrans[i].GetId());
-		}
-
-	}
-
-
-	for (int i = 0; i < all_clients.size(); i++)
-	{
-		Client_IdIx.insert(make_pair(all_clients.at(i), i)); //preenche o map de clientes com os clientes existentes no vetor
-	}
-
-	for (int i = 0; i < VProducts.size(); i++)
-	{
-		Prod_Ix.insert(make_pair(VProducts.at(i).GetProd(), i)); //preenche o map de produtos com os produtos existentes no vetor
-	}
-
-	for (int i = 0; i < VTrans.size(); i++)
-	{
-
-		Trans_IdIx.insert(make_pair(VTrans.at(i).GetId(), i)); //preenche o map de transacoes com os index das transacoes dos clientes existentes no vetor
-	}
-
-	vector<vector<bool>> andreia_jesseeca_bernardo(all_clients.size(), vector<bool>(VProducts.size(), false));
-
-
-	for (int i = 0; i < VTrans.size(); i++)
-	{
-
-		for (int a = 0; a < VTrans.at(i).GetProds().size(); a++)
-		{
-
-			andreia_jesseeca_bernardo[Client_IdIx[VTrans[i].GetId()]][Prod_Ix[VTrans[i].GetProds().at(a)]] = true;
-
-
-		}
-	}
-
-
-
-	// Parte para usar o id do cliente a recomendar
-
-	vector <bool> auxtocompare = vector<bool>(VProducts.size(), false);
-
-	if (find(all_clients.begin(), all_clients.end(), id) != all_clients.end())
-	{
-		vector<bool> client_recommend;
-		vector<string> products_recommend;
-
-
-		for (int i = 0; i < andreia_jesseeca_bernardo.size(); i++)
-		{
-			if (i == Client_IdIx[id])
+			if (find(all_clients.begin(), all_clients.end(), VTrans[i].GetId()) == all_clients.end())
 			{
-				client_recommend = andreia_jesseeca_bernardo[i];
+				all_clients.push_back(VTrans[i].GetId());
 			}
 		}
 
-		for (int i = 0; i < andreia_jesseeca_bernardo.size(); i++)
+		for (int i = 0; i < all_clients.size(); i++)
 		{
-			for (int a = 0; a < andreia_jesseeca_bernardo[i].size(); a++)
+			Client_IdIx.insert(make_pair(all_clients.at(i), i)); //preenche o map de clientes com os clientes existentes no vetor
+		}
+
+		for (int i = 0; i < VProducts.size(); i++)
+		{
+			Prod_Ix.insert(make_pair(VProducts.at(i).GetProd(), i)); //preenche o map de produtos com os produtos existentes no vetor
+		}
+
+		for (int i = 0; i < VTrans.size(); i++)
+		{
+
+			Trans_IdIx.insert(make_pair(VTrans.at(i).GetId(), i)); //preenche o map de transacoes com os index das transacoes dos clientes existentes no vetor
+		}
+
+		//criacao da matriz
+		vector<vector<bool>> matrix_taget(all_clients.size(), vector<bool>(VProducts.size(), false));
+
+		for (int i = 0; i < VTrans.size(); i++)
+		{
+			for (int a = 0; a < VTrans.at(i).GetProds().size(); a++)
 			{
+				matrix_taget[Client_IdIx[VTrans[i].GetId()]][Prod_Ix[VTrans[i].GetProds().at(a)]] = true;
+			}
+		}
 
-				if (andreia_jesseeca_bernardo[i][a] != client_recommend[a])
+		// Parte para usar o id do cliente a recomendar
+		vector <bool> auxtocompare = vector<bool>(VProducts.size(), false);
+
+		if (find(all_clients.begin(), all_clients.end(), id) != all_clients.end())
+		{
+			vector<bool> client_recommend;
+			vector<string> products_recommend;
+
+			for (int i = 0; i < matrix_taget.size(); i++)
+			{
+				if (i == Client_IdIx[id])
 				{
-					int c = 0;
+					client_recommend = matrix_taget[i];
+				}
+			}
 
-					if (andreia_jesseeca_bernardo[i][a] == true)
+			for (int i = 0; i < matrix_taget.size(); i++)
+			{
+				for (int a = 0; a < matrix_taget[i].size(); a++)
+				{
+
+					if (matrix_taget[i][a] != client_recommend[a])
 					{
-						products_recommend.push_back(VProducts.at(a).GetProd());
-						c++;
-					}
+						int c = 0;
 
-					if (andreia_jesseeca_bernardo[i][a] == false)
+						if (matrix_taget[i][a] == true)
+						{
+							products_recommend.push_back(VProducts.at(a).GetProd());
+							c++;
+						}
+
+						if (matrix_taget[i][a] == false)
+						{
+							products_recommend.erase(products_recommend.end() - c, products_recommend.end());
+						}
+					}
+				}
+			}
+
+			// cria um vetor de produtos recomendados com a estrutura (nome do produto, numero de vezes que aparece)
+			vector<ProdutosRecomendados> VPR;
+			for (int i = 0; i < products_recommend.size(); i++)
+			{
+				int t = 0; //numero de vezes que cada produto repete
+				for (int j = 0; j < products_recommend.size(); j++)
+				{
+					if (products_recommend.at(i) == products_recommend.at(j))
+						t++;
+				}
+				ProdutosRecomendados novoelem;
+				novoelem.produto = products_recommend.at(i);
+				novoelem.total = t;
+				VPR.push_back(novoelem);
+			}
+
+			// elimina os produtos repetidos, de maneira a ficar apenas uma vez cada produto
+			if (VPR.size() > 1)
+			{
+				for (int i = 0; i < VPR.size(); i++)
+				{
+					for (int j = 1; j < VPR.size(); j++)
 					{
-						products_recommend.erase(products_recommend.end() - c, products_recommend.end());
+						if (VPR.at(i).produto == VPR.at(j).produto)
+							VPR.erase(VPR.begin() + j);
 					}
+				}
 
+				// cria um vetor com todos os totais dos produtos, de maneira a calcular o total maximo, ou seja, o produto mais frequente
+				vector<int> Totais;
+				vector<int>::iterator result;
+				int totalMaximo;
+				for (int i = 0; i < VPR.size(); i++)
+				{
+					Totais.push_back(VPR.at(i).total);
+				}
+				result = std::max_element(Totais.begin(), Totais.end()); // retorna a posicao do maior elemento
+				totalMaximo = Totais.at(std::distance(Totais.begin(), result) + 1);
+
+				//display dos produtos recomendados, os mais frequentes
+				setcolor(14); cout << "\n> ";  setcolor(15); cout << "Produto(s) recomendado(s):\n";
+				for (int i = 0; i < VPR.size(); i++)
+				{
+					if (totalMaximo == VPR.at(i).total)
+					{
+						setcolor(11); cout << "   - ";  setcolor(15); cout << VPR.at(i).produto << endl;
+					}
+				}
+			}
+			else
+			{
+				setcolor(14); cout << "\n> ";  setcolor(15); cout << "Produto(s) recomendado(s):\n";
+				for (int i = 0; i < VPR.size(); i++)
+				{
+					setcolor(11); cout << "   - ";  setcolor(15); cout << VPR.at(i).produto << endl;
 				}
 			}
 		}
+		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
 
+		/*cout << endl;
 
-		for (int i = 0; i < products_recommend.size(); ++i)
-			cout << products_recommend.at(i) << endl;
-
-	}
-
-	cout << endl;
-
-	for (int i = 0; i < andreia_jesseeca_bernardo.size(); i++)
-	{
-		for (int a = 0; a < andreia_jesseeca_bernardo[i].size(); a++)
+		for (int i = 0; i < matrix_taget.size(); i++)
 		{
-			cout << andreia_jesseeca_bernardo[i][a];
+		for (int a = 0; a < matrix_taget[i].size(); a++)
+		{
+		cout << matrix_taget[i][a];
 		}
 		cout << endl;
+		}*/
+	}
+	else
+	{
+		setcolor(4); cout << "\nEste cliente nao efetuou nenhuma transacao.\n";
+		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar(); getchar();
 	}
 
-
 	getchar();
-
 	return 0;
 }
