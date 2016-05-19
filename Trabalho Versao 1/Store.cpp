@@ -1,5 +1,6 @@
 #include "Store.h"
 
+Utilities ut;
 Store::Store()
 {
 }
@@ -93,39 +94,22 @@ bool Store::dataValida(int Dia, int Mes, int Ano)
 	else return false;
 }
 
-//Utilidades
-
-void Store::setcolor(int ForgC)
-{
-	WORD wColor;
-
-	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_SCREEN_BUFFER_INFO csbi;
-
-	if (GetConsoleScreenBufferInfo(hStdOut, &csbi))
-	{
-		wColor = (csbi.wAttributes & 0xF0) + (ForgC & 0x0F);
-		SetConsoleTextAttribute(hStdOut, wColor);
-	}
-	return;
-}
-
 //Menus
 
 //MENU - Publicidade Personalizada
 int Store::publicidadePersonalizada()
 {
-	system("cls");
+	ut.clearScreen();
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~               ";  setcolor(3); cout << "Supermercado  Vende++";  setcolor(15); cout << "               ~~~| " << endl
+		<< "|~~~               ";  ut.setcolor(3); cout << "Supermercado  Vende++";  ut.setcolor(15); cout << "               ~~~| " << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~                     ";  setcolor(7); cout << "PUBLICIDADE";  setcolor(15); cout << "                    ~~~|" << endl
+		<< "|~~~                    ";  ut.setcolor(7); cout << "PUBLICIDADE";  ut.setcolor(15); cout << "                    ~~~|" << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-	setcolor(7);
+	ut.setcolor(7);
 	cout << setw(20) << "1. Individual" << setw(31) << "2. Bottom 10" << endl;
-	setcolor(15);
+	ut.setcolor(15);
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~                                 ";  setcolor(7); cout << "< 0. Voltar >";  setcolor(15); cout << "     ~~~|" << endl
+		<< "|~~~                                 ";  ut.setcolor(7); cout << "< 0. Voltar >";  ut.setcolor(15); cout << "     ~~~|" << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
 
 	unsigned short int opcao;
@@ -134,10 +118,16 @@ int Store::publicidadePersonalizada()
 
 	while (cin.fail() || (opcao > 5))
 	{
+		if (cin.eof())
+		{
+			cin.clear();
+			return 0;
+		}
+
 		cin.clear();
 		cin.ignore(1000, '\n');
-		setcolor(4); cout << "> Digito invalido!" << endl;
-		setcolor(15); cout << "Volte a indicar escolha: ";
+		ut.setcolor(4); cout << "> Digito invalido!" << endl;
+		ut.setcolor(15); cout << "Volte a indicar escolha: ";
 		cin >> opcao;
 	}
 
@@ -161,6 +151,7 @@ void Store::opcoesPublicidadePersonalizada()
 			pubIndividual();
 			break;
 		case 2:
+			////cenas
 			break;
 		}
 }
@@ -168,19 +159,19 @@ void Store::opcoesPublicidadePersonalizada()
 //MENU - Visualizar Informacao
 int Store::visualizarInformacao()
 {
-	system("cls");
+	ut.clearScreen();
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~               ";  setcolor(3); cout << "Supermercado  Vende++";  setcolor(15); cout << "               ~~~| " << endl
+		<< "|~~~               ";  ut.setcolor(3); cout << "Supermercado  Vende++";  ut.setcolor(15); cout << "               ~~~| " << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~                ";  setcolor(7); cout << "VISUALIZAR INFORMACAO";  setcolor(15); cout << "               ~~~|" << endl
+		<< "|~~                ";  ut.setcolor(7); cout << "VISUALIZAR INFORMACAO";  ut.setcolor(15); cout << "               ~~~|" << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-	setcolor(7);
+	ut.setcolor(7);
 	cout << setw(13) << "1. Cliente" << setw(43) << "4. Clientes (ordem alfabetica)" << endl
 		<< setw(23) << "2. Todos os clientes" << setw(16) << "5. Transacoes" << endl
 		<< setw(15) << "3. Bottom 10" << endl;
-	setcolor(15);
+	ut.setcolor(15);
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~                                 ";  setcolor(7); cout << "< 0. Voltar >";  setcolor(15); cout << "     ~~~|" << endl
+		<< "|~~~                                 ";  ut.setcolor(7); cout << "< 0. Voltar >";  ut.setcolor(15); cout << "     ~~~|" << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
 
 	unsigned short int opcao;
@@ -189,10 +180,15 @@ int Store::visualizarInformacao()
 
 	while (cin.fail() || (opcao > 5))
 	{
+		if (cin.eof())
+		{
+			cin.clear();
+			return 0;
+		}
 		cin.clear();
 		cin.ignore(1000, '\n');
-		setcolor(4); cout << "> Digito invalido!" << endl;
-		setcolor(15); cout << "Volte a indicar escolha: ";
+		ut.setcolor(4); cout << "> Digito invalido!" << endl;
+		ut.setcolor(15); cout << "Volte a indicar escolha: ";
 		cin >> opcao;
 	}
 
@@ -233,20 +229,20 @@ void Store::opcoesVisualizarInformacao()
 //MENU - Transacoes
 int Store::listaTransacoes()
 {
-	system("cls");
+	ut.clearScreen();
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~               ";  setcolor(3); cout << "Supermercado  Vende++";  setcolor(15); cout << "               ~~~| " << endl
+		<< "|~~~               ";  ut.setcolor(3); cout << "Supermercado  Vende++";  ut.setcolor(15); cout << "               ~~~| " << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~                     ";  setcolor(7); cout << "TRANSACOES";  setcolor(15); cout << "                    ~~~|" << endl
+		<< "|~~~                     ";  ut.setcolor(7); cout << "TRANSACOES";  ut.setcolor(15); cout << "                    ~~~|" << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-	setcolor(7); cout << setw(5) << "ID" << setw(14) << "Data" << setw(28) << "Produtos" << endl;
-	setcolor(3); cout << "-----------------------------------------------------------" << endl;
-	setcolor(15);  mostrarTransacoes();
-	setcolor(3); cout << "-----------------------------------------------------------" << endl;
-	setcolor(7); cout << setw(18) << "1. Por cliente" << setw(32) << "3. Por dia" << endl
-		<< setw(23) << "2. Entre duas datas" << endl;  setcolor(15);
+	ut.setcolor(7); cout << setw(5) << "ID" << setw(14) << "Data" << setw(28) << "Produtos" << endl;
+	ut.setcolor(3); cout << "-----------------------------------------------------------" << endl;
+	ut.setcolor(15);  mostrarTransacoes();
+	ut.setcolor(3); cout << "-----------------------------------------------------------" << endl;
+	ut.setcolor(7); cout << setw(18) << "1. Por cliente" << setw(32) << "3. Por dia" << endl
+		<< setw(23) << "2. Entre duas datas" << endl;  ut.setcolor(15);
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~                                 ";  setcolor(7); cout << "< 0. Voltar >";  setcolor(15); cout << "     ~~~|" << endl
+		<< "|~~~                                 ";  ut.setcolor(7); cout << "< 0. Voltar >";  ut.setcolor(15); cout << "     ~~~|" << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
 
 	unsigned short int opcao;
@@ -255,10 +251,15 @@ int Store::listaTransacoes()
 
 	while (cin.fail() || (opcao > 3))
 	{
+		if (cin.eof())
+		{
+			cin.clear();
+			return 0;
+		}
 		cin.clear();
 		cin.ignore(1000, '\n');
-		setcolor(4); cout << "> Digito invalido!" << endl;
-		setcolor(15); cout << "Volte a indicar escolha: ";
+		ut.setcolor(4); cout << "> Digito invalido!" << endl;
+		ut.setcolor(15); cout << "Volte a indicar escolha: ";
 		cin >> opcao;
 	}
 
@@ -293,19 +294,19 @@ void Store::opcoesListaTransacoes()
 //MENU - Produtos Disponiveis
 int Store::produtosDisponiveis()
 {
-	system("cls");
+	ut.clearScreen();
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~               ";  setcolor(3); cout << "Supermercado  Vende++";  setcolor(15); cout << "               ~~~| " << endl
+		<< "|~~~               ";  ut.setcolor(3); cout << "Supermercado  Vende++";  ut.setcolor(15); cout << "               ~~~| " << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~                ";  setcolor(7); cout << "PRODUTOS DISPONIVEIS";  setcolor(15); cout << "                ~~~|" << endl
+		<< "|~~                ";  ut.setcolor(7); cout << "PRODUTOS DISPONIVEIS";  ut.setcolor(15); cout << "                ~~~|" << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-	setcolor(7); cout << setw(10) << "Ref" << setw(22) << "Produto" << setw(20) << "Preco" << endl;
-	setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(15);
-	setcolor(15);  mostrarProdutos();
-	setcolor(3); cout << "-----------------------------------------------------------" << endl;
-	setcolor(7); cout << setw(22) << "1. Efetuar Compra" << endl;
+	ut.setcolor(7); cout << setw(10) << "Ref" << setw(22) << "Produto" << setw(20) << "Preco" << endl;
+	ut.setcolor(3); cout << "-----------------------------------------------------------" << endl;  ut.setcolor(15);
+	ut.setcolor(15);  mostrarProdutos();
+	ut.setcolor(3); cout << "-----------------------------------------------------------" << endl;
+	ut.setcolor(7); cout << setw(22) << "1. Efetuar Compra" << endl;
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~                                 ";  setcolor(7); cout << "< 0. Voltar >";  setcolor(15); cout << "     ~~~|" << endl
+		<< "|~~~                                 ";  ut.setcolor(7); cout << "< 0. Voltar >";  ut.setcolor(15); cout << "     ~~~|" << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
 
 	unsigned short int opcao;
@@ -314,10 +315,15 @@ int Store::produtosDisponiveis()
 
 	while (cin.fail() || (opcao > 1))
 	{
+		if (cin.eof())
+		{
+			cin.clear();
+			return 0;
+		}
 		cin.clear();
 		cin.ignore(1000, '\n');
-		setcolor(4); cout << "> Digito invalido!" << endl;
-		setcolor(15); cout << "Volte a indicar escolha: ";
+		ut.setcolor(4); cout << "> Digito invalido!" << endl;
+		ut.setcolor(15); cout << "Volte a indicar escolha: ";
 		cin >> opcao;
 	}
 
@@ -347,20 +353,20 @@ void Store::opcoesProdutosDisponiveis()
 //MENU - Gerir Clientes
 int Store::gerirClientes()
 {
-	system("cls");
+	ut.clearScreen();
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~               ";  setcolor(3); cout << "Supermercado  Vende++";  setcolor(15); cout << "               ~~~| " << endl
+		<< "|~~~               ";  ut.setcolor(3); cout << "Supermercado  Vende++";  ut.setcolor(15); cout << "               ~~~| " << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~                 ";  setcolor(7); cout << "GESTOR DE CLIENTES";  setcolor(15); cout << "                ~~~|" << endl
+		<< "|~~~                 ";  ut.setcolor(7); cout << "GESTOR DE CLIENTES";  ut.setcolor(15); cout << "                ~~~|" << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-	setcolor(7); cout << setw(5) << "ID" << setw(20) << "Nome do Cliente" << setw(18) << "Data Adesao" << setw(12) << "Total" << endl;
-	setcolor(3); cout << "-----------------------------------------------------------" << endl;
-	setcolor(15);  mostrarClientes();
-	setcolor(3); cout << "-----------------------------------------------------------" << endl;
-	setcolor(7); cout << setw(20) << "1. Criar Cliente" << setw(32) << "3. Alterar Cliente" << endl
-		<< setw(22) << "2. Remover Cliente" << endl;  setcolor(15);
+	ut.setcolor(7); cout << setw(5) << "ID" << setw(20) << "Nome do Cliente" << setw(18) << "Data Adesao" << setw(12) << "Total" << endl;
+	ut.setcolor(3); cout << "-----------------------------------------------------------" << endl;
+	ut.setcolor(15);  mostrarClientes();
+	ut.setcolor(3); cout << "-----------------------------------------------------------" << endl;
+	ut.setcolor(7); cout << setw(20) << "1. Criar Cliente" << setw(32) << "3. Alterar Cliente" << endl
+		<< setw(22) << "2. Remover Cliente" << endl;  ut.setcolor(15);
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~                                 ";  setcolor(7); cout << "< 0. Voltar >";  setcolor(15); cout << "     ~~~|" << endl
+		<< "|~~~                                 ";  ut.setcolor(7); cout << "< 0. Voltar >";  ut.setcolor(15); cout << "     ~~~|" << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
 
 	unsigned short int opcao;
@@ -369,10 +375,15 @@ int Store::gerirClientes()
 
 	while (cin.fail() || (opcao > 3))
 	{
+		if (cin.eof())
+		{
+			cin.clear();
+			return 0;
+		}
 		cin.clear();
 		cin.ignore(1000, '\n');
-		setcolor(4); cout << "> Digito invalido!" << endl;
-		setcolor(15); cout << "Volte a indicar escolha: ";
+		ut.setcolor(4); cout << "> Digito invalido!" << endl;
+		ut.setcolor(15); cout << "Volte a indicar escolha: ";
 		cin >> opcao;
 	}
 
@@ -407,19 +418,19 @@ void Store::opcoesGerirClientes()
 //MENU - Lista de Clientes
 int Store::listaClientes()
 {
-	system("cls");
+	ut.clearScreen();
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~               ";  setcolor(3); cout << "Supermercado  Vende++";  setcolor(15); cout << "               ~~~| " << endl
+		<< "|~~~               ";  ut.setcolor(3); cout << "Supermercado  Vende++";  ut.setcolor(15); cout << "               ~~~| " << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~                 ";  setcolor(7); cout << "LISTA DE CLIENTES";  setcolor(15); cout << "                 ~~~|" << endl
+		<< "|~~~                 ";  ut.setcolor(7); cout << "LISTA DE CLIENTES";  ut.setcolor(15); cout << "                 ~~~|" << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-	setcolor(7); cout << setw(5) << "ID" << setw(20) << "Nome do Cliente" << setw(18) << "Data Adesao" << setw(12) << "Total" << endl;
-	setcolor(3); cout << "-----------------------------------------------------------" << endl;
-	setcolor(15);  mostrarClientes();
-	setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(7);
-	cout << setw(32) << "1. Ir para gestor de clientes" << endl;  setcolor(15);
+	ut.setcolor(7); cout << setw(5) << "ID" << setw(20) << "Nome do Cliente" << setw(18) << "Data Adesao" << setw(12) << "Total" << endl;
+	ut.setcolor(3); cout << "-----------------------------------------------------------" << endl;
+	ut.setcolor(15);  mostrarClientes();
+	ut.setcolor(3); cout << "-----------------------------------------------------------" << endl;  ut.setcolor(7);
+	cout << setw(32) << "1. Ir para gestor de clientes" << endl;  ut.setcolor(15);
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~                                 ";  setcolor(7); cout << "< 0. Voltar >";  setcolor(15); cout << "     ~~~|" << endl
+		<< "|~~~                                 ";  ut.setcolor(7); cout << "< 0. Voltar >";  ut.setcolor(15); cout << "     ~~~|" << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
 
 	unsigned short int opcao;
@@ -428,10 +439,15 @@ int Store::listaClientes()
 
 	while (cin.fail() || (opcao > 1))
 	{
+		if (cin.eof())
+		{
+			cin.clear();
+			return 0;
+		}
 		cin.clear();
 		cin.ignore(1000, '\n');
-		setcolor(4); cout << "> Digito invalido!" << endl;
-		setcolor(15); cout << "Volte a indicar escolha: ";
+		ut.setcolor(4); cout << "> Digito invalido!" << endl;
+		ut.setcolor(15); cout << "Volte a indicar escolha: ";
 		cin >> opcao;
 	}
 
@@ -460,33 +476,35 @@ void Store::opcoesListaClientes()
 //MENU - Saida
 int Store::saida()
 {
-	system("cls");
+	ut.clearScreen();
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~               ";  setcolor(3); cout << "Supermercado  Vende++";  setcolor(15); cout << "               ~~~| " << endl
+		<< "|~~~               ";  ut.setcolor(3); cout << "Supermercado  Vende++";  ut.setcolor(15); cout << "               ~~~| " << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|                          ";  setcolor(7); cout << "SAIR";  setcolor(15); cout << "                           |" << endl;
-	setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(15);
+		<< "|                          ";  ut.setcolor(7); cout << "SAIR";  ut.setcolor(15); cout << "                           |" << endl;
+	ut.setcolor(3); cout << "-----------------------------------------------------------" << endl;  ut.setcolor(15);
 	cout << endl << setw(48) << "Obrigado por utilizar este software!" << endl << endl;
-	setcolor(7); cout << setw(30) << "Desenvolvido por:  ";  setcolor(15); cout << "Barbara Sofia Silva" << endl;
+	ut.setcolor(7); cout << setw(30) << "Desenvolvido por:  ";  ut.setcolor(15); cout << "Barbara Sofia Silva" << endl;
 	cout << setw(43) << "Julieta Frade" << endl;
-	setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(15);
+	ut.setcolor(3); cout << "-----------------------------------------------------------" << endl;  ut.setcolor(15);
+	escreverCliente();
+	escreverTrans();
 	Sleep(5000);
 	exit(0);
 }
 
 //MENU - Menu Inicial
 int Store::menuInicial() {
-	system("cls");
+	ut.clearScreen();
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~               ";  setcolor(3); cout << "Supermercado  Vende++";  setcolor(15); cout << "               ~~~| " << endl
+		<< "|~~~               ";  ut.setcolor(3); cout << "Supermercado  Vende++";  ut.setcolor(15); cout << "               ~~~| " << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~                        ";  setcolor(7); cout << "MENU";  setcolor(15); cout << "                       ~~~|" << endl
+		<< "|~~~                        ";  ut.setcolor(7); cout << "MENU";  ut.setcolor(15); cout << "                       ~~~|" << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
 		<< setw(23) << "1. Lista de Clientes" << setw(17) << "4. Transacoes" << endl
 		<< setw(24) << "2. Gestor de Clientes" << setw(27) << "5. Visualizar Informacao" << endl
 		<< setw(20) << "3. Efetuar Compra" << setw(35) << "6. Publicidade Personalizada" << endl;
-	setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(15);
-	cout << "|~~~                                 ";  setcolor(7); cout << "< 0. Sair >";  setcolor(15); cout << "       ~~~|" << endl
+	ut.setcolor(3); cout << "-----------------------------------------------------------" << endl;  ut.setcolor(15);
+	cout << "|~~~                                 ";  ut.setcolor(7); cout << "< 0. Sair >";  ut.setcolor(15); cout << "       ~~~|" << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
 
 	unsigned short int opcao;
@@ -495,10 +513,15 @@ int Store::menuInicial() {
 
 	while (cin.fail() || (opcao > 6))
 	{
+		if (cin.eof())
+		{
+			cin.clear();
+			return 0;
+		}
 		cin.clear();
 		cin.ignore(1000, '\n');
-		setcolor(4); cout << "> Digito invalido!" << endl;
-		setcolor(15); cout << "Volte a indicar escolha: ";
+		ut.setcolor(4); cout << "> Digito invalido!" << endl;
+		ut.setcolor(15); cout << "Volte a indicar escolha: ";
 		cin >> opcao;
 	}
 
@@ -592,7 +615,7 @@ void Store::extrairClientes() {
 		}
 		Clientfile.close();
 	}
-	else { setcolor(4); cout << "Impossivel abrir ficheiro" << endl; setcolor(15); }
+	else { ut.setcolor(4); cerr << "Impossivel abrir ficheiro." << endl; ut.setcolor(15); }
 }
 
 //Escreve vetor VClient no ficheiro dos clientes
@@ -608,7 +631,7 @@ int Store::escreverCliente()
 		}
 		Clientfile.close();
 	}
-	else { setcolor(4); cout << "Impossivel abrir ficheiro" << endl; setcolor(15); }
+	else { ut.setcolor(4); cerr << "Impossivel abrir ficheiro." << endl; ut.setcolor(15); }
 	return 0;
 }
 
@@ -647,10 +670,23 @@ int Store::criarCliente()
 	extrairClientes();
 
 	cout << endl << "Introduza o nome do cliente: "; cin.ignore(); getline(cin >> setw(26), nome); cout << endl;
+
+	while (cin.fail())
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+			return 0;
+		}
+
+		cin.clear();
+		cin.ignore(1000, '\n');
+		ut.setcolor(4); cout << "> Input invalido!" << endl;
+		ut.setcolor(15); cout << "Volte a indicar escolha: ";
+		cin >> nome;
+	}
+
 	VClients.push_back(Client(VClients.back().GetId() + 1, formatarNome(nome), dataAtual(), montante));
-
-	escreverCliente();
-
 	return 0;
 }
 
@@ -661,6 +697,21 @@ int Store::removerCliente()
 	string opcao;
 
 	cout << endl << "Intruduza o ID ou o NOME do cliente que pretende eliminar: ";  cin.ignore(); getline(cin, opcao); cout << endl;
+
+	while (cin.fail())
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+			return 0;
+		}
+
+		cin.clear();
+		cin.ignore(1000, '\n');
+		ut.setcolor(4); cout << "> Input invalido!" << endl;
+		ut.setcolor(15); cout << "Volte a indicar escolha: ";
+		cin >> opcao;
+	}
 
 	if (clienteExiste(opcao))
 	{
@@ -673,20 +724,25 @@ int Store::removerCliente()
 			if ((id == VClients.at(i).GetId()) || (opcao == VClients.at(i).GetNome()))
 			{
 				cout << "Tem acerteza que quer eliminar o cliente:" << endl;
-				setcolor(3); cout << "-----------------------------------------------------------" << endl; setcolor(15);
+				ut.setcolor(3); cout << "-----------------------------------------------------------" << endl; ut.setcolor(15);
 				cout << VClients.at(i).GetId();
 				cout << setw(20) << VClients.at(i).GetNome();
 				cout << setw(14) << VClients.at(i).GetData();
 				cout << setw(15) << setprecision(2) << fixed << VClients.at(i).GetMontante() << endl;
-				setcolor(3); cout << "-----------------------------------------------------------" << endl; setcolor(7);
-				cout << "1. SIM" << "        " << "2. NAO" << endl << endl; setcolor(15);
+				ut.setcolor(3); cout << "-----------------------------------------------------------" << endl; ut.setcolor(7);
+				cout << "1. SIM" << "        " << "2. NAO" << endl << endl; ut.setcolor(15);
 				cout << "Digite a sua opcao: ";  cin >> dig; cout << endl;
 				while (cin.fail())
 				{
+					if (cin.eof())
+					{
+						cin.clear();
+						return 0;
+					}
 					cin.clear();
 					cin.ignore(1000, '\n');
-					setcolor(4); cout << "> Digito invalido!" << endl;
-					setcolor(15); cout << "Volte a indicar escolha: ";
+					ut.setcolor(4); cout << "> Digito invalido!" << endl;
+					ut.setcolor(15); cout << "Volte a indicar escolha: ";
 					cin >> dig;
 				}
 
@@ -694,7 +750,6 @@ int Store::removerCliente()
 				{
 					extrairClientes();
 					VClients.erase(VClients.begin() + i);
-					escreverCliente();
 					return 0;
 				}
 				else
@@ -704,8 +759,8 @@ int Store::removerCliente()
 		}
 	}
 	else {
-		setcolor(4); cout << "ERRO! Cliente nao encontrado." << endl; setcolor(15);
-		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
+		ut.setcolor(4); cerr << "ERRO! Cliente nao encontrado." << endl; ut.setcolor(15);
+		ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
 		return 0;
 	}
 
@@ -721,6 +776,21 @@ int Store::alterarCliente()
 
 	cout << endl << "Intruduza o ID ou o NOME do cliente que pretende alterar: ";  cin.ignore(); getline(cin, opcao); cout << endl;
 
+	while (cin.fail())
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+			return 0;
+		}
+
+		cin.clear();
+		cin.ignore(1000, '\n');
+		ut.setcolor(4); cout << "> Input invalido!" << endl;
+		ut.setcolor(15); cout << "Volte a indicar escolha: ";
+		cin >> opcao;
+	}
+
 	if (clienteExiste(opcao))
 	{
 		if ((int)opcao.at(0) >= 48 && (int)opcao.at(0) <= 57) // verifica se o primeiro elemento da string corresponde a um inteiro no codigo ascii (entre 0 e 9)
@@ -732,32 +802,67 @@ int Store::alterarCliente()
 			if ((id == VClients.at(i).GetId()) || (opcao == VClients.at(i).GetNome()))
 			{
 				cout << "Tem acerteza que quer alterar o cliente:" << endl;
-				setcolor(3); cout << "-----------------------------------------------------------" << endl; setcolor(15);
+				ut.setcolor(3); cout << "-----------------------------------------------------------" << endl; ut.setcolor(15);
 				cout << VClients.at(i).GetId();
 				cout << setw(20) << VClients.at(i).GetNome();
 				cout << setw(18) << VClients.at(i).GetData();
 				cout << setw(16) << setprecision(2) << fixed << VClients.at(i).GetMontante() << endl;
-				setcolor(3); cout << "-----------------------------------------------------------" << endl; setcolor(7);
-				cout << "1. SIM" << "        " << "2. NAO" << endl << endl; setcolor(15);
+				ut.setcolor(3); cout << "-----------------------------------------------------------" << endl; ut.setcolor(7);
+				cout << "1. SIM" << "        " << "2. NAO" << endl << endl; ut.setcolor(15);
 				cout << "Digite a sua opcao: ";  cin >> dig; cout << endl;
 				while (cin.fail())
 				{
+					if (cin.eof())
+					{
+						cin.clear();
+						return 0;
+					}
 					cin.clear();
 					cin.ignore(1000, '\n');
-					setcolor(4); cout << "> Digito invalido!" << endl;
-					setcolor(15); cout << "Volte a indicar escolha: ";
+					ut.setcolor(4); cout << "> Digito invalido!" << endl;
+					ut.setcolor(15); cout << "Volte a indicar escolha: ";
 					cin >> dig;
 				}
 
 				if (dig == 1)
 				{
 					cout << endl << "Intruduza o nome do cliente: "; cin.ignore(); getline(cin >> setw(26), nome); cout << endl;
+
+					while (cin.fail())
+					{
+						if (cin.eof())
+						{
+							cin.clear();
+							return 0;
+						}
+
+						cin.clear();
+						cin.ignore(1000, '\n');
+						ut.setcolor(4); cout << "> Input invalido!" << endl;
+						ut.setcolor(15); cout << "Volte a indicar escolha: ";
+						cin >> nome;
+					}
+
 					cout << "Introduza o montante gasto: "; cin >> montante; cout << endl;
+
+					while (cin.fail())
+					{
+						if (cin.eof())
+						{
+							cin.clear();
+							return 0;
+						}
+
+						cin.clear();
+						cin.ignore(1000, '\n');
+						ut.setcolor(4); cout << "> Input invalido!" << endl;
+						ut.setcolor(15); cout << "Volte a indicar escolha: ";
+						cin >> montante;
+					}
 
 					extrairClientes();
 					VClients.at(i).SetNome(formatarNome(nome));
 					VClients.at(i).SetMontante(montante);
-					escreverCliente();
 					return 0;
 				}
 				else
@@ -767,8 +872,8 @@ int Store::alterarCliente()
 		}
 	}
 	else {
-		setcolor(4); cout << "ERRO! Cliente nao encontrado." << endl; setcolor(15);
-		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
+		ut.setcolor(4); cerr << "ERRO! Cliente nao encontrado." << endl; ut.setcolor(15);
+		ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
 		return 0;
 	}
 	return 0;
@@ -782,6 +887,21 @@ int Store::informacaoIndividual()
 
 	cout << endl << "Intruduza o ID ou o NOME do cliente que pretende visualizar: ";  cin.ignore(); getline(cin, opcao); cout << endl;
 
+	while (cin.fail())
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+			return 0;
+		}
+
+		cin.clear();
+		cin.ignore(1000, '\n');
+		ut.setcolor(4); cout << "> Input invalido!" << endl;
+		ut.setcolor(15); cout << "Volte a indicar escolha: ";
+		cin >> opcao;
+	}
+
 	if (clienteExiste(opcao))
 	{
 		if ((int)opcao.at(0) >= 48 && (int)opcao.at(0) <= 57) // verifica se o primeiro elemento da string corresponde a um inteiro no codigo ascii (entre 0 e 9)
@@ -792,23 +912,23 @@ int Store::informacaoIndividual()
 		{
 			if ((id == VClients.at(i).GetId()) || (opcao == VClients.at(i).GetNome()))
 			{
-				system("cls");
-				setcolor(14); cout << "> "; setcolor(15); cout << "Informacao do cliente: " << VClients.at(i).GetNome() << endl << endl;
-				setcolor(7); cout << setw(5) << "ID" << setw(20) << "Nome do Cliente" << setw(18) << "Data Adesao" << setw(12) << "Total" << endl;
-				setcolor(3); cout << "-----------------------------------------------------------" << endl; setcolor(15);
+				ut.clearScreen();
+				ut.setcolor(14); cout << "> "; ut.setcolor(15); cout << "Informacao do cliente: " << VClients.at(i).GetNome() << endl << endl;
+				ut.setcolor(7); cout << setw(5) << "ID" << setw(20) << "Nome do Cliente" << setw(18) << "Data Adesao" << setw(12) << "Total" << endl;
+				ut.setcolor(3); cout << "-----------------------------------------------------------" << endl; ut.setcolor(15);
 				cout << setw(5) << VClients.at(i).GetId();
 				cout << setw(20) << VClients.at(i).GetNome();
 				cout << setw(18) << VClients.at(i).GetData();
 				cout << setw(12) << setprecision(2) << fixed << VClients.at(i).GetMontante() << endl;
-				setcolor(3); cout << "-----------------------------------------------------------" << endl; setcolor(15);
-				setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
+				ut.setcolor(3); cout << "-----------------------------------------------------------" << endl; ut.setcolor(15);
+				ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
 				return 0;
 			}
 		}
 	}
 	else {
-		setcolor(4); cout << "> ERRO! Cliente nao encontrado." << endl; setcolor(15);
-		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
+		ut.setcolor(4); cerr << "> ERRO! Cliente nao encontrado." << endl; ut.setcolor(15);
+		ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
 		return 0;
 	}
 	return 0;
@@ -852,16 +972,16 @@ int Store::ordenarCNome()
 
 	sort(VO.begin(), VO.end(), [](Client &a, Client &b) {return a.GetNome() < b.GetNome(); });
 
-	system("cls");
+	ut.clearScreen();
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~               "; setcolor(3); cout << "Supermercado  Vende++"; setcolor(15); cout << "               ~~~| " << endl
+		<< "|~~~               "; ut.setcolor(3); cout << "Supermercado  Vende++"; ut.setcolor(15); cout << "               ~~~| " << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~                 "; setcolor(7); cout << "LISTA DE CLIENTES"; setcolor(15); cout << "                 ~~~|" << endl
+		<< "|~~~                 "; ut.setcolor(7); cout << "LISTA DE CLIENTES"; ut.setcolor(15); cout << "                 ~~~|" << endl
 		<< "|~~~               por ordem  alfabetica               ~~~|" << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-	setcolor(7); cout << setw(5) << "ID" << setw(20) << "Nome do Cliente" << setw(18) << "Data Adesao" << setw(12) << "Total" << endl;
-	setcolor(3); cout << "-----------------------------------------------------------" << endl;
-	setcolor(15);
+	ut.setcolor(7); cout << setw(5) << "ID" << setw(20) << "Nome do Cliente" << setw(18) << "Data Adesao" << setw(12) << "Total" << endl;
+	ut.setcolor(3); cout << "-----------------------------------------------------------" << endl;
+	ut.setcolor(15);
 	for (unsigned int i = 0; i < VO.size(); i++)
 	{
 		if (i < 10) {
@@ -872,7 +992,7 @@ int Store::ordenarCNome()
 		}
 	}
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-	setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar(); getchar();
+	ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar(); getchar();
 	return 0;
 }
 
@@ -885,15 +1005,15 @@ int Store::bottom10()
 
 	sort(VO.begin(), VO.end(), [](Client &a, Client &b) {return a.GetMontante() < b.GetMontante(); });
 
-	system("cls");
+	ut.clearScreen();
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~               "; setcolor(3); cout << "Supermercado  Vende++"; setcolor(15); cout << "               ~~~| " << endl
+		<< "|~~~               "; ut.setcolor(3); cout << "Supermercado  Vende++"; ut.setcolor(15); cout << "               ~~~| " << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-		<< "|~~~                    "; setcolor(7); cout << "BOTTOM10"; setcolor(15); cout << "                     ~~~|" << endl
+		<< "|~~~                    "; ut.setcolor(7); cout << "BOTTOM10"; ut.setcolor(15); cout << "                     ~~~|" << endl
 		<< "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-	setcolor(7); cout << setw(5) << "ID" << setw(20) << "Nome do Cliente" << setw(18) << "Data Adesao" << setw(12) << "Total" << endl;
-	setcolor(3); cout << "-----------------------------------------------------------" << endl;
-	setcolor(15);
+	ut.setcolor(7); cout << setw(5) << "ID" << setw(20) << "Nome do Cliente" << setw(18) << "Data Adesao" << setw(12) << "Total" << endl;
+	ut.setcolor(3); cout << "-----------------------------------------------------------" << endl;
+	ut.setcolor(15);
 
 
 	for (unsigned int i = 0; i < VO.size(); i++)
@@ -905,14 +1025,14 @@ int Store::bottom10()
 			cout << setw(12) << setprecision(2) << fixed << VO.at(i).GetMontante() << endl;
 		}
 	}
-	setcolor(3); cout << "-----------------------------------------------------------" << endl; setcolor(7);
+	ut.setcolor(3); cout << "-----------------------------------------------------------" << endl; ut.setcolor(7);
 	if (VO.size() < 10)
 	{
 		cout << endl << "     ATENCAO: Existem menos de 10 clientes registados." << endl;
 	}
-	setcolor(15);
+	ut.setcolor(15);
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
-	setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); 
+	ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15);
 	getchar();
 	getchar();
 	return 0;
@@ -952,24 +1072,7 @@ void Store::extrairProdutos()
 		}
 		Prodfile.close();
 	}
-	else { setcolor(4); cout << "Impossivel abrir ficheiro" << endl;  setcolor(15); }
-}
-
-//Escreve vetor VProd no ficheiro dos produtos
-int Store::escreverProduto()
-{
-	ofstream Prodfile(FProd);
-	if (Prodfile.is_open())
-	{
-		Prodfile << VProducts.size() << endl;
-		for (unsigned int i = 0; i < VProducts.size(); i++)
-		{
-			Prodfile << VProducts.at(i).GetProd() << " ; " << setprecision(1) << fixed << VProducts.at(i).GetPrice() << endl;
-		}
-		Prodfile.close();
-	}
-	else { setcolor(4); cout << "Impossivel abrir ficheiro" << endl;  setcolor(15); }
-	return 0;
+	else { ut.setcolor(4); cerr << "Impossivel abrir ficheiro." << endl;  ut.setcolor(15); }
 }
 
 //Mostra o ficheiro dos produtos
@@ -991,8 +1094,8 @@ int Store::efetuarCompras()
 	string opcao;
 	unsigned int id;
 
-	setcolor(14); cout << "> ";  setcolor(15); cout << "Tendo em conta os produtos disponiveis, qual deseja comprar?" << endl;
-	setcolor(14); cout << "> ";  setcolor(15); cout << "Quando terminar, por favor digite ";  setcolor(11); cout << " 0";  setcolor(15); cout << ".\n\n";
+	ut.setcolor(14); cout << "> ";  ut.setcolor(15); cout << "Tendo em conta os produtos disponiveis, qual deseja comprar?" << endl;
+	ut.setcolor(14); cout << "> ";  ut.setcolor(15); cout << "Quando terminar, por favor digite ";  ut.setcolor(11); cout << " 0";  ut.setcolor(15); cout << ".\n\n";
 
 	//selecao de produtos a comprar
 	while (true)
@@ -1001,10 +1104,15 @@ int Store::efetuarCompras()
 
 		while (cin.fail())
 		{
+			if (cin.eof())
+			{
+				cin.clear();
+				return 0;
+			}
 			cin.clear();
 			cin.ignore(1000, '\n');
-			setcolor(4); cout << "> Referencia Invalida!" << endl;
-			setcolor(15); cin >> ref;
+			ut.setcolor(4); cout << "> Referencia Invalida!" << endl;
+			ut.setcolor(15); cin >> ref;
 		}
 
 		if (ref == 0)
@@ -1014,18 +1122,18 @@ int Store::efetuarCompras()
 			{
 				produtos.append(VProducts.at(ref - 1).GetProd());
 				produtos.append(", ");
-				setcolor(7); cout << "> Produto Adicionado!\n\n";  setcolor(15);
+				ut.setcolor(7); cout << "> Produto Adicionado!\n\n";  ut.setcolor(15);
 				total += VProducts.at(ref - 1).GetPrice();
 			}
-			else { setcolor(4); cout << "> Este produto nao existe!\n\n";  setcolor(15); }
+			else { ut.setcolor(4); cout << "> Este produto nao existe!\n\n";  ut.setcolor(15); }
 		}
 	}
 
 	//caso nao tenha inserido nenhum produto valido, ou apenas tenha desistido de comprar
 	if (produtos.empty())
 	{
-		setcolor(4); cout << "> Nao introduziu nenhum produto valido." << endl;  setcolor(15);
-		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
+		ut.setcolor(4); cout << "> Nao introduziu nenhum produto valido." << endl;  ut.setcolor(15);
+		ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
 		return 0;
 	}
 
@@ -1033,46 +1141,61 @@ int Store::efetuarCompras()
 	else
 	{
 		//confirmacao da compra
-		setcolor(14); cout << endl << "> ";  setcolor(15); cout << "Quer comprar o(s) produto(s): ";  setcolor(3); cout << "{ ";  setcolor(15); cout << produtos.substr(0, produtos.size() - 2) << "." << endl;
-		setcolor(3); cout << "-----------------------------------------------------------" << endl;
-		setcolor(7); cout << "1. SIM" << "        " << "2. NAO" << endl << endl;  setcolor(15);
+		ut.setcolor(14); cout << endl << "> ";  ut.setcolor(15); cout << "Quer comprar o(s) produto(s): ";  ut.setcolor(3); cout << "{ ";  ut.setcolor(15); cout << produtos.substr(0, produtos.size() - 2) << "." << endl;
+		ut.setcolor(3); cout << "-----------------------------------------------------------" << endl;
+		ut.setcolor(7); cout << "1. SIM" << "        " << "2. NAO" << endl << endl;  ut.setcolor(15);
 		cout << "Digite a sua opcao: ";  cin >> dig; cout << endl;
 
 		while ((dig != 1) && (dig != 2))
 		{
+			if (cin.eof())
+			{
+				cin.clear();
+				return 0;
+			}
 			cin.clear();
 			cin.ignore(1000, '\n');
-			setcolor(4); cout << "> Digito invalido!" << endl;
-			setcolor(15); cout << "Volte a indicar escolha: ";
+			ut.setcolor(4); cout << "> Digito invalido!" << endl;
+			ut.setcolor(15); cout << "Volte a indicar escolha: ";
 			cin >> dig;
 		}
 		if (dig == 1)
 		{
 			//selecao do cliente a efetuar a compra
-			setcolor(14); cout << endl << "> ";  setcolor(15); cout << "Ja e cliente?" << endl;
-			setcolor(3); cout << "-----------------------------------------------------------" << endl;
-			setcolor(7); cout << "1. SIM" << "        " << "2. NAO" << endl << endl;  setcolor(15);
+			ut.setcolor(14); cout << endl << "> ";  ut.setcolor(15); cout << "Ja e cliente?" << endl;
+			ut.setcolor(3); cout << "-----------------------------------------------------------" << endl;
+			ut.setcolor(7); cout << "1. SIM" << "        " << "2. NAO" << endl << endl;  ut.setcolor(15);
 			cout << "Digite a sua opcao: ";  cin >> op; cout << endl;
 
 			while ((op != 1) && (op != 2))
 			{
+				if (cin.eof())
+				{
+					cin.clear();
+					return 0;
+				}
 				cin.clear();
 				cin.ignore(1000, '\n');
-				setcolor(4); cout << "> Digito invalido!" << endl;
-				setcolor(15); cout << "Volte a indicar escolha: ";
+				ut.setcolor(4); cout << "> Digito invalido!" << endl;
+				ut.setcolor(15); cout << "Volte a indicar escolha: ";
 				cin >> op;
 			}
 
 			if (op == 1)
 			{
-				cout << endl << "Intruduza o ID ou Nome do cliente: ";  setcolor(3); cout << "{ ";  setcolor(15); cin.ignore(); getline(cin, opcao);
+				cout << endl << "Intruduza o ID ou Nome do cliente: ";  ut.setcolor(3); cout << "{ ";  ut.setcolor(15); cin.ignore(); getline(cin, opcao);
 
-				while ((clienteExiste(opcao)) == false)
+				while (((clienteExiste(opcao)) == false) || (cin.fail()))
 				{
+					if (cin.eof())
+					{
+						cin.clear();
+						return 0;
+					}
 					cin.clear();
 					cin.ignore(1000, '\n');
-					setcolor(4); cout << "> Este id/nome nao existe!" << endl;
-					setcolor(15); cout << "Volte a indicar: ";
+					ut.setcolor(4); cout << "> Este id/nome nao existe!" << endl;
+					ut.setcolor(15); cout << "Volte a indicar: ";
 					cin >> opcao;
 				}
 
@@ -1090,7 +1213,7 @@ int Store::efetuarCompras()
 			}
 
 			//Display da montante total a pagar
-			cout << endl << "Total a pagar: ";  setcolor(3); cout << "{ ";  setcolor(15); cout << total << " euros" << endl;
+			cout << endl << "Total a pagar: ";  ut.setcolor(3); cout << "{ ";  ut.setcolor(15); cout << total << " euros." << endl;
 
 			//Ajuste da montante no cliente
 			for (unsigned int i = 0; i < VClients.size(); i++)
@@ -1100,25 +1223,24 @@ int Store::efetuarCompras()
 					extrairClientes();
 					VClients.at(i).SetMontante(total);
 					id = VClients.at(i).GetId();
-					escreverCliente();
 				}
 			}
 			criarTrans(id, produtos);
-			setcolor(4); cout << "\n> Compra Efetuada!\n";  setcolor(15);
+			ut.setcolor(4); cout << "\n> Compra Efetuada!\n";  ut.setcolor(15);
 			Sleep(3000);
 			return 0;
 		}
 		else {
 			if (dig == 2)
 			{
-				setcolor(4); cout << "> Compra Apagada!\n";  setcolor(15);
-				setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
+				ut.setcolor(4); cout << "> Compra Apagada!\n";  ut.setcolor(15);
+				ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
 				return 0;
 			}
 			else
 			{
-				setcolor(4); cout << "ERRO!" << endl;  setcolor(15);
-				setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
+				ut.setcolor(4); cerr << "ERRO!" << endl;  ut.setcolor(15);
+				ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
 				return 0;
 			}
 		}
@@ -1178,7 +1300,7 @@ void Store::extrairTransacoes()
 		}
 		transactionFile.close();
 	}
-	else { setcolor(4); cout << "Impossivel abrir ficheiro" << endl;  setcolor(15); }
+	else { ut.setcolor(4); cerr << "Impossivel abrir ficheiro." << endl;  ut.setcolor(15); }
 }
 
 //Escreve o vetor VTrans no ficheiro de transacoes
@@ -1204,7 +1326,7 @@ int Store::escreverTrans()
 		}
 		TransFile.close();
 	}
-	else { setcolor(4); cout << "Impossivel abrir ficheiro" << endl;  setcolor(15); }
+	else { ut.setcolor(4); cerr << "Impossivel abrir ficheiro." << endl;  ut.setcolor(15); }
 	return 0;
 }
 
@@ -1219,36 +1341,126 @@ int Store::transEntreDatas()
 	int c = 0; //contador
 
 	cout << endl;
-	setcolor(14); cout << "> ";  setcolor(15); cout << "Tera que escolher duas datas para visualizar as transacoes efetuadas nesse intervalo." << endl;
-	setcolor(14); cout << "> ";  setcolor(15); cout << "Introduza a primeira data:" << endl << endl;
+	ut.setcolor(14); cout << "> ";  ut.setcolor(15); cout << "Tera que escolher duas datas para visualizar as transacoes efetuadas nesse intervalo." << endl;
+	ut.setcolor(14); cout << "> ";  ut.setcolor(15); cout << "Introduza a primeira data:" << endl << endl;
 	cout << "> Dia: "; cin >> dia1; cout << "> Mes: "; cin >> mes1; cout << "> Ano: "; cin >> ano1;
+	
+	while (cin.fail())
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+			return 0;
+		}
+
+		cin.clear();
+		cin.ignore(1000, '\n');
+		ut.setcolor(4); cout << "> Input invalido!" << endl;
+		ut.setcolor(15); cout << "Volte a indicar escolha: ";
+		cin >> dia1;
+	}
+
+	while (cin.fail())
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+			return 0;
+		}
+
+		cin.clear();
+		cin.ignore(1000, '\n');
+		ut.setcolor(4); cout << "> Input invalido!" << endl;
+		ut.setcolor(15); cout << "Volte a indicar escolha: ";
+		cin >> mes1;
+	}
+
+	while (cin.fail())
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+			return 0;
+		}
+
+		cin.clear();
+		cin.ignore(1000, '\n');
+		ut.setcolor(4); cout << "> Input invalido!" << endl;
+		ut.setcolor(15); cout << "Volte a indicar escolha: ";
+		cin >> ano1;
+	}
 
 	//Verifica se a primeira data é valida
 	if (dataValida(dia1, mes1, ano1))
 	{
-		setcolor(7); cout << "Data Valida!\n";  setcolor(15);
+		ut.setcolor(7); cout << "Data Valida!\n";  ut.setcolor(15);
 	}
 	else
 	{
-		setcolor(4); cout << "Data Invalida\n";  setcolor(15);
-		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
+		ut.setcolor(4); cout << "Data Invalida.\n";  ut.setcolor(15);
+		ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
 		return 0;
 	}
 	cout << endl;
 
-	setcolor(14); cout << "> ";  setcolor(15); cout << "Introduza a segunda data: " << endl;
+	ut.setcolor(14); cout << "> ";  ut.setcolor(15); cout << "Introduza a segunda data: " << endl;
 	cout << "> Dia: "; cin >> dia2; cout << "> Mes: "; cin >> mes2; cout << "> Ano: "; cin >> ano2;
+
+	while (cin.fail())
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+			return 0;
+		}
+
+		cin.clear();
+		cin.ignore(1000, '\n');
+		ut.setcolor(4); cout << "> Input invalido!" << endl;
+		ut.setcolor(15); cout << "Volte a indicar escolha: ";
+		cin >> dia2;
+	}
+
+	while (cin.fail())
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+			return 0;
+		}
+
+		cin.clear();
+		cin.ignore(1000, '\n');
+		ut.setcolor(4); cout << "> Input invalido!" << endl;
+		ut.setcolor(15); cout << "Volte a indicar escolha: ";
+		cin >> mes2;
+	}
+
+	while (cin.fail())
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+			return 0;
+		}
+
+		cin.clear();
+		cin.ignore(1000, '\n');
+		ut.setcolor(4); cout << "> Input invalido!" << endl;
+		ut.setcolor(15); cout << "Volte a indicar escolha: ";
+		cin >> ano2;
+	}
 
 	//Verifica se a segunda data é valida
 	if (dataValida(dia2, mes2, ano2))
 	{
-		setcolor(7); cout << "Data Valida!\n";  setcolor(15);
-		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
+		ut.setcolor(7); cout << "Data Valida!\n";  ut.setcolor(15);
+		ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
 	}
 	else
 	{
-		setcolor(4); cout << "Data Invalida\n";  setcolor(15);
-		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
+		ut.setcolor(4); cout << "Data Invalida.\n";  ut.setcolor(15);
+		ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
 		return 0;
 	}
 
@@ -1285,10 +1497,10 @@ int Store::transEntreDatas()
 	datadig2.append(data2.substr(0, data2.find_first_of("/"))); //adiciona dia ao fim do ano|mes : ficando anomesdia
 	dataint2 = stoi(datadig2, nullptr, 10); //converte a string data digitos para um inteiro
 
-	system("cls");
-	setcolor(14); cout << "> ";  setcolor(15); cout << "Transacoes entre: " << data1 << " e " << data2 << endl << endl;
-	setcolor(7);  cout << setw(5) << "ID" << setw(14) << "Data" << setw(28) << "Produtos" << endl;
-	setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(15);
+	ut.clearScreen();
+	ut.setcolor(14); cout << "> ";  ut.setcolor(15); cout << "Transacoes entre: " << data1 << " e " << data2 << endl << endl;
+	ut.setcolor(7);  cout << setw(5) << "ID" << setw(14) << "Data" << setw(28) << "Produtos" << endl;
+	ut.setcolor(3); cout << "-----------------------------------------------------------" << endl;  ut.setcolor(15);
 
 	//Display das transacoes
 	for (unsigned int i = 0; i < VTrans.size(); i++)
@@ -1322,12 +1534,12 @@ int Store::transEntreDatas()
 			cout << setw(34) << produtos << endl;
 		}
 	}
-	setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(15);
+	ut.setcolor(3); cout << "-----------------------------------------------------------" << endl;  ut.setcolor(15);
 	if (c == 0)
 	{
-		setcolor(7); cout << endl << "ATENCAO: "; setcolor(15); cout << "Nao existe nenhuma transacao efetuada \n         entre estas datas.\n" << endl;
+		ut.setcolor(7); cout << endl << "ATENCAO: "; ut.setcolor(15); cout << "Nao existe nenhuma transacao efetuada \n         entre estas datas.\n" << endl;
 	}
-	setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
+	ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
 	return 0;
 }
 
@@ -1341,17 +1553,61 @@ int Store::transDia()
 	string DataDigitos, DataCompleta;
 
 	cout << endl;
-	setcolor(14); cout << "> ";  setcolor(15); cout << "Introduza a data que pretende visualizar." << endl;
+	ut.setcolor(14); cout << "> ";  ut.setcolor(15); cout << "Introduza a data que pretende visualizar." << endl;
 	cout << "> Dia: "; cin >> dia1; cout << "> Mes: "; cin >> mes1; cout << "> Ano: "; cin >> ano1;
+	while (cin.fail())
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+			return 0;
+		}
+
+		cin.clear();
+		cin.ignore(1000, '\n');
+		ut.setcolor(4); cout << "> Input invalido!" << endl;
+		ut.setcolor(15); cout << "Volte a indicar escolha: ";
+		cin >> dia1;
+	}
+
+	while (cin.fail())
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+			return 0;
+		}
+
+		cin.clear();
+		cin.ignore(1000, '\n');
+		ut.setcolor(4); cout << "> Input invalido!" << endl;
+		ut.setcolor(15); cout << "Volte a indicar escolha: ";
+		cin >> mes1;
+	}
+
+	while (cin.fail())
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+			return 0;
+		}
+
+		cin.clear();
+		cin.ignore(1000, '\n');
+		ut.setcolor(4); cout << "> Input invalido!" << endl;
+		ut.setcolor(15); cout << "Volte a indicar escolha: ";
+		cin >> ano1;
+	}
 
 	if (dataValida(dia1, mes1, ano1))
 	{
-		setcolor(7); cout << "Data Valida!\n";  setcolor(15);
+		ut.setcolor(7); cout << "Data Valida!\n";  ut.setcolor(15);
 	}
 	else
 	{
-		setcolor(4); cout << "Data Invalida\n";  setcolor(15);
-		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
+		ut.setcolor(4); cout << "Data Invalida.\n";  ut.setcolor(15);
+		ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
 		return 0;
 	}
 
@@ -1377,12 +1633,12 @@ int Store::transDia()
 	if (DataExiste)
 	{
 		cout << endl;
-		setcolor(7); cout << "Foi efetuada alguma transacao neste dia." << endl;  setcolor(15);
-		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
-		system("cls");
-		setcolor(14); cout << "> ";  setcolor(15); cout << "Transacoes do dia: " << data1 << endl << endl;
-		setcolor(7); cout << setw(5) << "ID" << setw(14) << "Data" << setw(28) << "Produtos" << endl;
-		setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(15);
+		ut.setcolor(7); cout << "Foi efetuada alguma transacao neste dia." << endl;  ut.setcolor(15);
+		ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
+		ut.clearScreen();
+		ut.setcolor(14); cout << "> ";  ut.setcolor(15); cout << "Transacoes do dia: " << data1 << endl << endl;
+		ut.setcolor(7); cout << setw(5) << "ID" << setw(14) << "Data" << setw(28) << "Produtos" << endl;
+		ut.setcolor(3); cout << "-----------------------------------------------------------" << endl;  ut.setcolor(15);
 
 		for (unsigned int i = 0; i < VTrans.size(); i++)
 		{
@@ -1414,15 +1670,15 @@ int Store::transDia()
 				cout << setw(34) << produtos << endl;
 			}
 		}
-		setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(15);
-		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
+		ut.setcolor(3); cout << "-----------------------------------------------------------" << endl;  ut.setcolor(15);
+		ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
 		return 0;
 	}
 	else
 	{
 		cout << endl;
-		setcolor(4); cout << "> Nao foi efetuada nenhuma transacao neste dia." << endl;  setcolor(15);
-		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
+		ut.setcolor(4); cout << "> Nao foi efetuada nenhuma transacao neste dia." << endl;  ut.setcolor(15);
+		ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
 		return 0;
 	}
 	return 0;
@@ -1451,6 +1707,21 @@ int Store::transIndividual()
 
 	cout << endl << "Intruduza o ID do cliente que pretende visualizar: ";  cin >> id; cout << endl;
 
+	while (cin.fail())
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+			return 0;
+		}
+
+		cin.clear();
+		cin.ignore(1000, '\n');
+		ut.setcolor(4); cout << "> Input invalido!" << endl;
+		ut.setcolor(15); cout << "Volte a indicar escolha: ";
+		cin >> id;
+	}
+
 	if (transExisteID(id))
 	{
 		if (clienteExiste(to_string(id)))
@@ -1459,19 +1730,19 @@ int Store::transIndividual()
 			{
 				if ((id == VClients.at(i).GetId()) || (opcao == VClients.at(i).GetNome()))
 				{
-					system("cls");
-					setcolor(14); cout << "> ";  setcolor(15); cout << "Transacoes do cliente: " << VClients.at(i).GetNome() << endl << endl;
-					setcolor(7);  cout << setw(5) << "ID" << setw(14) << "Data" << setw(28) << "Produtos" << endl;
-					setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(15);
+					ut.clearScreen();
+					ut.setcolor(14); cout << "> ";  ut.setcolor(15); cout << "Transacoes do cliente: " << VClients.at(i).GetNome() << endl << endl;
+					ut.setcolor(7);  cout << setw(5) << "ID" << setw(14) << "Data" << setw(28) << "Produtos" << endl;
+					ut.setcolor(3); cout << "-----------------------------------------------------------" << endl;  ut.setcolor(15);
 				}
 			}
 		}
 		else
 		{
-			system("cls");
-			setcolor(14); cout << "> ";  setcolor(15); cout << "Transacoes de um cliente eliminado." << endl << endl;
-			setcolor(7);  cout << setw(5) << "ID" << setw(14) << "Data" << setw(28) << "Produtos" << endl;
-			setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(15);
+			ut.clearScreen();
+			ut.setcolor(14); cout << "> ";  ut.setcolor(15); cout << "Transacoes de um cliente eliminado." << endl << endl;
+			ut.setcolor(7);  cout << setw(5) << "ID" << setw(14) << "Data" << setw(28) << "Produtos" << endl;
+			ut.setcolor(3); cout << "-----------------------------------------------------------" << endl;  ut.setcolor(15);
 		}
 
 		for (unsigned int w = 0; w < VTrans.size(); w++)
@@ -1498,12 +1769,12 @@ int Store::transIndividual()
 				cout << setw(34) << produtos << endl;
 			}
 		}
-		setcolor(3); cout << "-----------------------------------------------------------" << endl;  setcolor(15);
-		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
+		ut.setcolor(3); cout << "-----------------------------------------------------------" << endl;  ut.setcolor(15);
+		ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
 	}
 	else {
-		setcolor(4); cout << "> Nao existe nenhuma transacao com este ID." << endl;  setcolor(15);
-		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
+		ut.setcolor(4); cout << "> Nao existe nenhuma transacao com este ID." << endl;  ut.setcolor(15);
+		ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
 	}
 	getchar();
 	return 0;
@@ -1573,12 +1844,10 @@ void Store::criarTrans(int id, string produtos)
 
 	extrairTransacoes();
 	VTrans.push_back(Transaction(id, dataAtual(), products));
-	escreverTrans();
-
 	return;
 }
 
-//Publicidade ///////////////////
+//Publicidade
 
 // estrutura para o vetor de produtos recomendados
 struct ProdutosRecomendados
@@ -1606,12 +1875,27 @@ int Store::pubIndividual()
 {
 	int id;
 
-	cout << endl << "Intruduza o ID do cliente: ";  cin >> id;
+	cout << endl << "Introduza o ID do cliente: ";  cin >> id;
+
+	while (cin.fail())
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+			return 0;
+		}
+
+		cin.clear();
+		cin.ignore(1000, '\n');
+		ut.setcolor(4); cout << "> Input invalido!" << endl;
+		ut.setcolor(15); cout << "Volte a indicar escolha: ";
+		cin >> id;
+	}
 
 	if (transExisteID(id)) //verifica se o cliente realizou transacoes
 	{
 		vector<unsigned int> all_clients;    //vetor com os id clientes existentes e os que ja foram apagados mas possuem transacooes
-		
+
 		for (int i = 0; i < VTrans.size(); i++) //percorre o vetor de transacoes
 		{
 			if (find(all_clients.begin(), all_clients.end(), VTrans[i].GetId()) == all_clients.end()) //verifica se o id da transaçao na posiçao i ja existe no vetor all_clients
@@ -1629,16 +1913,16 @@ int Store::pubIndividual()
 		{
 			Prod_Ix.insert(make_pair(VProducts.at(i).GetProd(), i)); //preenche o map de produtos com os produtos existentes no vetor e a sua posiçao
 		}
-		
-			
+
+
 		//criacao da matriz
-		vector<vector<bool>> matrix_taget(all_clients.size(), vector<bool>(VProducts.size(), false)); //inicia a matriz a false
-		
+		vector<vector<bool>> matrix_target(all_clients.size(), vector<bool>(VProducts.size(), false)); //inicia a matriz a false
+
 		for (int i = 0; i < VTrans.size(); i++) //percorre o vetor produtos
 		{
-			for (int a = 0; a < VTrans.at(i).GetProds().size(); a++) //percorre o vetor de produtos em casa transacao
+			for (int a = 0; a < VTrans.at(i).GetProds().size(); a++) //percorre o vetor de produtos em cada transacao
 			{
-				matrix_taget[Client_IdIx[VTrans[i].GetId()]][Prod_Ix[VTrans[i].GetProds().at(a)]] = true; // identifique o cliente de casa transacao e na linha desse cliente na matriz coloque a true os produtos registados nessa transação
+				matrix_target[Client_IdIx[VTrans[i].GetId()]][Prod_Ix[VTrans[i].GetProds().at(a)]] = true; // identifi  o cliente de cada transacao e na linha desse cliente na matriz coloque a true os produtos registados nessa transação
 			}
 		}
 
@@ -1649,30 +1933,30 @@ int Store::pubIndividual()
 			vector<bool> client_recommend; //vetor igual à linha da matriz do cliente alvo
 			vector<string> products_recommend; //vetor de potenciais produtos para recomendar
 
-			for (int i = 0; i < matrix_taget.size(); i++)
+			for (int i = 0; i < matrix_target.size(); i++)
 			{
 				if (i == Client_IdIx[id])
 				{
-					client_recommend = matrix_taget[i];
+					client_recommend = matrix_target[i];
 				}
 			}
 
-			for (int i = 0; i < matrix_taget.size(); i++) //percorre todos os clientes da matriz
+			for (int i = 0; i < matrix_target.size(); i++) //percorre todos os clientes da matriz
 			{
-				for (int a = 0; a < matrix_taget[i].size(); a++) //percorre cada produto de cada cliente
+				for (int a = 0; a < matrix_target[i].size(); a++) //percorre cada produto de cada cliente
 				{
 
-					if (matrix_taget[i][a] != client_recommend[a]) //se o bool do produto do cliente que esta a ser analizado for diferente do bool do mesmo produto do cliente alvo
+					if (matrix_target[i][a] != client_recommend[a]) //se o bool do produto do cliente que esta a ser analizado for diferente do bool do mesmo produto do cliente alvo
 					{
 						int c = 0; //contador de produtos adicionados em cada cliente ao vetor de potenciais produtos a recomendar
 
-						if (matrix_taget[i][a] == true) // se o cliente que esta a ser analizado comprou o produto
+						if (matrix_target[i][a] == true) // se o cliente que esta a ser analizado comprou o produto
 						{
 							products_recommend.push_back(VProducts.at(a).GetProd()); //adiciona o produto à lista de potencias produtos
 							c++; //adiciona ao contador
 						}
 
-						if (matrix_taget[i][a] == false) //se o cliente alvo comprou o produto e o cliente que esta a ser analizado nao comprou
+						if (matrix_target[i][a] == false) //se o cliente alvo comprou o produto e o cliente que esta a ser analizado nao comprou
 						{
 							products_recommend.erase(products_recommend.end() - c, products_recommend.end()); //apaga os produtos adicinados ao vetor potencias produtos a reocmendar deste cliente
 						}
@@ -1722,50 +2006,50 @@ int Store::pubIndividual()
 					totalMaximo = Totais.at(std::distance(Totais.begin(), result) + 1);
 
 					//display dos produtos recomendados, os mais frequentes
-					setcolor(14); cout << "\n> ";  setcolor(15); cout << "Produto(s) recomendado(s):\n";
+					ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
 					for (int i = 0; i < VPR.size(); i++)
 					{
 						if (totalMaximo == VPR.at(i).total)
 						{
-							setcolor(11); cout << "   - ";  setcolor(15); cout << VPR.at(i).produto << endl;
+							ut.setcolor(11); cout << "   - ";  ut.setcolor(15); cout << VPR.at(i).produto << endl;
 						}
 					}
 				}
 				else
 				{
-					setcolor(14); cout << "\n> ";  setcolor(15); cout << "Produto(s) recomendado(s):\n";
+					ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
 					for (int i = 0; i < VPR.size(); i++)
 					{
-						setcolor(11); cout << "   - ";  setcolor(15); cout << VPR.at(i).produto << endl;
+						ut.setcolor(11); cout << "   - ";  ut.setcolor(15); cout << VPR.at(i).produto << endl;
 					}
 				}
 			}
 			else
 			{
-				setcolor(14); cout << "\n> ";  setcolor(15); cout << "Produto(s) recomendado(s):\n";
+				ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
 				for (int i = 0; i < VPR.size(); i++)
 				{
-					setcolor(11); cout << "   - ";  setcolor(15); cout << VPR.at(i).produto << endl;
+					ut.setcolor(11); cout << "   - ";  ut.setcolor(15); cout << VPR.at(i).produto << endl;
 				}
 			}
 		}
-		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
+		ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
 
 		/*cout << endl;
 
-		for (int i = 0; i < matrix_taget.size(); i++)
+		for (int i = 0; i < matrix_target.size(); i++)
 		{
-		for (int a = 0; a < matrix_taget[i].size(); a++)
+		for (int a = 0; a < matrix_target[i].size(); a++)
 		{
-		cout << matrix_taget[i][a];
+		cout << matrix_target[i][a];
 		}
 		cout << endl;
 		}*/
 	}
 	else
 	{
-		setcolor(4); cout << "\nEste cliente nao efetuou nenhuma transacao.\n";
-		setcolor(4); cout << "\nPrecione qualquer tecla para voltar."; setcolor(15); getchar();
+		ut.setcolor(4); cout << "\nEste cliente nao efetuou nenhuma transacao.\n";
+		ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
 	}
 
 	getchar();

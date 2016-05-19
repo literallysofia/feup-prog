@@ -7,6 +7,7 @@
 using namespace std;
 
 Store* Store::singleton_instance = 0;
+Utilities u;
 
 //Abre janela de controlo no meio do ecra
 HWND hwnd = GetConsoleWindow();
@@ -16,7 +17,6 @@ HANDLE screen = GetStdHandle(STD_OUTPUT_HANDLE);
 COORD max_size = GetLargestConsoleWindowSize(screen);
 
 bool ficheiroValidoC(string FClient) {
-	Utilities u;
 	ifstream f;
 	string line, subLine;
 	unsigned int index = 0, fileLineCount, lineCount = 0;
@@ -130,7 +130,6 @@ bool ficheiroValidoC(string FClient) {
 
 //Verifica se o ficheiro de produtos esta corrompido
 bool ficheiroValidoP(string FProd) {
-	Utilities u;
 	ifstream f;
 	string line, subLine;
 	unsigned int index = 0, fileLineCount, lineCount = 0;
@@ -194,7 +193,6 @@ bool ficheiroValidoP(string FProd) {
 
 //Verifica se o ficheiro de transacoes esta corrompido
 bool ficheiroValidoT(string FTrans) {
-	Utilities u;
 	ifstream f;
 	string line, subLine;
 	unsigned int index = 0, fileLineCount, lineCount = 0;
@@ -316,7 +314,6 @@ bool ficheiroDisponivel(string file) {
 
 //Obtem a string com o nome do ficheiro dos clientes
 void ficheiroClientes() {
-	Utilities u;
 	string FClient;
 	cout << endl;
 	cout << "Ficheiro dos clientes: "; u.setcolor(3);  cout << "{ ";  u.setcolor(15); cin >> FClient;
@@ -339,7 +336,6 @@ void ficheiroClientes() {
 
 //Obtem a string com o nome do ficheiro dos produtos
 void ficheiroProdutos() {
-	Utilities u;
 	string FProd;
 	cout << endl;
 	cout << "Ficheiro dos produtos: "; u.setcolor(3);  cout << "{ "; u.setcolor(15); cin >> FProd;
@@ -363,7 +359,6 @@ void ficheiroProdutos() {
 //Obtem a string com o nome do ficheiro das transacoes
 void ficheiroTransacoes()
 {
-	Utilities u;
 	string FTrans;
 	cout << endl;
 	cout << "Ficheiro das transacoes: "; u.setcolor(3);  cout << "{ ";  u.setcolor(15); cin >> FTrans;
@@ -389,7 +384,6 @@ int main()
 	//Janela//
 	HWND consoleWindow = GetConsoleWindow();
 	SetWindowPos(consoleWindow, 0, 310, 150, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
-	Utilities u;
 
 	//Menu de boas vindas
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl

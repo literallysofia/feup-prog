@@ -1,6 +1,7 @@
-5
+6
 1 ; Rui Pereira ; 01/03/2008 ; 2.70
 2 ; Maria De Lurdes ; 23/04/2009 ; 0.00
 6 ; Joana Beires ; 15/10/2010 ; 7.50
 16 ; Manuela Moura ; 31/03/2016 ; 8.30
 17 ; Julieta Frade ; 19/05/2016 ; 5.20
+18 ; Sofia Silva ; 19/05/2016 ; 0.00
