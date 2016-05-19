@@ -53,65 +53,62 @@ public:
 	void setTransFileName(string transactiontxt);
 
 	//Datas
-	string DataAtual();
-	bool Bisexto(int ano);
-	int Dias(int mes, int ano);
-	bool DataValida(int Dia, int Mes, int Ano);
+	string dataAtual();
+	bool anoBissexto(int ano);
+	int totalDias(int mes, int ano);
+	bool dataValida(int Dia, int Mes, int Ano);
 
 	//Utilidades
-
 	void setcolor(int ForgC);
 
-	int PublicidadePersonalizada();
-
-	void OpcoesPublicidadePersonalizada();
-
 	//Menus
-	int VisualizarInformacao();
-	void OpcoesVisualizarInformacao();
-	int ListaTransacoes();
-	void OpcoesListaTransacoes();
-	int ProdutosDisponiveis();
-	void OpcoesProdutosDisponiveis();
-	int GerirClientes();
-	void OpcoesGerirClientes();
-	int ListaClientes();
-	void OpcoesListaClientes();
-	int Saida();
-	int MenuIniciar();
-	void OpcoesMenuIniciar();
+	int visualizarInformacao();
+	void opcoesVisualizarInformacao();
+	int listaTransacoes();
+	void opcoesListaTransacoes();
+	int produtosDisponiveis();
+	void opcoesProdutosDisponiveis();
+	int gerirClientes();
+	void opcoesGerirClientes();
+	int listaClientes();
+	void opcoesListaClientes();
+	int saida();
+	int menuInicial();
+	void opcoesMenuInicial();
+	int publicidadePersonalizada();
+	void opcoesPublicidadePersonalizada();
 
 	//Clientes
-	void ExtrairClientes();
-	int EscreverCliente();
-	bool ClienteExiste(string output);
-	int CriarCliente();
-	int RemoverCliente();
-	int AlterarCliente();
-	int InfoInd();
+	void extrairClientes();
+	int escreverCliente();
+	bool clienteExiste(string output);
+	int criarCliente();
+	int removerCliente();
+	int alterarCliente();
+	int informacaoIndividual();
 	string formatarNome(string nome);
 	int ordenarCNome();
-	int Bottom10();
-	int MostrarClientes();
+	int bottom10();
+	int mostrarClientes();
 
 	//Produtos
-	void ExtrairProdutos();
-	int EscreverProduto();
-	int MostrarProdutos();
-	int Compras();
+	void extrairProdutos();
+	int escreverProduto();
+	int mostrarProdutos();
+	int efetuarCompras();
 
 	//Transacoes
-	void ExtrairTransacoes();
-	int EscreverTrans();
-	int TransEntre();
-	int TransDia();
-	bool TransExiste(unsigned int id);
-	int TransInd();
-	bool TransData(int dataint1);
-	int MostrarTransacoes();
-	void AdicionarTrans(int id, string produtos);
+	void extrairTransacoes();
+	int escreverTrans();
+	int transEntreDatas();
+	int transDia();
+	bool transExisteID(unsigned int id);
+	int transIndividual();
+	bool transExisteData(int dataint1);
+	int mostrarTransacoes();
+	void criarTrans(int id, string produtos);
 
 	//Publicidade
-	int PubIndividual();
+	int pubIndividual();
 };
 

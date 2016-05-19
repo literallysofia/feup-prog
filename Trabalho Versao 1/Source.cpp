@@ -15,56 +15,114 @@ const HWND hDesktop = GetDesktopWindow();
 HANDLE screen = GetStdHandle(STD_OUTPUT_HANDLE);
 COORD max_size = GetLargestConsoleWindowSize(screen);
 
-//Verifica se o ficheiro de clientes esta corrompido
 bool ficheiroValidoC(string FClient) {
-
+	Utilities u;
 	ifstream f;
-	string line;
-	int total;
+	string line, subLine;
+	unsigned int index = 0, fileLineCount, lineCount = 0;
+
+	//Verificacao do numero de clientes
 	f.open(FClient);
-
-	//Verifica o numero de clientes
 	getline(f, line);
-	total = stoi(line);
+	while (index != line.length()) {
+		if (!isdigit(line[index])) {
+			cerr << "> A primeira linha com o total de clientes, contem caracteres invalidos.\n";
+			return false;
+		}
+		++index;
+	}
+	index = 0;
 
-	if (total == 0) {
+	//Verificacao da correspondencia do total de clientes
+	fileLineCount = atoi(line.c_str());
+
+	while (getline(f, line)) {
+		++lineCount;
+	}
+	if (fileLineCount != lineCount) {
+		u.setcolor(4); cerr << "> O total de clientes nao esta de correto.\n"; u.setcolor(15);
 		return false;
 	}
+	f.close();
+
+	//Verificacao de cada linha do ficheiro
+	f.open(FClient);
+	getline(f, line); //Discarda a linha do ficheiro
+
 	while (getline(f, line)) {
-		//Verifica o ID
-		unsigned int id = atoi(line.substr(0, line.find(" ; ")).c_str());
-		if (id == 0) {
-			return false;
+
+		index = 0;
+
+		//Verificacao do ID
+		subLine = line.substr(0, line.find(" ; "));
+
+		while (index != subLine.length()) {
+			if (!isdigit(subLine[index])) {
+				u.setcolor(4); cerr << "> ID invalido.\n"; u.setcolor(15);
+				return false;
+			}
+			++index;
 		}
+		index = 0;
 		line.erase(0, line.find(" ; ") + 3);
 
-		//Verifica o nome
-		unsigned int nome = atoi(line.substr(0, line.find(" ; ")).c_str());
-		if (nome != 0) {
-			return false;
+		//Verificacao do Nome
+		subLine = line.substr(0, line.find(" ; "));
+		while (index != subLine.length()) {
+			if (!isalpha(subLine[index]) && subLine[index] != ' ') {
+				u.setcolor(4); cerr << "> Nome invalido.\n"; u.setcolor(15);
+				return false;
+			}
+			++index;
 		}
+		index = 0;
 		line.erase(0, line.find(" ; ") + 3);
 
-		//Verifica o dia
-		unsigned int dia = atoi(line.substr(0, line.find("/")).c_str());
-		if (dia == 0) {
-			return false;
+		//Verificacao do dia da data
+		subLine = line.substr(0, line.find("/"));
+		while (index != subLine.length()) {
+			if (!isdigit(subLine[index])) {
+				u.setcolor(4); cerr << "> Data invalida.\n"; u.setcolor(15);
+				return false;
+			}
+			++index;
 		}
+		index = 0;
 		line.erase(0, line.find("/") + 1);
 
-		//verifica o mes
-		unsigned int mes = atoi(line.substr(0, line.find("/")).c_str());
-		if (mes == 0) {
-			return false;
+		//Verificacao do mes da data
+		subLine = line.substr(0, line.find("/"));
+		while (index != subLine.length()) {
+			if (!isdigit(subLine[index])) {
+				u.setcolor(4); cerr << "> Data invalida.\n"; u.setcolor(15);
+				return false;
+			}
+			++index;
 		}
+		index = 0;
 		line.erase(0, line.find("/") + 1);
 
-		//Verifica o ano
-		unsigned int ano = atoi(line.substr(0, line.find(" ; ")).c_str());
-		if (ano == 0) {
-			return false;
+		//Verificacao do ano da data
+		subLine = line.substr(0, line.find(" ; "));
+		while (index != subLine.length()) {
+			if (!isdigit(subLine[index])) {
+				u.setcolor(4); cerr << "> Data invalida.\n"; u.setcolor(15);
+				return false;
+			}
+			++index;
 		}
+		index = 0;
 		line.erase(0, line.find(" ; ") + 3);
+
+		//Verificacao da montante
+		subLine = line;
+		while (index != subLine.length()) {
+			if (!isdigit(subLine[index]) && subLine[index] != '.') {
+				u.setcolor(4); cerr << "> Montante invalida.\n"; u.setcolor(15);
+				return false;
+			}
+			++index;
+		}
 	}
 	f.close();
 	return true;
@@ -72,26 +130,63 @@ bool ficheiroValidoC(string FClient) {
 
 //Verifica se o ficheiro de produtos esta corrompido
 bool ficheiroValidoP(string FProd) {
-
+	Utilities u;
 	ifstream f;
-	string line;
-	int total;
+	string line, subLine;
+	unsigned int index = 0, fileLineCount, lineCount = 0;
+
+	//Verificacao do numero de produtos
 	f.open(FProd);
-
-	//Verifica o numero de produtos
 	getline(f, line);
-	total = stoi(line);
-
-	if (total == 0) {
-		return false;
-	}
-	while (getline(f, line)) {
-		//Verifica o produto
-		unsigned int produto = atoi(line.substr(0, line.find(" ; ")).c_str());
-		if (produto != 0) {
+	while (index != line.length()) {
+		if (!isdigit(line[index])) {
+			cerr << "> A primeira linha com o total de produtos, contem caracteres invalidos.\n";
 			return false;
 		}
+		++index;
+	}
+	index = 0;
+
+	//Verificacao da correspondencia do total de clientes
+	fileLineCount = atoi(line.c_str());
+
+	while (getline(f, line)) {
+		++lineCount;
+	}
+	if (fileLineCount != lineCount) {
+		u.setcolor(4); cerr << "> O total de produtos nao esta de correto.\n"; u.setcolor(15);
+		return false;
+	}
+	f.close();
+
+	//Verificacao de cada linha do ficheiro
+	f.open(FProd);
+	getline(f, line); //Discarda a linha do ficheiro
+
+	while (getline(f, line)) {
+
+		index = 0;
+		//Verificacao do Nome
+		subLine = line.substr(0, line.find(" ; "));
+		while (index != subLine.length()) {
+			if (!isalpha(subLine[index]) && subLine[index] != ' ') {
+				u.setcolor(4); cerr << "> Nome invalido.\n"; u.setcolor(15);
+				return false;
+			}
+			++index;
+		}
+		index = 0;
 		line.erase(0, line.find(" ; ") + 3);
+
+		//Verificacao do preco
+		subLine = line;
+		while (index != subLine.length()) {
+			if (!isdigit(subLine[index]) && subLine[index] != '.') {
+				u.setcolor(4); cerr << "> Preco invalida.\n"; u.setcolor(15);
+				return false;
+			}
+			++index;
+		}
 	}
 	f.close();
 	return true;
@@ -99,54 +194,117 @@ bool ficheiroValidoP(string FProd) {
 
 //Verifica se o ficheiro de transacoes esta corrompido
 bool ficheiroValidoT(string FTrans) {
-
+	Utilities u;
 	ifstream f;
-	string line;
-	int total;
+	string line, subLine;
+	unsigned int index = 0, fileLineCount, lineCount = 0;
+
+	//Verificacao do numero de transacoes
 	f.open(FTrans);
-
-	//Verifica o numero de transacoes
 	getline(f, line);
-	total = stoi(line);
+	while (index != line.length()) {
+		if (!isdigit(line[index])) {
+			cerr << "> A primeira linha com o total de transacoes, contem caracteres invalidos.\n";
+			return false;
+		}
+		++index;
+	}
+	index = 0;
 
-	if (total == 0) {
+	//Verificacao da correspondencia do total de transacoes
+	fileLineCount = atoi(line.c_str());
+
+	while (getline(f, line)) {
+		++lineCount;
+	}
+	if (fileLineCount != lineCount) {
+		u.setcolor(4); cerr << "> O total de transacoes nao esta de correto.\n"; u.setcolor(15);
 		return false;
 	}
+	f.close();
+
+	//Verificacao de cada linha do ficheiro
+	f.open(FTrans);
+	getline(f, line); //Discarda a linha do ficheiro
+
 	while (getline(f, line)) {
-		//Verifica o ID
-		unsigned int id = atoi(line.substr(0, line.find(" ; ")).c_str());
-		if (id == 0) {
-			return false;
+
+		index = 0;
+
+		//Verificacao do ID
+		subLine = line.substr(0, line.find(" ; "));
+
+		while (index != subLine.length()) {
+			if (!isdigit(subLine[index])) {
+				u.setcolor(4); cerr << "> ID invalido.\n"; u.setcolor(15);
+				return false;
+			}
+			++index;
 		}
+		index = 0;
 		line.erase(0, line.find(" ; ") + 3);
 
-		//Verifica o dia
-		unsigned int dia = atoi(line.substr(0, line.find("/")).c_str());
-		if (dia == 0) {
-			return false;
+		//Verificacao do dia da data
+		subLine = line.substr(0, line.find("/"));
+		while (index != subLine.length()) {
+			if (!isdigit(subLine[index])) {
+				u.setcolor(4); cerr << "> Data invalida.\n"; u.setcolor(15);
+				return false;
+			}
+			++index;
 		}
+		index = 0;
 		line.erase(0, line.find("/") + 1);
 
-		//verifica o mes
-		unsigned int mes = atoi(line.substr(0, line.find("/")).c_str());
-		if (mes == 0) {
-			return false;
+		//Verificacao do mes da data
+		subLine = line.substr(0, line.find("/"));
+		while (index != subLine.length()) {
+			if (!isdigit(subLine[index])) {
+				u.setcolor(4); cerr << "> Data invalida.\n"; u.setcolor(15);
+				return false;
+			}
+			++index;
 		}
+		index = 0;
 		line.erase(0, line.find("/") + 1);
 
-		//Verifica o ano
-		unsigned int ano = atoi(line.substr(0, line.find(" ; ")).c_str());
-		if (ano == 0) {
-			return false;
+		//Verificacao do ano da data
+		subLine = line.substr(0, line.find(" ; "));
+		while (index != subLine.length()) {
+			if (!isdigit(subLine[index])) {
+				u.setcolor(4); cerr << "> Data invalida.\n"; u.setcolor(15);
+				return false;
+			}
+			++index;
 		}
+		index = 0;
 		line.erase(0, line.find(" ; ") + 3);
+
+		//Verificacao dos produtos
+		subLine = line;
+		subLine.append(", ");
+		string produto;
+
+		while (!(subLine.empty()))
+		{
+			produto = subLine.substr(0, subLine.find_first_of(","));
+			while (index != produto.length()) {
+				if (!isalpha(produto[index]) && produto[index] != ' ') {
+					u.setcolor(4); cerr << "> Nome invalido.\n"; u.setcolor(15);
+					return false;
+				}
+				++index;
+			}
+			index = 0;
+			subLine.erase(0, subLine.find_first_of(",") + 2);
+		}
 	}
 	f.close();
 	return true;
 }
 
 //Verifica se existe o ficheiro com um determinado nome
-bool FicheiroDisponivel(string file) {
+bool ficheiroDisponivel(string file) {
 	ifstream f(file);
 	if (f.is_open())
 	{
@@ -157,12 +315,12 @@ bool FicheiroDisponivel(string file) {
 }
 
 //Obtem a string com o nome do ficheiro dos clientes
-void FicheiroClientes() {
+void ficheiroClientes() {
 	Utilities u;
 	string FClient;
 	cout << endl;
 	cout << "Ficheiro dos clientes: "; u.setcolor(3);  cout << "{ ";  u.setcolor(15); cin >> FClient;
-	while (cin.fail() || FicheiroDisponivel(FClient) == false)
+	while (cin.fail() || ficheiroDisponivel(FClient) == false)
 	{
 		cin.clear();
 		cin.ignore(1000, '\n');
@@ -180,12 +338,12 @@ void FicheiroClientes() {
 }
 
 //Obtem a string com o nome do ficheiro dos produtos
-void FicheiroProdutos() {
+void ficheiroProdutos() {
 	Utilities u;
 	string FProd;
 	cout << endl;
 	cout << "Ficheiro dos produtos: "; u.setcolor(3);  cout << "{ "; u.setcolor(15); cin >> FProd;
-	while (cin.fail() || FicheiroDisponivel(FProd) == false)
+	while (cin.fail() || ficheiroDisponivel(FProd) == false)
 	{
 		cin.clear();
 		cin.ignore(1000, '\n');
@@ -203,13 +361,13 @@ void FicheiroProdutos() {
 }
 
 //Obtem a string com o nome do ficheiro das transacoes
-void FicheiroTransacoes()
+void ficheiroTransacoes()
 {
 	Utilities u;
 	string FTrans;
 	cout << endl;
 	cout << "Ficheiro das transacoes: "; u.setcolor(3);  cout << "{ ";  u.setcolor(15); cin >> FTrans;
-	while (cin.fail() || FicheiroDisponivel(FTrans) == false)
+	while (cin.fail() || ficheiroDisponivel(FTrans) == false)
 	{
 		cin.clear();
 		cin.ignore(1000, '\n');
@@ -244,19 +402,19 @@ int main()
 	u.setcolor(3);  cout << "-----------------------------------------------------------" << endl;
 	u.setcolor(15);
 
-	FicheiroClientes();
-	FicheiroProdutos();
-	FicheiroTransacoes();
+	ficheiroClientes();
+	ficheiroProdutos();
+	ficheiroTransacoes();
 
 	u.setcolor(3);
 	cout << endl;
 	Sleep(500);  cout << "."; Sleep(500);  cout << "."; Sleep(500);  cout << "." << endl;  u.setcolor(15);
 
-	Store::instance()->ExtrairClientes();
-	Store::instance()->ExtrairProdutos();
-	Store::instance()->ExtrairTransacoes();
+	Store::instance()->extrairClientes();
+	Store::instance()->extrairProdutos();
+	Store::instance()->extrairTransacoes();
 
-	Store::instance()->OpcoesMenuIniciar();
+	Store::instance()->opcoesMenuInicial();
 	
 	return 0;
 }
