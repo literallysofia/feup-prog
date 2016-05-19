@@ -56,9 +56,6 @@ public:
 	int totalDias(int mes, int ano);
 	bool dataValida(int Dia, int Mes, int Ano);
 
-	//Utilidades
-	void setcolor(int ForgC);
-
 	//Menus
 	int visualizarInformacao();
 	void opcoesVisualizarInformacao();
@@ -91,7 +88,6 @@ public:
 
 	//Produtos
 	void extrairProdutos();
-	int escreverProduto();
 	int mostrarProdutos();
 	int efetuarCompras();
 

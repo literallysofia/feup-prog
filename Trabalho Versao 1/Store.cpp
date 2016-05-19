@@ -568,7 +568,7 @@ void Store::opcoesMenuInicial()
 void Store::extrairClientes() {
 	ifstream Clientfile(FClient);
 	string line;
-	int i = 0;
+
 
 	if (Clientfile.is_open())
 	{
@@ -579,38 +579,38 @@ void Store::extrairClientes() {
 
 			if (line.find(";") != -1) {
 
-				size_t pos1 = line.find(" ;");
-				string str1 = line.substr(pos1 + 3);
-				size_t pos2 = str1.find(" ;");
-				string str2 = str1.substr(pos2 + 3);
-				size_t pos3 = str2.find(" ;");
+				size_t pos1 = line.find(" ;"); //posiçao 1º ;
+				string str1 = line.substr(pos1 + 3); //nome+data+compras
+				size_t pos2 = str1.find(" ;"); //posição 2º ;
+				string str2 = str1.substr(pos2 + 3); //data+compras
+				size_t pos3 = str2.find(" ;"); //posiçao 3º ;
 
 				string ids = line.substr(0, pos1);
 				string nome = str1.substr(0, pos2);
 				string data = str2.substr(0, pos3);
 				string comprass = str2.substr(pos3 + 3);
 
-				size_t posd1 = data.find("/");
-				string strd1 = data.substr(posd1 + 1);
-				size_t posd2 = strd1.find("/");
+				size_t posd1 = data.find("/"); //posição 1º / na data
+				string strd1 = data.substr(posd1 + 1); //mes+ano
+				size_t posd2 = strd1.find("/"); //posiçao 2º / na data
 
 				string dia = data.substr(0, posd1);
 				string mes = strd1.substr(0, posd2);
 				string ano = strd1.substr(posd2 + 1);
 
+				//adiciona um 0 antes do mes ou do dia caso so tenho um digito
 				if (dia.size() == 1)
 					dia = "0" + dia;
 				if (mes.size() == 1)
 					mes = "0" + mes;
 
-				string datafinal = dia + "/" + mes + "/" + ano;
+				string datafinal = dia + "/" + mes + "/" + ano; //data ja com 0s
 
-				int idi = stoi(ids);
-				float comprasf = stof(comprass);
+				int idi = stoi(ids, nullptr, 10); //passa o id de string para int
+				float comprasf = stof(comprass); //passa compras de string para float
 
 				VClients.push_back(Client(idi, formatarNome(nome), datafinal, comprasf));
 
-				i++;
 			}
 		}
 		Clientfile.close();
@@ -624,7 +624,7 @@ int Store::escreverCliente()
 	ofstream Clientfile(FClient);
 	if (Clientfile.is_open())
 	{
-		Clientfile << VClients.size() << endl;
+		Clientfile << VClients.size() << endl; //adiciona nº de clientes no inicio do ficheiro
 		for (unsigned int i = 0; i < VClients.size(); i++)
 		{
 			Clientfile << VClients.at(i).GetId() << " ; " << VClients.at(i).GetNome() << " ; " << VClients.at(i).GetData() << " ; " << setprecision(2) << fixed << VClients.at(i).GetMontante() << endl;
@@ -636,24 +636,25 @@ int Store::escreverCliente()
 }
 
 //Verifica se o cliente existe
-bool Store::clienteExiste(string output)
+bool Store::clienteExiste(string output) //output pode ser nome ou id
 {
 	int id;
 	int a = 0;
 	if ((int)output.at(0) >= 48 && (int)output.at(0) <= 57) // verifica se o primeiro elemento da string corresponde a um inteiro no codigo ascii (entre 0 e 9)
 	{
-		id = stoi(output, nullptr, 10); // se a opcao for o ID
+		id = stoi(output, nullptr, 10); // se a opcao for o ID passa de string para int
+
 		for (unsigned int i = 0; i < VClients.size(); i++)
 		{
 			if (id == VClients.at(i).GetId())
-				a = a + 1;
+				a++; //adiciona caso encontro um cliente com este id
 		}
 	}
 	else {
 		for (unsigned int i = 0; i < VClients.size(); i++)
 		{
 			if (output == VClients.at(i).GetNome())
-				a = a + 1;
+				a++; //adiciona caso encontro um cliente com este nome
 		}
 	}
 	if (a > 0)
@@ -671,9 +672,9 @@ int Store::criarCliente()
 
 	cout << endl << "Introduza o nome do cliente: "; cin.ignore(); getline(cin >> setw(26), nome); cout << endl;
 
-	while (cin.fail())
+	while (cin.fail()) //caso existir algum erro com o input
 	{
-		if (cin.eof())
+		if (cin.eof()) //caso queira voltar com ctrl-z
 		{
 			cin.clear();
 			return 0;
@@ -934,43 +935,37 @@ int Store::informacaoIndividual()
 	return 0;
 }
 
-//Muda a primeira letra de cada palavra de uma string para maiuscula e as restantes para minusculas - formata os nomes
-string Store::formatarNome(string nome)
+string Store::formatarNome(string nome) //muda a primeira letra de cada palavra de uma string para maiuscula e as restantes para minusculas - formata os nomes
 {
 	string NomeAlterado = nome;
 
-	//altera primeiro tudo para minusculas
 	for (unsigned int i = 1; i < NomeAlterado.length(); i++)
 	{
-		NomeAlterado.at(i) = tolower(NomeAlterado.at(i));
+		NomeAlterado.at(i) = tolower(NomeAlterado.at(i)); //altera tudo para minusculas
 	}
 
-	//altera a primeira letra da string para maiusculas
 	if (!isupper(NomeAlterado.at(0)))
 	{
-		NomeAlterado.at(0) = toupper(NomeAlterado.at(0));
+		NomeAlterado.at(0) = toupper(NomeAlterado.at(0)); //altera a primeira letra da string para maiusculas
 	}
 
-	//altera a letra depois de um espaço para maiusculas
+
 	for (unsigned int i = 1; i < NomeAlterado.length(); i++)
 	{
 		if (NomeAlterado.at(i - 1) == ' ' && !isupper(NomeAlterado.at(i)))
 		{
-			NomeAlterado.at(i) = toupper(NomeAlterado.at(i));
+			NomeAlterado.at(i) = toupper(NomeAlterado.at(i)); //altera a letra depois de um espaço para maiusculas
 		}
 	}
 
 	return NomeAlterado;
 }
 
-
-
-//Mostra clientes por ordem alfabética
-int Store::ordenarCNome()
+int Store::ordenarCNome() //mostra clientes por ordem alfabética
 {
-	vector <Client> VO = VClients;
+	vector <Client> VO = VClients; //VO é um vetor igual ao VClients que vai ser ordenado
 
-	sort(VO.begin(), VO.end(), [](Client &a, Client &b) {return a.GetNome() < b.GetNome(); });
+	sort(VO.begin(), VO.end(), [](Client &a, Client &b) {return a.GetNome() < b.GetNome(); }); //ordena o vetor VO
 
 	ut.clearScreen();
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
@@ -984,7 +979,7 @@ int Store::ordenarCNome()
 	ut.setcolor(15);
 	for (unsigned int i = 0; i < VO.size(); i++)
 	{
-		if (i < 10) {
+		{
 			cout << setw(5) << VO.at(i).GetId();
 			cout << setw(20) << VO.at(i).GetNome();
 			cout << setw(18) << VO.at(i).GetData();
@@ -998,12 +993,11 @@ int Store::ordenarCNome()
 
 // BOTTOM 10 //
 
-//Mostra os piores 10 clientes
-int Store::bottom10()
+int Store::bottom10() //mostra os piores 10 clientes
 {
-	vector<Client> VO = VClients;
+	vector<Client> VO = VClients; //VO é um vetor igual ao VClients que vai ser ordenado
 
-	sort(VO.begin(), VO.end(), [](Client &a, Client &b) {return a.GetMontante() < b.GetMontante(); });
+	sort(VO.begin(), VO.end(), [](Client &a, Client &b) {return a.GetMontante() < b.GetMontante(); }); //ordena o vetor VO
 
 	ut.clearScreen();
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
@@ -1018,7 +1012,7 @@ int Store::bottom10()
 
 	for (unsigned int i = 0; i < VO.size(); i++)
 	{
-		if (i < 10) {
+		if (i < 10) { //mostra só os 10 piores
 			cout << setw(5) << VO.at(i).GetId();
 			cout << setw(20) << VO.at(i).GetNome();
 			cout << setw(18) << VO.at(i).GetData();
@@ -1050,7 +1044,6 @@ int Store::mostrarClientes() {
 	return 0;
 }
 
-
 //Produtos
 
 //Extrai informacao do ficheiro dos produtos para um vetor (VProd)
@@ -1058,7 +1051,7 @@ void Store::extrairProdutos()
 {
 	ifstream Prodfile(FProd);
 	string line;
-	int i = 0;
+
 	if (Prodfile.is_open())
 	{
 		if (!VProducts.empty()) VProducts.clear();
@@ -1067,7 +1060,6 @@ void Store::extrairProdutos()
 		{
 			if (line.find(";") != -1) {
 				VProducts.push_back(Product(line.substr(0, line.find_first_of(";") - 1), stof(line.substr(line.find_last_of(";") + 2, line.length() - line.find_last_of(";") - 2))));
-				i++;
 			}
 		}
 		Prodfile.close();
@@ -1215,7 +1207,7 @@ int Store::efetuarCompras()
 			//Display da montante total a pagar
 			cout << endl << "Total a pagar: ";  ut.setcolor(3); cout << "{ ";  ut.setcolor(15); cout << total << " euros." << endl;
 
-			//Ajuste da montante no cliente
+			//Adicionar compra ao montante do cliente
 			for (unsigned int i = 0; i < VClients.size(); i++)
 			{
 				if ((id == VClients.at(i).GetId()) || (opcao == VClients.at(i).GetNome()))
@@ -1272,13 +1264,14 @@ void Store::extrairTransacoes()
 				data = line.substr(line.find_first_of(";") + 2, line.find_last_of(";") - line.find_first_of(";") - 3); //define a data do elemento do vetor
 
 				size_t posd1 = data.find("/");
-				string strd1 = data.substr(posd1 + 1);
+				string strd1 = data.substr(posd1 + 1); //mes + ano
 				size_t posd2 = strd1.find("/");
 
 				string dia = data.substr(0, posd1);
 				string mes = strd1.substr(0, posd2);
 				string ano = strd1.substr(posd2 + 1);
 
+				//adiciona um 0 antes do mes e do dia caso nao tenham so um digito
 				if (dia.size() == 1)
 					dia = "0" + dia;
 				if (mes.size() == 1)
@@ -1311,7 +1304,7 @@ int Store::escreverTrans()
 
 	if (TransFile.is_open())
 	{
-		TransFile << VTrans.size() << endl;
+		TransFile << VTrans.size() << endl; //numero de transacoes no inicio do ficheiro
 		for (unsigned int i = 0; i < VTrans.size(); i++)
 		{
 			TransFile << VTrans.at(i).GetId() << " ; " << VTrans.at(i).GetDate() << " ; ";
@@ -1344,7 +1337,7 @@ int Store::transEntreDatas()
 	ut.setcolor(14); cout << "> ";  ut.setcolor(15); cout << "Tera que escolher duas datas para visualizar as transacoes efetuadas nesse intervalo." << endl;
 	ut.setcolor(14); cout << "> ";  ut.setcolor(15); cout << "Introduza a primeira data:" << endl << endl;
 	cout << "> Dia: "; cin >> dia1; cout << "> Mes: "; cin >> mes1; cout << "> Ano: "; cin >> ano1;
-	
+
 	while (cin.fail())
 	{
 		if (cin.eof())
@@ -1964,52 +1957,68 @@ int Store::pubIndividual()
 				}
 			}
 
-			// cria um vetor de produtos recomendados com a estrutura (nome do produto, numero de vezes que aparece)
-			vector<ProdutosRecomendados> VPR;
-
-			for (int i = 0; i < products_recommend.size(); i++)
+			if (products_recommend.size() == 0)
 			{
-				int t = 0; //numero de vezes que cada produto repete
-				for (int j = 0; j < products_recommend.size(); j++)
-				{
-					if (products_recommend.at(i) == products_recommend.at(j))
-						t++;
-				}
-				ProdutosRecomendados novoelem; //criacao novo elemento
-				novoelem.produto = products_recommend.at(i);
-				novoelem.total = t;
-				VPR.push_back(novoelem);
+				ut.setcolor(4); cout << "\nNao existe nenhum produto a recomendar.\n";
 			}
 
-			// elimina os produtos repetidos, de maneira a ficar apenas uma vez cada produto
-			if (VPR.size() > 1)
-			{
-				for (int i = 0; i < VPR.size(); i++)
+			else {
+				// cria um vetor de produtos recomendados com a estrutura (nome do produto, numero de vezes que aparece)
+				vector<ProdutosRecomendados> VPR;
+
+				for (int i = 0; i < products_recommend.size(); i++)
 				{
-					for (int j = 1; j < VPR.size(); j++)
+					int t = 0; //numero de vezes que cada produto repete
+					for (int j = 0; j < products_recommend.size(); j++)
 					{
-						if (VPR.at(i).produto == VPR.at(j).produto)
-							VPR.erase(VPR.begin() + j);
+						if (products_recommend.at(i) == products_recommend.at(j))
+							t++;
 					}
+					ProdutosRecomendados novoelem; //criacao novo elemento
+					novoelem.produto = products_recommend.at(i);
+					novoelem.total = t;
+					VPR.push_back(novoelem);
 				}
+
+
+				// elimina os produtos repetidos, de maneira a ficar apenas uma vez cada produto
 				if (VPR.size() > 1)
 				{
-					// cria um vetor com todos os totais dos produtos, de maneira a calcular o total maximo, ou seja, o produto mais frequente
-					vector<int> Totais;
-					vector<int>::iterator result;
-					int totalMaximo;
 					for (int i = 0; i < VPR.size(); i++)
 					{
-						Totais.push_back(VPR.at(i).total);
+						for (int j = 1; j < VPR.size(); j++)
+						{
+							if (VPR.at(i).produto == VPR.at(j).produto)
+								VPR.erase(VPR.begin() + j);
+						}
 					}
-					result = std::max_element(Totais.begin(), Totais.end()); // retorna a posicao do maior elemento (comecando em 1)
-					totalMaximo = Totais.at(std::distance(Totais.begin(), result) + 1);
-
-					//display dos produtos recomendados, os mais frequentes
-					ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
-					for (int i = 0; i < VPR.size(); i++)
+					if (VPR.size() > 1)
 					{
-						if (totalMaximo == VPR.at(i).total)
+						// cria um vetor com todos os totais dos produtos, de maneira a calcular o total maximo, ou seja, o produto mais frequente
+						vector<int> Totais;
+						vector<int>::iterator result;
+						int totalMaximo;
+						for (int i = 0; i < VPR.size(); i++)
+						{
+							Totais.push_back(VPR.at(i).total);
+						}
+						result = std::max_element(Totais.begin(), Totais.end()); // retorna a posicao do maior elemento (comecando em 1)
+						totalMaximo = Totais.at(std::distance(Totais.begin(), result) + 1);
+
+						//display dos produtos recomendados, os mais frequentes
+						ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
+						for (int i = 0; i < VPR.size(); i++)
+						{
+							if (totalMaximo == VPR.at(i).total)
+							{
+								ut.setcolor(11); cout << "   - ";  ut.setcolor(15); cout << VPR.at(i).produto << endl;
+							}
+						}
+					}
+					else
+					{
+						ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
+						for (int i = 0; i < VPR.size(); i++)
 						{
 							ut.setcolor(11); cout << "   - ";  ut.setcolor(15); cout << VPR.at(i).produto << endl;
 						}
@@ -2024,27 +2033,20 @@ int Store::pubIndividual()
 					}
 				}
 			}
-			else
+			ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
+
+			cout << endl;
+			/*
+			for (int i = 0; i < matrix_target.size(); i++)
 			{
-				ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
-				for (int i = 0; i < VPR.size(); i++)
+				for (int a = 0; a < matrix_target[i].size(); a++)
 				{
-					ut.setcolor(11); cout << "   - ";  ut.setcolor(15); cout << VPR.at(i).produto << endl;
+					cout << matrix_target[i][a];
 				}
+				cout << endl;
 			}
+			*/
 		}
-		ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
-
-		/*cout << endl;
-
-		for (int i = 0; i < matrix_target.size(); i++)
-		{
-		for (int a = 0; a < matrix_target[i].size(); a++)
-		{
-		cout << matrix_target[i][a];
-		}
-		cout << endl;
-		}*/
 	}
 	else
 	{
