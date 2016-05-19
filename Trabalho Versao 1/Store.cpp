@@ -151,7 +151,7 @@ void Store::opcoesPublicidadePersonalizada()
 			pubIndividual();
 			break;
 		case 2:
-			////cenas
+			pubBottom10();
 			break;
 		}
 }
@@ -2055,5 +2055,19 @@ int Store::pubIndividual()
 	}
 
 	getchar();
+	return 0;
+}
+
+int Store::pubBottom10()
+{
+	vector <Client> VB10 = VClients; //VB10 é um vetor igual ao VClients que vai ser ordenado
+	sort(VB10.begin(), VB10.end(), [](Client &a, Client &b) {return a.GetMontante() < b.GetMontante(); }); //ordena o vetor VB10
+	VB10.erase(VB10.begin() + 10, VB10.end()); //VB10 passa a ser um vetor com apenas os 10 primeiros elementos de VClients
+
+	for (int i = 0; i < VB10.size(); i++)
+	{
+		cout << VB10.at(i).GetId() << VB10.at(i).GetNome() << VB10.at(i).GetData() << VB10.at(i).GetMontante() << endl;
+	}
+	getchar(); getchar();
 	return 0;
 }

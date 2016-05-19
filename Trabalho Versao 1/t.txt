@@ -1,3 +1,8 @@
-2
+7
 1 ; 01/01/2016 ; laranja, banana
-16 ; 15/03/2016 ; laranja, banana
+10 ; 01/01/2016 ; laranja, abacate, framboesas
+4 ; 01/01/2016 ; morangos
+5 ; 01/01/2016 ; morangos, abacate
+9 ; 01/01/2016 ; melancia, morangos, laranja
+11 ; 01/01/2016 ; banana, framboesas
+2 ; 01/01/2016 ; melancia

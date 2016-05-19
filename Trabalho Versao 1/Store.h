@@ -104,5 +104,6 @@ public:
 
 	//Publicidade
 	int pubIndividual();
+	int pubBottom10();
 };
 

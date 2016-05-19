@@ -160,6 +160,11 @@
     <ClInclude Include="Transaction.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="c.txt" />
+    <Text Include="p.txt" />
+    <Text Include="t.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

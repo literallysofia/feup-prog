@@ -1,7 +1,12 @@
-6
-1 ; Rui Pereira ; 01/03/2008 ; 2.70
-2 ; Maria De Lurdes ; 23/04/2009 ; 0.00
-6 ; Joana Beires ; 15/10/2010 ; 7.50
-16 ; Manuela Moura ; 31/03/2016 ; 8.30
-17 ; Julieta Frade ; 19/05/2016 ; 5.20
-18 ; Sofia Silva ; 19/05/2016 ; 0.00
+11
+1 ; Diogo Picarra ; 01/03/2008 ; 2.70
+2 ; Tiago Bettencourt ; 23/04/2009 ; 0.00
+3 ; David Fonseca ; 15/10/2010 ; 7.50
+4 ; Antonio Zambujo ; 31/03/2011 ; 8.30
+5 ; Miguel Araujo ; 19/05/2012 ; 5.20
+6 ; Jorge Palma ; 09/07/2013 ; 6.01
+7 ; Rui Veloso ; 3/2/2014 ; 3.22
+8 ; Pedro Abrunhosa ; 12/06/2015 ; 4.20
+9 ; Ana Bacalhau ; 23/11/2015 ; 2.59
+10 ; Marisa Liz ; 02/03/2016 ; 20.55
+11 ; Pedro Geraldes ; 18/05/2016 ; 10.80

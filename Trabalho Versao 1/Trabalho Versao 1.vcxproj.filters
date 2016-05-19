@@ -51,4 +51,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="c.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="p.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="t.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

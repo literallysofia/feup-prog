@@ -1,5 +1,7 @@
-4
+6
 laranja ; 1.5
 banana ; 1.2
-peixe ; 5.6
-batatas fritas ; 0.4
+morangos ; 5.6
+abacate ; 2.4
+melancia ; 3.2
+framboesas ; 1.8
