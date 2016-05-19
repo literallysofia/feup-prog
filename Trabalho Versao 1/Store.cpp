@@ -696,7 +696,7 @@ int Store::removerCliente()
 	int id, dig;
 	string opcao;
 
-	cout << endl << "Intruduza o ID ou o NOME do cliente que pretende eliminar: ";  cin.ignore(); getline(cin, opcao); cout << endl;
+	cout << endl << "Introduza o ID ou o NOME do cliente que pretende eliminar: ";  cin.ignore(); getline(cin, opcao); cout << endl;
 
 	while (cin.fail())
 	{
@@ -774,7 +774,7 @@ int Store::alterarCliente()
 	float montante;
 	string opcao, nome;
 
-	cout << endl << "Intruduza o ID ou o NOME do cliente que pretende alterar: ";  cin.ignore(); getline(cin, opcao); cout << endl;
+	cout << endl << "Introduza o ID ou o NOME do cliente que pretende alterar: ";  cin.ignore(); getline(cin, opcao); cout << endl;
 
 	while (cin.fail())
 	{
@@ -826,7 +826,7 @@ int Store::alterarCliente()
 
 				if (dig == 1)
 				{
-					cout << endl << "Intruduza o nome do cliente: "; cin.ignore(); getline(cin >> setw(26), nome); cout << endl;
+					cout << endl << "Introduza o nome do cliente: "; cin.ignore(); getline(cin >> setw(26), nome); cout << endl;
 
 					while (cin.fail())
 					{
@@ -885,7 +885,7 @@ int Store::informacaoIndividual()
 	int id;
 	string opcao;
 
-	cout << endl << "Intruduza o ID ou o NOME do cliente que pretende visualizar: ";  cin.ignore(); getline(cin, opcao); cout << endl;
+	cout << endl << "Introduza o ID ou o NOME do cliente que pretende visualizar: ";  cin.ignore(); getline(cin, opcao); cout << endl;
 
 	while (cin.fail())
 	{
@@ -1183,7 +1183,7 @@ int Store::efetuarCompras()
 
 			if (op == 1)
 			{
-				cout << endl << "Intruduza o ID ou Nome do cliente: ";  ut.setcolor(3); cout << "{ ";  ut.setcolor(15); cin.ignore(); getline(cin, opcao);
+				cout << endl << "Introduza o ID ou Nome do cliente: ";  ut.setcolor(3); cout << "{ ";  ut.setcolor(15); cin.ignore(); getline(cin, opcao);
 
 				while (((clienteExiste(opcao)) == false) || (cin.fail()))
 				{
@@ -1705,7 +1705,7 @@ int Store::transIndividual()
 	int id;
 	string opcao, produtos;
 
-	cout << endl << "Intruduza o ID do cliente que pretende visualizar: ";  cin >> id; cout << endl;
+	cout << endl << "Introduza o ID do cliente que pretende visualizar: ";  cin >> id; cout << endl;
 
 	while (cin.fail())
 	{
