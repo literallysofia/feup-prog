@@ -1867,7 +1867,6 @@ ForwardIterator max_element(ForwardIterator first, ForwardIterator last)
 int Store::pubIndividual()
 {
 	int id;
-
 	cout << endl << "Introduza o ID do cliente: ";  cin >> id;
 
 	while (cin.fail())
@@ -1887,77 +1886,96 @@ int Store::pubIndividual()
 
 	if (transExisteID(id)) //verifica se o cliente realizou transacoes
 	{
-		vector<unsigned int> all_clients;    //vetor com os id clientes existentes e os que ja foram apagados mas possuem transacooes
+		vector<unsigned int> all_Clients;    //vetor com os id clientes existentes nas transacoes
 
-		for (int i = 0; i < VTrans.size(); i++) //percorre o vetor de transacoes
+		for (unsigned int i = 0; i < VTrans.size(); i++) //percorre o vetor de transacoes
 		{
-			if (find(all_clients.begin(), all_clients.end(), VTrans[i].GetId()) == all_clients.end()) //verifica se o id da transaçao na posiçao i ja existe no vetor all_clients
+			if (find(all_Clients.begin(), all_Clients.end(), VTrans[i].GetId()) == all_Clients.end()) //verifica se o id da transaçao na posiçao i ja existe no vetor all_clients
 			{
-				all_clients.push_back(VTrans[i].GetId()); //adiciona se nao existir
+				all_Clients.push_back(VTrans[i].GetId()); //adiciona se nao existir
 			}
 		}
 
-		for (int i = 0; i < all_clients.size(); i++)
+		for (unsigned int i = 0; i < all_Clients.size(); i++)
 		{
-			Client_IdIx.insert(make_pair(all_clients.at(i), i)); //preenche o map de clientes com os clientes existentes no vetor all_clients e a sua posiçao
+			Client_IdIx.insert(make_pair(all_Clients.at(i), i)); //preenche o map de clientes com os clientes existentes no vetor all_clients e a sua posiçao
 		}
 
-		for (int i = 0; i < VProducts.size(); i++)
+		for (unsigned int i = 0; i < VProducts.size(); i++)
 		{
 			Prod_Ix.insert(make_pair(VProducts.at(i).GetProd(), i)); //preenche o map de produtos com os produtos existentes no vetor e a sua posiçao
 		}
 
-
 		//criacao da matriz
-		vector<vector<bool>> matrix_target(all_clients.size(), vector<bool>(VProducts.size(), false)); //inicia a matriz a false
+		vector<vector<bool>> matrix_Target(all_Clients.size(), vector<bool>(VProducts.size(), false)); //inicia a matriz a false
 
-		for (int i = 0; i < VTrans.size(); i++) //percorre o vetor produtos
+		for (unsigned int i = 0; i < VTrans.size(); i++) //percorre o vetor produtos
 		{
-			for (int a = 0; a < VTrans.at(i).GetProds().size(); a++) //percorre o vetor de produtos em cada transacao
+			for (unsigned int a = 0; a < VTrans.at(i).GetProds().size(); a++) //percorre o vetor de produtos em cada transacao
 			{
-				matrix_target[Client_IdIx[VTrans[i].GetId()]][Prod_Ix[VTrans[i].GetProds().at(a)]] = true; // identifi  o cliente de cada transacao e na linha desse cliente na matriz coloque a true os produtos registados nessa transação
+				matrix_Target[Client_IdIx[VTrans[i].GetId()]][Prod_Ix[VTrans[i].GetProds().at(a)]] = true; // identifi  o cliente de cada transacao e na linha desse cliente na matriz coloque a true os produtos registados nessa transação
 			}
 		}
 
-		// Parte para usar o id do cliente a recomendar
-
-		if (find(all_clients.begin(), all_clients.end(), id) != all_clients.end()) //percorre o vetor all clients enquanto nao chega ao fim
+		//display matriz
+		/*for (int i = 0; i < matrix_Target.size(); i++)
 		{
-			vector<bool> client_recommend; //vetor igual à linha da matriz do cliente alvo
-			vector<string> products_recommend; //vetor de potenciais produtos para recomendar
-
-			for (int i = 0; i < matrix_target.size(); i++)
+			for (int a = 0; a < matrix_Target[i].size(); a++)
 			{
-				if (i == Client_IdIx[id])
+				cout << matrix_Target[i][a];
+			}
+			cout << endl;
+		}*/
+
+		vector<unsigned int> bought_Products; // vetor com o indice dos produtos comprados pelo cliente alvo
+
+		// preenche vetor bought_Products
+		for (unsigned int i = 0; i < matrix_Target.at(Client_IdIx.at(id)).size(); i++)
+			if (matrix_Target.at(Client_IdIx.at(id)).at(i))
+				bought_Products.push_back(i);
+
+		vector <unsigned int> client_Index; // vetor com os indices dos clientes que compraram o mesmo produto que o cliente alvo
+
+		// percorre a matriz para preencher o vetor client_Index
+		for (unsigned int i = 0; i < matrix_Target.size(); i++)
+		{
+			if (i == Client_IdIx.at(id)) // salta a linha que é igual ao cliente alvo
+				continue;
+
+			bool comprouOsMesmos = true;
+
+			for (auto c : bought_Products)
+			{
+				if (matrix_Target.at(i).at(c) != matrix_Target.at(Client_IdIx.at(id)).at(c))
 				{
-					client_recommend = matrix_target[i];
+					comprouOsMesmos = false;
+					break;
 				}
 			}
 
-			for (int i = 0; i < matrix_target.size(); i++) //percorre todos os clientes da matriz
+			if (comprouOsMesmos)
+				client_Index.push_back(i);
+		}
+
+
+		vector<string> products_Recommend; //vetor de potenciais produtos para recomendar
+
+		for (unsigned int j = 0; j < client_Index.size(); j++)
+		{
+			for (unsigned int w = 0; w < matrix_Target.at(client_Index.at(j)).size(); w++) //percorre cada produto de cada cliente do vetor client_Index
 			{
-				for (int a = 0; a < matrix_target[i].size(); a++) //percorre cada produto de cada cliente
+				if (matrix_Target.at(client_Index.at(j)).at(w)) // se tiver comprado produto da coluna w (true)
 				{
-
-					if (matrix_target[i][a] != client_recommend[a]) //se o bool do produto do cliente que esta a ser analizado for diferente do bool do mesmo produto do cliente alvo
+					if (find(bought_Products.begin(), bought_Products.end(), w) == bought_Products.end())
 					{
-						int c = 0; //contador de produtos adicionados em cada cliente ao vetor de potenciais produtos a recomendar
-
-						if (matrix_target[i][a] == true) // se o cliente que esta a ser analizado comprou o produto
-						{
-							products_recommend.push_back(VProducts.at(a).GetProd()); //adiciona o produto à lista de potencias produtos
-							c++; //adiciona ao contador
-						}
-
-						if (matrix_target[i][a] == false) //se o cliente alvo comprou o produto e o cliente que esta a ser analizado nao comprou
-						{
-							products_recommend.erase(products_recommend.end() - c, products_recommend.end()); //apaga os produtos adicinados ao vetor potencias produtos a reocmendar deste cliente
-						}
+						products_Recommend.push_back(VProducts.at(w).GetProd());
 					}
 				}
 			}
+		}
 
-			if (products_recommend.size() == 0)
+
+		if (products_Recommend.size() == 0)
 			{
 				ut.setcolor(4); cout << "\nNao existe nenhum produto a recomendar.\n";
 			}
@@ -1966,16 +1984,16 @@ int Store::pubIndividual()
 				// cria um vetor de produtos recomendados com a estrutura (nome do produto, numero de vezes que aparece)
 				vector<ProdutosFrequencia> VPR;
 
-				for (int i = 0; i < products_recommend.size(); i++)
+				for (int i = 0; i < products_Recommend.size(); i++)
 				{
 					int t = 0; //numero de vezes que cada produto repete
-					for (int j = 0; j < products_recommend.size(); j++)
+					for (int j = 0; j < products_Recommend.size(); j++)
 					{
-						if (products_recommend.at(i) == products_recommend.at(j))
+						if (products_Recommend.at(i) == products_Recommend.at(j))
 							t++;
 					}
 					ProdutosFrequencia novoelem; //criacao novo elemento
-					novoelem.produto = products_recommend.at(i);
+					novoelem.produto = products_Recommend.at(i);
 					novoelem.total = t;
 					VPR.push_back(novoelem);
 				}
@@ -2033,25 +2051,12 @@ int Store::pubIndividual()
 					}
 				}
 			}
-			ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
-
-			cout << endl;
-			
-			for (int i = 0; i < matrix_target.size(); i++)
-			{
-				for (int a = 0; a < matrix_target[i].size(); a++)
-				{
-					cout << matrix_target[i][a];
-				}
-				cout << endl;
-			}
-			
-		}
+			ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar.\n"; ut.setcolor(15); getchar();
 	}
 	else
 	{
 		ut.setcolor(4); cout << "\nEste cliente nao efetuou nenhuma transacao.\n";
-		ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
+		ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar.\n"; ut.setcolor(15); getchar();
 	}
 
 	getchar();
@@ -2190,7 +2195,7 @@ int Store::pubBottom10()
 		}
 	}
 
-	vector <bool> clienteB10 (VProducts.size()); //vetor de booleanos que terá true nas posiçoes dos produtos mais frequentes dos bottom 10
+	vector <bool> clienteB10(VProducts.size()); //vetor de booleanos que terá true nas posiçoes dos produtos mais frequentes dos bottom 10
 	vector<string> products_recommendB10; //vetor de potenciais produtos a recomendar para os bottom10
 
 	//preenche o vetor clienteB10 com true nas posiçoes dos produtos mais frequentes
@@ -2211,7 +2216,7 @@ int Store::pubBottom10()
 		}
 	}
 
-	
+
 	for (int i = 0; i < matrix_NB10.size(); i++) //percorre todos os clientes da matriz
 	{
 		for (int a = 0; a < matrix_NB10[i].size(); a++) //percorre cada produto de cada cliente
