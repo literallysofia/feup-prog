@@ -2036,7 +2036,7 @@ int Store::pubIndividual()
 			ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
 
 			cout << endl;
-			/*
+			
 			for (int i = 0; i < matrix_target.size(); i++)
 			{
 				for (int a = 0; a < matrix_target[i].size(); a++)
@@ -2045,7 +2045,7 @@ int Store::pubIndividual()
 				}
 				cout << endl;
 			}
-			*/
+			
 		}
 	}
 	else
@@ -2190,12 +2190,128 @@ int Store::pubBottom10()
 		}
 	}
 
-	//mais ceninhas wooooooo
+	vector <bool> clienteB10 (VProducts.size()); //vetor de booleanos que terá true nas posiçoes dos produtos mais frequentes dos bottom 10
+	vector<string> products_recommendB10; //vetor de potenciais produtos a recomendar para os bottom10
+
+	//preenche o vetor clienteB10 com true nas posiçoes dos produtos mais frequentes
+	for (int i = 0; i < VProducts.size(); i++)
+	{
+		clienteB10.at(Prod_Ix[produtos_maisfrequentes[i]]) = true;
+	}
+
+	//criacao da matriz dos clientes que nao sao do Bottom10
+	vector<vector<bool>> matrix_NB10(VNB10.size(), vector<bool>(VProducts.size(), false)); //inicia a matriz a false
+
+	//preenche a matriz dos clientes que nao sao dos Bottom10
+	for (int i = 0; i < TNB10.size(); i++) //percorre o vetor produtos
+	{
+		for (int a = 0; a < TNB10.at(i).GetProds().size(); a++) //percorre o vetor de produtos em cada transacao
+		{
+			matrix_NB10[Client_IdIx[TNB10[i].GetId()]][Prod_Ix[TNB10[i].GetProds().at(a)]] = true; // identifica  o cliente de cada transacao e na linha desse cliente na matriz coloque a true os produtos registados nessa transação
+		}
+	}
+
+	
+	for (int i = 0; i < matrix_NB10.size(); i++) //percorre todos os clientes da matriz
+	{
+		for (int a = 0; a < matrix_NB10[i].size(); a++) //percorre cada produto de cada cliente
+		{
+
+			if (matrix_NB10[i][a] != clienteB10[a]) //se o bool do produto do cliente que esta a ser analizado for diferente do bool do mesmo produto do Bottom10
+			{
+				int c = 0; //contador de produtos adicionados em cada cliente ao vetor de potenciais produtos a recomendar
+
+				if (matrix_NB10[i][a] == true) // se o cliente que esta a ser analizado comprou o produto
+				{
+					products_recommendB10.push_back(VProducts.at(a).GetProd()); //adiciona o produto à lista de potencias produtos
+					c++; //adiciona ao contador
+				}
+
+				if (matrix_NB10[i][a] == false) //se o Bottom10 comprou o produto e o cliente que esta a ser analizado nao comprou
+				{
+					products_recommendB10.erase(products_recommendB10.end() - c, products_recommendB10.end()); //apaga os produtos adicinados ao vetor potencias produtos a reocmendar deste cliente
+				}
+			}
+		}
+	}
+
+	if (products_recommendB10.size() == 0)
+	{
+		ut.setcolor(4); cout << "\nNao existe nenhum produto a recomendar.\n";
+	}
+
+	else {
+		// cria um vetor de produtos recomendados com a estrutura (nome do produto, numero de vezes que aparece)
+		vector<ProdutosFrequencia> VPRB10;
+
+		for (int i = 0; i < products_recommendB10.size(); i++)
+		{
+			int t = 0; //numero de vezes que cada produto repete
+			for (int j = 0; j < products_recommendB10.size(); j++)
+			{
+				if (products_recommendB10.at(i) == products_recommendB10.at(j))
+					t++;
+			}
+			ProdutosFrequencia novoelem; //criacao novo elemento
+			novoelem.produto = products_recommendB10.at(i);
+			novoelem.total = t;
+			VPRB10.push_back(novoelem);
+		}
 
 
+		// elimina os produtos repetidos, de maneira a ficar apenas uma vez cada produto
+		if (VPRB10.size() > 1)
+		{
+			for (int i = 0; i < VPRB10.size(); i++)
+			{
+				for (int j = 1; j < VPRB10.size(); j++)
+				{
+					if (VPRB10.at(i).produto == VPRB10.at(j).produto)
+						VPRB10.erase(VPRB10.begin() + j);
+				}
+			}
+			if (VPRB10.size() > 1)
+			{
+				// cria um vetor com todos os totais dos produtos, de maneira a calcular o total maximo, ou seja, o produto mais frequente
+				vector<int> Totais;
+				vector<int>::iterator result;
+				int totalMaximo;
+				for (int i = 0; i < VPRB10.size(); i++)
+				{
+					Totais.push_back(VPRB10.at(i).total);
+				}
+				result = std::max_element(Totais.begin(), Totais.end()); // retorna a posicao do maior elemento (comecando em 1)
+				totalMaximo = Totais.at(std::distance(Totais.begin(), result) + 1);
 
-
-
+				//display dos produtos recomendados, os mais frequentes
+				ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
+				for (int i = 0; i < VPRB10.size(); i++)
+				{
+					if (totalMaximo == VPRB10.at(i).total)
+					{
+						ut.setcolor(11); cout << "   - ";  ut.setcolor(15); cout << VPRB10.at(i).produto << endl;
+					}
+				}
+			}
+			else
+			{
+				ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
+				for (int i = 0; i < VPRB10.size(); i++)
+				{
+					ut.setcolor(11); cout << "   - ";  ut.setcolor(15); cout << VPRB10.at(i).produto << endl;
+				}
+			}
+		}
+		else
+		{
+			ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
+			for (int i = 0; i < VPRB10.size(); i++)
+			{
+				ut.setcolor(11); cout << "   - ";  ut.setcolor(15); cout << VPRB10.at(i).produto << endl;
+			}
+		}
+	}
+	ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar."; ut.setcolor(15); getchar();
 
 	getchar(); getchar();
 	return 0;

@@ -1,4 +1,4 @@
-11
+13
 1 ; Diogo Picarra ; 01/03/2008 ; 2.70
 2 ; Tiago Bettencourt ; 23/04/2009 ; 0.00
 3 ; David Fonseca ; 15/10/2010 ; 7.50
@@ -10,3 +10,5 @@
 9 ; Ana Bacalhau ; 23/11/2015 ; 2.59
 10 ; Marisa Liz ; 02/03/2016 ; 20.55
 11 ; Pedro Geraldes ; 18/05/2016 ; 10.80
+12 ; Julieta Frade ; 20/05/2016 ; 20.00
+13 ; Sofia Silva ; 20/05/2016 ; 30.00
