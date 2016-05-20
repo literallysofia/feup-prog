@@ -5,7 +5,7 @@
 4 ; Antonio Zambujo ; 31/03/2011 ; 8.30
 5 ; Miguel Araujo ; 19/05/2012 ; 5.20
 6 ; Jorge Palma ; 09/07/2013 ; 6.01
-7 ; Rui Veloso ; 3/2/2014 ; 3.22
+7 ; Rui Veloso ; 03/02/2014 ; 3.22
 8 ; Pedro Abrunhosa ; 12/06/2015 ; 4.20
 9 ; Ana Bacalhau ; 23/11/2015 ; 2.59
 10 ; Marisa Liz ; 02/03/2016 ; 20.55
