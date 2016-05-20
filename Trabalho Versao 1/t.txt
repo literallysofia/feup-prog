@@ -9,6 +9,6 @@
 3 ; 01/01/2016 ; abacate
 4 ; 01/01/2016 ; abacate
 11 ; 01/01/2016 ; abacate
-10 ; 01/01/2016 ; banana, morangos, abacate, melancia
+10 ; 01/01/2016 ; banana, morangos, abacate
 12 ; 01/01/2016 ; banana, morangos, abacate, melancia
-13 ; 01/01/2016 ; laranja, framboesas, banana
+13 ; 01/01/2016 ; laranja, banana, morangos
