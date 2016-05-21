@@ -668,8 +668,6 @@ int Store::criarCliente()
 	string nome;
 	float montante = 0;
 
-	extrairClientes();
-
 	cout << endl << "Introduza o nome do cliente: "; cin.ignore(); getline(cin >> setw(26), nome); cout << endl;
 
 	while (cin.fail()) //caso existir algum erro com o input
@@ -749,7 +747,6 @@ int Store::removerCliente()
 
 				if (dig == 1)
 				{
-					extrairClientes();
 					VClients.erase(VClients.begin() + i);
 					return 0;
 				}
@@ -861,7 +858,6 @@ int Store::alterarCliente()
 						cin >> montante;
 					}
 
-					extrairClientes();
 					VClients.at(i).SetNome(formatarNome(nome));
 					VClients.at(i).SetMontante(montante);
 					return 0;
@@ -1212,7 +1208,6 @@ int Store::efetuarCompras()
 			{
 				if ((id == VClients.at(i).GetId()) || (opcao == VClients.at(i).GetNome()))
 				{
-					extrairClientes();
 					VClients.at(i).SetMontante(total);
 					id = VClients.at(i).GetId();
 				}
@@ -1835,7 +1830,6 @@ void Store::criarTrans(int id, string produtos)
 		produtos.erase(0, produtos.find_first_of(",") + 2);
 	}
 
-	extrairTransacoes();
 	VTrans.push_back(Transaction(id, dataAtual(), products));
 	return;
 }
@@ -2319,7 +2313,7 @@ int Store::pubBottom10()
 
 		for (unsigned int i = 0; i < VNB10.size(); i++)
 		{
-			ClientNB10_IdIx.insert(make_pair(VNB10.at(i).GetId(), i)); //preenche o map de clientes com os clientes existentes no vetor all_clients e a sua posiçao
+			ClientNB10_IdIx.insert(make_pair(VNB10.at(i).GetId(), i)); //preenche o map de clientes que nao sao dos bottom10 com os clientes existentes no vetor VNB10 e a sua posiçao
 		}
 
 		for (unsigned int i = 0; i < VProducts.size(); i++)
@@ -2328,13 +2322,13 @@ int Store::pubBottom10()
 		}
 
 		//criacao da matriz
-		vector<vector<bool>> matrix_NB10(VNB10.size(), vector<bool>(VProducts.size(), false)); //inicia a matriz a false
+		vector<vector<bool>> matrix_NB10(VNB10.size(), vector<bool>(VProducts.size(), false)); //inicia a matriz dos clientes que nao sao dos bottom10 a false
 
 		for (unsigned int i = 0; i < TNB10.size(); i++) //percorre o vetor transacoes
 		{
 			for (unsigned int a = 0; a < TNB10.at(i).GetProds().size(); a++) //percorre o vetor de produtos em cada transacao
 			{
-				matrix_NB10[ClientNB10_IdIx[TNB10.at(i).GetId()]][Prod_Ix[TNB10.at(i).GetProds().at(a)]] = true; // identifi  o cliente de cada transacao e na linha desse cliente na matriz coloque a true os produtos registados nessa transação
+				matrix_NB10[ClientNB10_IdIx[TNB10.at(i).GetId()]][Prod_Ix[TNB10.at(i).GetProds().at(a)]] = true; // identifica o cliente de cada transacao e na linha desse cliente na matriz coloque a true os produtos registados nessa transação
 			}
 		}
 
@@ -2350,7 +2344,7 @@ int Store::pubBottom10()
 		}
 		*/
 
-		vector <bool> cB10(VProducts.size());
+		vector <bool> cB10(VProducts.size()); //vetor de booleanos com true na posiçao dos produdos mais frequentes comprados pelos bottom10 no VProducts
 
 		for (int i = 0; i < produtos_maisfrequentes.size(); i++)
 		{

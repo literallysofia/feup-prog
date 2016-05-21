@@ -31,8 +31,8 @@ private:
 
 	//Maps
 	map<unsigned int, unsigned int> Client_IdIx; //map<id_cliente, posicao_cliente>
-	map<unsigned int, unsigned int> ClientNB10_IdIx;
-	map<string, unsigned int> Prod_Ix;				//map<nome_produto, posicao_produto>
+	map<unsigned int, unsigned int> ClientNB10_IdIx; //map<id_clienteNB10, posicao_VNB10>
+	map<string, unsigned int> Prod_Ix; //map<nome_produto, posicao_produto>
 
 public:
 	Store();

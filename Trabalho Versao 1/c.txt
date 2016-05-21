@@ -1,14 +1,18 @@
-13
-1 ; Diogo Picarra ; 01/03/2008 ; 2.70
-2 ; Tiago Bettencourt ; 23/04/2009 ; 0.00
-3 ; David Fonseca ; 15/10/2010 ; 7.50
-4 ; Antonio Zambujo ; 31/03/2011 ; 8.30
-5 ; Miguel Araujo ; 19/05/2012 ; 5.20
-6 ; Jorge Palma ; 09/07/2013 ; 6.01
-7 ; Rui Veloso ; 03/02/2014 ; 3.22
-8 ; Pedro Abrunhosa ; 12/06/2015 ; 4.20
-9 ; Ana Bacalhau ; 23/11/2015 ; 2.59
-10 ; Marisa Liz ; 02/03/2016 ; 20.55
-11 ; Pedro Geraldes ; 18/05/2016 ; 10.80
-12 ; Julieta Frade ; 20/05/2016 ; 20.00
-13 ; Sofia Silva ; 20/05/2016 ; 30.00
+17
+1 ; Diogo Picarra ; 01/03/2008 ; 1.20
+2 ; Tiago Bettencourt ; 04/05/2009 ; 3.60
+3 ; David Fonseca ; 07/08/2009 ; 9.20
+4 ; Antonio Zambujo ; 01/04/2010 ; 11.00
+5 ; Miguel Araujo ; 22/05/2010 ; 16.10
+6 ; Jorge Palma ; 24/08/2010 ; 18.50
+7 ; Rui Veloso ; 24/12/2010 ; 21.70
+8 ; Pedro Abrunhosa ; 26/02/2011 ; 26.20
+9 ; Ana Bacalhau ; 04/03/2012 ; 29.40
+10 ; Marisa Liz ; 22/05/2013 ; 29.40
+11 ; Pedro Geraldes ; 05/07/2013 ; 26.20
+12 ; Rui Pereira ; 24/10/2013 ; 21.70
+13 ; Maria De Lurdes ; 23/10/2014 ; 18.50
+14 ; Joana Beires ; 28/02/2015 ; 16.10
+15 ; Manuela Moura ; 21/01/2016 ; 11.00
+16 ; Julieta Frade ; 21/05/2016 ; 9.20
+17 ; Sofia Silva ; 21/05/2016 ; 3.60

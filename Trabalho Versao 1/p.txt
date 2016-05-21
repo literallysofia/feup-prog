@@ -1,7 +1,11 @@
-6
+10
 laranja ; 1.5
 banana ; 1.2
 morangos ; 5.6
 abacate ; 2.4
 melancia ; 3.2
 framboesas ; 1.8
+amoras pretas ; 2.4
+ameixa ; 3.6
+manga ; 4.5
+ananas ; 3.2
