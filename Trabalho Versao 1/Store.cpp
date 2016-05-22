@@ -2508,7 +2508,7 @@ int Store::pubBottom10()
 
 			bool comprouOsMesmos = true;
 
-			for (unsigned int c = 0; c < bought_Products.size(); c++)
+			for (auto c : bought_Products)
 			{
 				if (matrix_NB10.at(i).at(c) != cB10.at(c))
 				{
