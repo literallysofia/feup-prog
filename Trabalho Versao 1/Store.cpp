@@ -1956,7 +1956,7 @@ int Store::pubIndividual()
 
 			bool comprouOsMesmos = true;
 
-			for (unsigned int c = 0; c < bought_Products.size(); c++)
+			for (auto c : bought_Products)
 			{
 				if (matrix_Target.at(i).at(c) != matrix_Target.at(Client_IdIx.at(id)).at(c))
 				{
