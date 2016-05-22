@@ -1851,9 +1851,23 @@ ForwardIterator max_element(ForwardIterator first, ForwardIterator last)
 	ForwardIterator largest = first;
 
 	while (++first != last)
-		if (*largest < *first)    // or: if (comp(*largest,*first)) for version (2)
+		if (*largest < *first)
 			largest = first;
 	return largest;
+}
+
+// algoritmo que obtem o valor minimo de um vetor de inteiros
+
+template <class ForwardIterator>
+ForwardIterator min_element(ForwardIterator first, ForwardIterator last)
+{
+	if (first == last) return last;
+	ForwardIterator smallest = first;
+
+	while (++first != last)
+		if (*first<*smallest)
+			smallest = first;
+	return smallest;
 }
 
 
@@ -1996,7 +2010,7 @@ int Store::pubIndividual()
 				}
 			}
 
-			for (int i = 0; i < todos_Produtos.size(); i++)
+			for (unsigned int i = 0; i < todos_Produtos.size(); i++)
 			{
 				if (find(clienteAlvo_produtos.begin(), clienteAlvo_produtos.end(), todos_Produtos.at(i)) != clienteAlvo_produtos.end())
 				{
@@ -2008,10 +2022,10 @@ int Store::pubIndividual()
 			// cria um vetor de todos os produtos com a estrutura (nome do produto, numero de vezes que aparece)
 			vector<ProdutosFrequencia> vector_All;
 
-			for (int i = 0; i < todos_Produtos.size(); i++)
+			for (unsigned int i = 0; i < todos_Produtos.size(); i++)
 			{
 				int t = 0; //numero de vezes que cada produto repete
-				for (int j = 0; j < todos_Produtos.size(); j++)
+				for (unsigned int j = 0; j < todos_Produtos.size(); j++)
 				{
 					if (todos_Produtos.at(i) == todos_Produtos.at(j))
 						t++;
@@ -2025,9 +2039,9 @@ int Store::pubIndividual()
 			// elimina os produtos repetidos, de maneira a ficar apenas uma vez cada produto
 			if (vector_All.size() > 1)
 			{
-				for (int i = 0; i < vector_All.size(); i++)
+				for (unsigned int i = 0; i < vector_All.size(); i++)
 				{
-					for (int j = 1; j < vector_All.size(); j++)
+					for (unsigned int j = 1; j < vector_All.size(); j++)
 					{
 						if (vector_All.at(i).produto == vector_All.at(j).produto)
 						{
@@ -2040,10 +2054,10 @@ int Store::pubIndividual()
 				if (vector_All.size() > 1)
 				{
 					// cria um vetor com todos os totais dos produtos, de maneira a calcular o total maximo, ou seja, o produto mais frequente
-					vector<int> total_All;
-					vector<int>::iterator result_All;
+					vector<unsigned int> total_All;
+					vector<unsigned int>::iterator result_All;
 					int totalMaximo_All;
-					for (int i = 0; i < vector_All.size(); i++)
+					for (unsigned int i = 0; i < vector_All.size(); i++)
 					{
 						total_All.push_back(vector_All.at(i).total);
 					}
@@ -2052,7 +2066,7 @@ int Store::pubIndividual()
 
 					//display dos produtos recomendados, os mais frequentes
 					ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
-					for (int i = 0; i < vector_All.size(); i++)
+					for (unsigned int i = 0; i < vector_All.size(); i++)
 					{
 						if (totalMaximo_All == vector_All.at(i).total)
 						{
@@ -2063,7 +2077,7 @@ int Store::pubIndividual()
 				else
 				{
 					ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
-					for (int i = 0; i < vector_All.size(); i++)
+					for (unsigned int i = 0; i < vector_All.size(); i++)
 					{
 						ut.setcolor(11); cout << "   - ";  ut.setcolor(15); cout << vector_All.at(i).produto << endl;
 					}
@@ -2071,10 +2085,78 @@ int Store::pubIndividual()
 			}
 			else
 			{
-				ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
-				for (int i = 0; i < vector_All.size(); i++)
+				if (vector_All.size() == 1)
 				{
-					ut.setcolor(11); cout << "   - ";  ut.setcolor(15); cout << vector_All.at(i).produto << endl;
+					ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
+					for (unsigned int i = 0; i < vector_All.size(); i++)
+					{
+						ut.setcolor(11); cout << "   - ";  ut.setcolor(15); cout << vector_All.at(i).produto << endl;
+					}
+				}
+				// caso o cliente ja tenha comprado todos os produtos, recomendar o mais frequente no geral
+				else
+				{
+					// vetor com todos os produtos comprados pelos clientes
+					vector<string> todos_Prod;
+
+					for (unsigned int i = 0; i < VTrans.size(); i++)
+					{
+						for (unsigned int j = 0; j < VTrans.at(i).GetProds().size(); j++)
+						{
+							todos_Prod.push_back(VTrans.at(i).GetProds().at(j));
+						}
+					}
+
+					//vetor com todos os produtos e seus totais
+					vector<ProdutosFrequencia> vector_Global;
+					for (unsigned int i = 0; i < todos_Prod.size(); i++)
+					{
+						int t = 0; //numero de vezes que cada produto repete
+						for (unsigned int j = 0; j < todos_Prod.size(); j++)
+						{
+							if (todos_Prod.at(i) == todos_Prod.at(j))
+								t++;
+						}
+						ProdutosFrequencia novoelem; //criacao novo elemento
+						novoelem.produto = todos_Prod.at(i);
+						novoelem.total = t;
+						vector_Global.push_back(novoelem);
+					}
+
+					//elimina produtos repetidos
+					for (unsigned int i = 0; i < vector_Global.size(); i++)
+					{
+						for (unsigned int j = 1; j < vector_Global.size(); j++)
+						{
+							if (vector_Global.at(i).produto == vector_Global.at(j).produto)
+							{
+								vector_Global.erase(vector_Global.begin() + j);
+								j = i + 1;
+							}
+						}
+					}
+
+					// cria um vetor com todos os totais dos produtos, de maneira a calcular o total maximo, ou seja, o produto mais frequente global
+					vector<unsigned int> total_Global;
+					vector<unsigned int>::iterator result_Global;
+					int totalMaximo_Global;
+					for (unsigned int i = 0; i < vector_Global.size(); i++)
+					{
+						total_Global.push_back(vector_Global.at(i).total);
+					}
+					result_Global = std::max_element(total_Global.begin(), total_Global.end()); // retorna a posicao do maior elemento (comecando em 1)
+					totalMaximo_Global = total_Global.at(std::distance(total_Global.begin(), result_Global));
+
+					//display dos produtos recomendados, os mais frequentes
+					ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
+					for (unsigned int i = 0; i < vector_Global.size(); i++)
+					{
+						if (totalMaximo_Global == vector_Global.at(i).total)
+						{
+							ut.setcolor(11); cout << "   - ";  ut.setcolor(15); cout << vector_Global.at(i).produto << endl;
+						}
+					}
+
 				}
 			}
 		}
@@ -2083,10 +2165,10 @@ int Store::pubIndividual()
 			// cria um vetor de produtos recomendados com a estrutura (nome do produto, numero de vezes que aparece)
 			vector<ProdutosFrequencia> VPR;
 
-			for (int i = 0; i < products_Recommend.size(); i++)
+			for (unsigned int i = 0; i < products_Recommend.size(); i++)
 			{
-				int t = 0; //numero de vezes que cada produto repete
-				for (int j = 0; j < products_Recommend.size(); j++)
+				unsigned int t = 0; //numero de vezes que cada produto repete
+				for (unsigned int j = 0; j < products_Recommend.size(); j++)
 				{
 					if (products_Recommend.at(i) == products_Recommend.at(j))
 						t++;
@@ -2101,9 +2183,9 @@ int Store::pubIndividual()
 			// elimina os produtos repetidos, de maneira a ficar apenas uma vez cada produto
 			if (VPR.size() > 1)
 			{
-				for (int i = 0; i < VPR.size(); i++)
+				for (unsigned int i = 0; i < VPR.size(); i++)
 				{
-					for (int j = 1; j < VPR.size(); j++)
+					for (unsigned int j = 1; j < VPR.size(); j++)
 					{
 						if (VPR.at(i).produto == VPR.at(j).produto)
 						{
@@ -2115,10 +2197,10 @@ int Store::pubIndividual()
 				if (VPR.size() > 1)
 				{
 					// cria um vetor com todos os totais dos produtos, de maneira a calcular o total maximo, ou seja, o produto mais frequente
-					vector<int> Totais;
-					vector<int>::iterator result;
-					int totalMaximo;
-					for (int i = 0; i < VPR.size(); i++)
+					vector<unsigned int> Totais;
+					vector<unsigned int>::iterator result;
+					unsigned int totalMaximo;
+					for (unsigned int i = 0; i < VPR.size(); i++)
 					{
 						Totais.push_back(VPR.at(i).total);
 					}
@@ -2127,7 +2209,7 @@ int Store::pubIndividual()
 
 					//display dos produtos recomendados, os mais frequentes
 					ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
-					for (int i = 0; i < VPR.size(); i++)
+					for (unsigned int i = 0; i < VPR.size(); i++)
 					{
 						if (totalMaximo == VPR.at(i).total)
 						{
@@ -2138,7 +2220,7 @@ int Store::pubIndividual()
 				else
 				{
 					ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
-					for (int i = 0; i < VPR.size(); i++)
+					for (unsigned int i = 0; i < VPR.size(); i++)
 					{
 						ut.setcolor(11); cout << "   - ";  ut.setcolor(15); cout << VPR.at(i).produto << endl;
 					}
@@ -2147,7 +2229,7 @@ int Store::pubIndividual()
 			else
 			{
 				ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
-				for (int i = 0; i < VPR.size(); i++)
+				for (unsigned int i = 0; i < VPR.size(); i++)
 				{
 					ut.setcolor(11); cout << "   - ";  ut.setcolor(15); cout << VPR.at(i).produto << endl;
 				}
@@ -2168,6 +2250,7 @@ int Store::pubIndividual()
 int Store::pubBottom10()
 {
 	vector<string> produtos_maisfrequentes; //vetor com o produto, ou produtos, mais frequentes do bottom 10
+	vector<string> produtos_menosfrequentes; //vetor com o produto, ou produtos, menos frequentes do bottom 10
 
 	vector <Client> VNB10; // vetor de clientes menos os do bottom 10 (Vector Not Bottom 10)
 	vector <Client> VB10 = VClients; //VB10 é um vetor igual ao VClients que vai ser ordenado
@@ -2230,16 +2313,16 @@ int Store::pubBottom10()
 			}
 		}
 
-		//PREENCHE VETOR DOS PRODUTOS MAIS FREQUENTES DO BOTTOM 10//
+		//PREENCHE VETOR DOS PRODUTOS MAIS E MENOS FREQUENTES DO BOTTOM 10//
 		if (produtos_TB10.size() > 1)
 		{
 			// cria um vetor com a estrutura (nome do produto, numero de vezes que aparece - frequencia)
 			vector<ProdutosFrequencia> VPFreq;
 
-			for (int i = 0; i < produtos_TB10.size(); i++)
+			for (unsigned int i = 0; i < produtos_TB10.size(); i++)
 			{
 				int t = 0; //numero de vezes que cada produto repete
-				for (int j = 0; j < produtos_TB10.size(); j++)
+				for (unsigned int j = 0; j < produtos_TB10.size(); j++)
 				{
 					if (produtos_TB10.at(i) == produtos_TB10.at(j))
 						t++;
@@ -2254,9 +2337,9 @@ int Store::pubBottom10()
 			// elimina os produtos repetidos, de maneira a ficar apenas uma vez cada produto
 			if (VPFreq.size() > 1)
 			{
-				for (int i = 0; i < VPFreq.size(); i++)
+				for (unsigned int i = 0; i < VPFreq.size(); i++)
 				{
-					for (int j = 1; j < VPFreq.size(); j++)
+					for (unsigned int j = 1; j < VPFreq.size(); j++)
 					{
 						if (VPFreq.at(i).produto == VPFreq.at(j).produto)
 						{
@@ -2268,46 +2351,74 @@ int Store::pubBottom10()
 
 				if (VPFreq.size() > 1)
 				{
-					// cria um vetor com todos os totais dos produtos, de maneira a calcular o total maximo, ou seja, o produto mais frequente
-					vector<int> Totais;
-					vector<int>::iterator result;
-					int totalMaximo;
-					for (int i = 0; i < VPFreq.size(); i++)
+					// cria um vetor com todos os totais dos produtos, de maneira a calcular o total maximo e o minimo, ou seja, o produto mais frequente e o menos frequente
+					vector<unsigned int> Totais;
+					vector<unsigned int>::iterator result_Max;
+					vector<unsigned int>::iterator result_Min;
+					unsigned int totalMaximo, totalMinimo;
+					for (unsigned int i = 0; i < VPFreq.size(); i++)
 					{
 						Totais.push_back(VPFreq.at(i).total);
 					}
-					result = std::max_element(Totais.begin(), Totais.end()); // retorna a posicao do maior elemento (comecando em 1)
-					totalMaximo = Totais.at(std::distance(Totais.begin(), result));
+					result_Max = std::max_element(Totais.begin(), Totais.end()); // retorna a posicao do maior elemento (comecando em 1)
+					totalMaximo = Totais.at(std::distance(Totais.begin(), result_Max));
 
-					for (int i = 0; i < VPFreq.size(); i++)
+					result_Min = std::min_element(Totais.begin(), Totais.end()); // retorna a posicao do menor elemento (comecando em 1)
+					totalMinimo = Totais.at(std::distance(Totais.begin(), result_Min));
+
+					for (unsigned int i = 0; i < VPFreq.size(); i++)
 					{
 						if (totalMaximo == VPFreq.at(i).total)
 						{
 							produtos_maisfrequentes.push_back(VPFreq.at(i).produto);
 						}
+
 					}
+
+					for (unsigned int i = 0; i < VPFreq.size(); i++)
+					{
+						if (totalMinimo == VPFreq.at(i).total)
+						{
+							produtos_menosfrequentes.push_back(VPFreq.at(i).produto);
+						}
+
+					}
+
 				}
 				else
 				{
-					for (int i = 0; i < VPFreq.size(); i++)
+					for (unsigned int i = 0; i < VPFreq.size(); i++)
 					{
 						produtos_maisfrequentes.push_back(VPFreq.at(i).produto);
+					}
+
+					for (unsigned int i = 0; i < VPFreq.size(); i++)
+					{
+						produtos_menosfrequentes.push_back(VPFreq.at(i).produto);
 					}
 				}
 			}
 			else
 			{
-				for (int i = 0; i < VPFreq.size(); i++)
+				for (unsigned int i = 0; i < VPFreq.size(); i++)
 				{
 					produtos_maisfrequentes.push_back(VPFreq.at(i).produto);
+				}
+				for (unsigned int i = 0; i < VPFreq.size(); i++)
+				{
+					produtos_menosfrequentes.push_back(VPFreq.at(i).produto);
 				}
 			}
 		}
 		else
 		{
-			for (int i = 0; i < produtos_TB10.size(); i++)
+			for (unsigned int i = 0; i < produtos_TB10.size(); i++)
 			{
 				produtos_maisfrequentes.push_back(produtos_TB10.at(i));
+			}
+			for (unsigned int i = 0; i < produtos_TB10.size(); i++)
+			{
+				produtos_menosfrequentes.push_back(produtos_TB10.at(i));
 			}
 		}
 
@@ -2346,7 +2457,7 @@ int Store::pubBottom10()
 
 		vector <bool> cB10(VProducts.size()); //vetor de booleanos com true na posiçao dos produdos mais frequentes comprados pelos bottom10 no VProducts
 
-		for (int i = 0; i < produtos_maisfrequentes.size(); i++)
+		for (unsigned int i = 0; i < produtos_maisfrequentes.size(); i++)
 		{
 			cB10.at(Prod_Ix[produtos_maisfrequentes[i]]) = true;
 		}
@@ -2412,7 +2523,7 @@ int Store::pubBottom10()
 			}
 
 			// remocao dos produtos frequentes dos bottom 10
-			for (int i = 0; i < todos_Produtos.size(); i++)
+			for (unsigned int i = 0; i < todos_Produtos.size(); i++)
 			{
 				if (find(produtos_maisfrequentes.begin(), produtos_maisfrequentes.end(), todos_Produtos.at(i)) != produtos_maisfrequentes.end())
 				{
@@ -2424,10 +2535,10 @@ int Store::pubBottom10()
 			// cria um vetor de todos os produtos com a estrutura (nome do produto, numero de vezes que aparece)
 			vector<ProdutosFrequencia> vector_All;
 
-			for (int i = 0; i < todos_Produtos.size(); i++)
+			for (unsigned int i = 0; i < todos_Produtos.size(); i++)
 			{
 				int t = 0; //numero de vezes que cada produto repete
-				for (int j = 0; j < todos_Produtos.size(); j++)
+				for (unsigned int j = 0; j < todos_Produtos.size(); j++)
 				{
 					if (todos_Produtos.at(i) == todos_Produtos.at(j))
 						t++;
@@ -2441,9 +2552,9 @@ int Store::pubBottom10()
 			// elimina os produtos repetidos, de maneira a ficar apenas uma vez cada produto
 			if (vector_All.size() > 1)
 			{
-				for (int i = 0; i < vector_All.size(); i++)
+				for (unsigned int i = 0; i < vector_All.size(); i++)
 				{
-					for (int j = 1; j < vector_All.size(); j++)
+					for (unsigned int j = 1; j < vector_All.size(); j++)
 					{
 						if (vector_All.at(i).produto == vector_All.at(j).produto)
 						{
@@ -2456,10 +2567,10 @@ int Store::pubBottom10()
 				if (vector_All.size() > 1)
 				{
 					// cria um vetor com todos os totais dos produtos, de maneira a calcular o total maximo, ou seja, o produto mais frequente
-					vector<int> total_All;
-					vector<int>::iterator result_All;
-					int totalMaximo_All;
-					for (int i = 0; i < vector_All.size(); i++)
+					vector<unsigned int> total_All;
+					vector<unsigned int>::iterator result_All;
+					unsigned int totalMaximo_All;
+					for (unsigned int i = 0; i < vector_All.size(); i++)
 					{
 						total_All.push_back(vector_All.at(i).total);
 					}
@@ -2468,7 +2579,7 @@ int Store::pubBottom10()
 
 					//display dos produtos recomendados, os mais frequentes
 					ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
-					for (int i = 0; i < vector_All.size(); i++)
+					for (unsigned int i = 0; i < vector_All.size(); i++)
 					{
 						if (totalMaximo_All == vector_All.at(i).total)
 						{
@@ -2479,7 +2590,7 @@ int Store::pubBottom10()
 				else
 				{
 					ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
-					for (int i = 0; i < vector_All.size(); i++)
+					for (unsigned int i = 0; i < vector_All.size(); i++)
 					{
 						ut.setcolor(11); cout << "   - ";  ut.setcolor(15); cout << vector_All.at(i).produto << endl;
 					}
@@ -2488,7 +2599,7 @@ int Store::pubBottom10()
 			else
 			{
 				ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
-				for (int i = 0; i < vector_All.size(); i++)
+				for (unsigned int i = 0; i < vector_All.size(); i++)
 				{
 					ut.setcolor(11); cout << "   - ";  ut.setcolor(15); cout << vector_All.at(i).produto << endl;
 				}
@@ -2499,10 +2610,10 @@ int Store::pubBottom10()
 			// cria um vetor de produtos recomendados com a estrutura (nome do produto, numero de vezes que aparece)
 			vector<ProdutosFrequencia> VPR;
 
-			for (int i = 0; i < products_Recommend.size(); i++)
+			for (unsigned int i = 0; i < products_Recommend.size(); i++)
 			{
-				int t = 0; //numero de vezes que cada produto repete
-				for (int j = 0; j < products_Recommend.size(); j++)
+				unsigned int t = 0; //numero de vezes que cada produto repete
+				for (unsigned int j = 0; j < products_Recommend.size(); j++)
 				{
 					if (products_Recommend.at(i) == products_Recommend.at(j))
 						t++;
@@ -2517,58 +2628,57 @@ int Store::pubBottom10()
 			// elimina os produtos repetidos, de maneira a ficar apenas uma vez cada produto
 			if (VPR.size() > 1)
 			{
-				for (int i = 0; i < VPR.size(); i++)
+				for (unsigned int i = 0; i < VPR.size(); i++)
 				{
-					for (int j = 1; j < VPR.size(); j++)
+					for (unsigned int j = 1; j < VPR.size(); j++)
 					{
 						if (VPR.at(i).produto == VPR.at(j).produto)
+						{
 							VPR.erase(VPR.begin() + j);
+							j = i + 1;
+						}
 					}
 				}
+
 				if (VPR.size() > 1)
 				{
 					// cria um vetor com todos os totais dos produtos, de maneira a calcular o total maximo, ou seja, o produto mais frequente
-					vector<int> Totais;
-					vector<int>::iterator result;
-					int totalMaximo;
-					for (int i = 0; i < VPR.size(); i++)
+					vector<unsigned int> Totais;
+					vector<unsigned int>::iterator result;
+					unsigned int totalMaximo;
+					for (unsigned int i = 0; i < VPR.size(); i++)
 					{
 						Totais.push_back(VPR.at(i).total);
 					}
 					result = std::max_element(Totais.begin(), Totais.end()); // retorna a posicao do maior elemento (comecando em 1)
 					totalMaximo = Totais.at(std::distance(Totais.begin(), result));
 
-					//display dos produtos recomendados, os mais frequentes
-					ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
-					for (int i = 0; i < VPR.size(); i++)
+					for (unsigned int i = 0; i < VPR.size(); i++)
 					{
-						if (totalMaximo == VPR.at(i).total)
+						if (totalMaximo != VPR.at(i).total)
 						{
-							ut.setcolor(11); cout << "   - ";  ut.setcolor(15); cout << VPR.at(i).produto << endl;
+							VPR.erase(VPR.begin() + i);
 						}
 					}
-					ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar.\n"; ut.setcolor(15); getchar();
 				}
-				else
-				{
-					ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
-					for (int i = 0; i < VPR.size(); i++)
-					{
-						ut.setcolor(11); cout << "   - ";  ut.setcolor(15); cout << VPR.at(i).produto << endl;
-					}
-					ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar.\n"; ut.setcolor(15); getchar();
-				}
-			}
-			else
-			{
-				ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
-				for (int i = 0; i < VPR.size(); i++)
-				{
-					ut.setcolor(11); cout << "   - ";  ut.setcolor(15); cout << VPR.at(i).produto << endl;
-				}
-				ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar.\n"; ut.setcolor(15); getchar();
 			}
 
+			//vetor de recomendacao final, com base nos mais frequentes dos clientes que nao estao no bottom 10, retorna os que sao menos frequentes nos bottom 10, e recomenda esses
+			vector<string> vector_Final;
+			for (unsigned int i = 0; i < VPR.size(); i++)
+			{
+				if (find(produtos_menosfrequentes.begin(), produtos_menosfrequentes.end(), VPR.at(i).produto) != produtos_menosfrequentes.end())
+				{
+					vector_Final.push_back(VPR.at(i).produto);
+				}
+			}
+
+			ut.setcolor(14); cout << "\n> ";  ut.setcolor(15); cout << "Produto(s) recomendado(s):\n";
+			for (unsigned int i = 0; i < vector_Final.size(); i++)
+			{
+				ut.setcolor(11); cout << "   - ";  ut.setcolor(15); cout << vector_Final.at(i) << endl;
+			}
+			ut.setcolor(4); cout << "\nPressione qualquer tecla para voltar.\n"; ut.setcolor(15); getchar();
 		}
 	}
 
