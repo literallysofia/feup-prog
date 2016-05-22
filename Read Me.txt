@@ -1,0 +1,42 @@
+________________________________________________________
+
+Trabalho Prático 2: 
+Supermercado Vende +++
+
+Desenvolvido por: 
+
+Bárbara Sofia Silva
+up201505628
+MIEIC Turma 2
+
+Julieta Frade 
+up201506530
+MIEIC Turma 2
+
+Em:
+20/05/2016
+________________________________________________________
+
+OBJETIVOS CUMPRIDOS:
+-Ler e guardar a informação de clientes e transações em ficheiros;
+-Criar, alterar e remover um cliente;
+-Visualizar de modo formatado informação: de um cliente ou de todos os clientes;
+-Listar os clientes por ordem alfabética;
+-Listar os Bottom10 clientes;
+-Efetuar compras (adicionar transações);
+-Atualiza o montante total de compras do correspondente cliente;
+-Visualizar, de modo formatado e por ordem cronológica, as transações: de um cliente, de um dia, entre duas datas especificadas, ou todas as transações;
+-Efectua publicidade personalizada para um cliente;
+-Efectua publicidade personalizada para os Bottom10 clientes;
+
+MELHORIAS:
+-Erro caso o ficheiro nao exista, o ficheiro nao seja o correto ou o numero que está na primeira linha dos ficheiro não esteja de acordo com o total de clientes, produtos ou transaçoes;
+-Erro caso o formato do input nao seja correto;
+-Erro caso a opçao digitada nao exista no menu;
+-Possibilidade de voltar (ctrl z) em qualquer input do programa;
+-Formatar o nome do novo cliente para que comece com letra maiuscula e as restantes letras sejam minusculas;
+-Verificar se a data existe;
+-Possibilidade de criar um cliente quando se efectua uma compra caso este nao exista;
+
+OBJETIVOS POR CUMPRIR:
+-///////////////////////////////////////////////77
