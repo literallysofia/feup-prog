@@ -48,6 +48,11 @@ void Client::SetMontante(float NM)
 	montante += NM;
 }
 
+void Client::SetNewMontante(float NM)
+{
+	montante = NM;
+}
+
 Client::~Client()
 {
 }

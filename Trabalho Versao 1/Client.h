@@ -30,5 +30,7 @@ public:
 
 	void SetMontante(float NM);
 
+	void SetNewMontante(float NM);
+
 	~Client();
 };
