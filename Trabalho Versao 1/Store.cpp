@@ -2070,7 +2070,7 @@ int Store::pubIndividual()
 						total_All.push_back(vector_All.at(i).total);
 					}
 
-					result_All = std::max_element(total_All.begin(), total_All.end()); // retorna a posicao do maior elemento (comecando em 1)
+					result_All = std::max_element(total_All.begin(), total_All.end()); // retorna a posicao do maior elemento  
 					totalMaximo_All = total_All.at(std::distance(total_All.begin(), result_All)); //maior elemento
 
 					//display dos produtos recomendados, os mais frequentes
@@ -2163,7 +2163,7 @@ int Store::pubIndividual()
 						total_Global.push_back(vector_Global.at(i).total);
 					}
 
-					result_Global = std::max_element(total_Global.begin(), total_Global.end()); // retorna a posicao do maior elemento (comecando em 1)
+					result_Global = std::max_element(total_Global.begin(), total_Global.end()); // retorna a posicao do maior elemento  
 					totalMaximo_Global = total_Global.at(std::distance(total_Global.begin(), result_Global));
 
 					//display dos produtos recomendados, os mais frequentes
@@ -2228,7 +2228,7 @@ int Store::pubIndividual()
 					{
 						Totais.push_back(VPR.at(i).total);
 					}
-					result = std::max_element(Totais.begin(), Totais.end()); // retorna a posicao do maior elemento (comecando em 1)
+					result = std::max_element(Totais.begin(), Totais.end()); // retorna a posicao do maior elemento  
 					totalMaximo = Totais.at(std::distance(Totais.begin(), result));
 
 					//display dos produtos mais frequentes
@@ -2397,10 +2397,10 @@ int Store::pubBottom10()
 					{
 						Totais.push_back(VPFreq.at(i).total);
 					}
-					result_Max = std::max_element(Totais.begin(), Totais.end()); // retorna a posicao do maior elemento (comecando em 1)
+					result_Max = std::max_element(Totais.begin(), Totais.end()); // retorna a posicao do maior elemento  
 					totalMaximo = Totais.at(std::distance(Totais.begin(), result_Max));
 
-					result_Min = std::min_element(Totais.begin(), Totais.end()); // retorna a posicao do menor elemento (comecando em 1)
+					result_Min = std::min_element(Totais.begin(), Totais.end()); // retorna a posicao do menor elemento  
 					totalMinimo = Totais.at(std::distance(Totais.begin(), result_Min));
 
 					for (unsigned int i = 0; i < VPFreq.size(); i++)
@@ -2616,7 +2616,7 @@ int Store::pubBottom10()
 						{
 							total_All.push_back(vector_All.at(i).total);
 						}
-						result_All = std::max_element(total_All.begin(), total_All.end()); // retorna a posicao do maior elemento (comecando em 1)
+						result_All = std::max_element(total_All.begin(), total_All.end()); // retorna a posicao do maior elemento  
 						totalMaximo_All = total_All.at(std::distance(total_All.begin(), result_All));
 
 						//display dos produtos recomendados, os mais frequentes
@@ -2720,7 +2720,7 @@ int Store::pubBottom10()
 					{
 						Totais.push_back(VPR.at(i).total);
 					}
-					result = std::max_element(Totais.begin(), Totais.end()); // retorna a posicao do maior elemento (comecando em 1)
+					result = std::max_element(Totais.begin(), Totais.end()); // retorna a posicao do maior elemento  
 					totalMaximo = Totais.at(std::distance(Totais.begin(), result));
 
 					for (unsigned int i = 0; i < VPR.size(); i++)

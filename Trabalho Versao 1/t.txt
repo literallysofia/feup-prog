@@ -1,48 +1,48 @@
 47
-7 ; 21/05/2016 ; laranja, ameixa
-8 ; 21/05/2016 ; framboesas, melancia
-1 ; 21/05/2016 ; banana
-17 ; 21/05/2016 ; abacate, banana
-9 ; 21/05/2016 ; ananas, laranja
-6 ; 21/05/2016 ; amoras, ameixa
-6 ; 21/05/2016 ; morangos, abacate
-11 ; 21/05/2016 ; amoras
-11 ; 21/05/2016 ; banana, manga, framboesas
-3 ; 21/05/2016 ; morangos, abacate, banana
-9 ; 21/05/2016 ; abacate, banana, morangos
-12 ; 21/05/2016 ; abacate, melancia, framboesas
-10 ; 21/05/2016 ; ameixa, manga, ananas
-5 ; 21/05/2016 ; laranja, banana, abacate
-9 ; 21/05/2016 ; melancia, framboesas
-8 ; 21/05/2016 ; ameixa, manga
-10 ; 21/05/2016 ; morangos, melancia, amoras
-7 ; 21/05/2016 ; banana, abacate, framboesas
-15 ; 21/05/2016 ; banana, morangos, abacate
-14 ; 21/05/2016 ; laranja, banana, morangos
-9 ; 21/05/2016 ; amoras, ameixa
-2 ; 21/05/2016 ; banana, abacate
-4 ; 21/05/2016 ; framboesas
-13 ; 21/05/2016 ; framboesas, amoras, ameixa
-5 ; 21/05/2016 ; ameixa
-16 ; 21/05/2016 ; banana, morangos, abacate
-12 ; 21/05/2016 ; amoras, ameixa
-10 ; 21/05/2016 ; abacate
-6 ; 21/05/2016 ; laranja, banana
-4 ; 21/05/2016 ; banana, morangos, abacate
-13 ; 21/05/2016 ; banana, morangos
-9 ; 21/05/2016 ; manga
-14 ; 21/05/2016 ; framboesas, ameixa
-7 ; 21/05/2016 ; melancia
-8 ; 21/05/2016 ; banana, morangos, abacate
-5 ; 21/05/2016 ; morangos, framboesas
-7 ; 21/05/2016 ; amoras, morangos
-8 ; 21/05/2016 ; laranja, amoras
-10 ; 21/05/2016 ; laranja, banana, framboesas
-15 ; 21/05/2016 ; framboesas
-11 ; 21/05/2016 ; abacate, melancia
-14 ; 21/05/2016 ; abacate
-13 ; 21/05/2016 ; laranja, abacate
-11 ; 21/05/2016 ; ameixa, morangos
-12 ; 21/05/2016 ; banana, morangos, laranja
-11 ; 21/05/2016 ; laranja
+7 ; 28/01/2010 ; laranja, ameixa
+8 ; 03/02/2010 ; framboesas, melancia
+1 ; 27/07/2010 ; banana
+17 ; 20/08/2010 ; abacate, banana
+9 ; 21/09/2010 ; ananas, laranja
+6 ; 21/01/2011 ; amoras, ameixa
+6 ; 06/03/2011 ; morangos, abacate
+11 ; 14/06/2011 ; amoras
+11 ; 21/09/2011 ; banana, manga, framboesas
+3 ; 30/11/2011 ; morangos, abacate, banana
+9 ; 21/01/2012 ; abacate, banana, morangos
+12 ; 28/02/2012 ; abacate, melancia, framboesas
+10 ; 28/03/2012 ; ameixa, manga, ananas
+5 ; 25/04/2012 ; laranja, banana, abacate
+9 ; 22/05/2012 ; melancia, framboesas
+8 ; 19/06/2012 ; ameixa, manga
+10 ; 16/07/2012 ; morangos, melancia, amoras
+7 ; 14/08/2012 ; banana, abacate, framboesas
+15 ; 30/09/2012 ; banana, morangos, abacate
+14 ; 29/10/2012 ; laranja, banana, morangos
+9 ; 24/02/2013 ; amoras, ameixa
+2 ; 19/04/2013 ; banana, abacate
+4 ; 18/05/2013 ; framboesas
+13 ; 20/09/2013 ; framboesas, amoras, ameixa
+5 ; 09/10/2013 ; ameixa
+16 ; 07/11/2013 ; banana, morangos, abacate
+12 ; 28/12/2013 ; amoras, ameixa
+10 ; 31/01/2014 ; abacate
+6 ; 29/03/2014 ; laranja, banana
+4 ; 26/04/2014 ; banana, morangos, abacate
+13 ; 22/05/2014 ; banana, morangos
+9 ; 08/06/2014 ; manga
+14 ; 09/07/2014 ; framboesas, ameixa
+7 ; 10/01/2015 ; melancia
+8 ; 12/02/2015 ; banana, morangos, abacate
+5 ; 27/05/2015 ; morangos, framboesas
+7 ; 21/07/2015 ; amoras, morangos
+8 ; 08/09/2015 ; laranja, amoras
+10 ; 05/01/2016 ; laranja, banana, framboesas
+15 ; 06/01/2016 ; framboesas
+11 ; 23/02/2016 ; abacate, melancia
+14 ; 13/03/2016 ; abacate
+13 ; 24/03/2016 ; laranja, abacate
+11 ; 05/04/2016 ; ameixa, morangos
+12 ; 18/05/2016 ; banana, morangos, laranja
+11 ; 20/05/2016 ; laranja
 6 ; 21/05/2016 ; framboesas

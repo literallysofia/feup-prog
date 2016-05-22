@@ -1,11 +1,12 @@
+
 ________________________________________________________
 
-Trabalho Pr�tico 2: 
-Supermercado Vende +++
+Trabalho Prático 2: 
+Supermercado Vende ++
 
 Desenvolvido por: 
 
-B�rbara Sofia Silva
+Bárbara Sofia Silva
 up201505628
 MIEIC Turma 2
 
@@ -18,25 +19,102 @@ Em:
 ________________________________________________________
 
 OBJETIVOS CUMPRIDOS:
--Ler e guardar a informa��o de clientes e transa��es em ficheiros;
+-Ler e guardar a informação de clientes e transações em ficheiros;
 -Criar, alterar e remover um cliente;
--Visualizar de modo formatado informa��o: de um cliente ou de todos os clientes;
--Listar os clientes por ordem alfab�tica;
+-Visualizar de modo formatado informação: de um cliente ou de todos os clientes;
+-Listar os clientes por ordem alfabética;
 -Listar os Bottom10 clientes;
--Efetuar compras (adicionar transa��es);
+-Efetuar compras (adicionar transações);
 -Atualiza o montante total de compras do correspondente cliente;
--Visualizar, de modo formatado e por ordem cronol�gica, as transa��es: de um cliente, de um dia, entre duas datas especificadas, ou todas as transa��es;
+-Visualizar, de modo formatado e por ordem cronológica, as transações: de um cliente, de um dia, entre duas datas especificadas, ou todas as transações;
 -Efectua publicidade personalizada para um cliente;
--Efectua publicidade personalizada para os Bottom10 clientes;
-
-MELHORIAS:
--Erro caso o ficheiro nao exista, o ficheiro nao seja o correto ou o numero que est� na primeira linha dos ficheiro n�o esteja de acordo com o total de clientes, produtos ou transa�oes;
--Erro caso o formato do input nao seja correto;
--Erro caso a op�ao digitada nao exista no menu;
--Possibilidade de voltar (ctrl z) em qualquer input do programa;
--Formatar o nome do novo cliente para que comece com letra maiuscula e as restantes letras sejam minusculas;
--Verificar se a data existe;
--Possibilidade de criar um cliente quando se efectua uma compra caso este nao exista;
+-Efectua publicidade personalizada para os Bottom10 clientes.
 
 OBJETIVOS POR CUMPRIR:
--///////////////////////////////////////////////77
+-Todos os objetivos foram cumpridos.
+________________________________________________________
+
+FUNCIONALIDADES DO PROGRAMA:
+
+Possibilidade de voltar (ctrl z) em qualquer input do programa.
+Erro caso:
+.o formato do input nao seja correto;
+.a opçao digitada nao exista no menu.
+
+
+00. EXTRAIR OS FICHEIROS
+Erro caso:
+ .o ficheiro nao exista;
+ .o ficheiro nao seja o correto;
+ .o numero que está na primeira linha dos ficheiro não esteja de acordo com o total de clientes, produtos ou transaçoes.
+
+ 	1. LISTA DE CLIENTES
+ 	Mostra a lista completa de clientes existentes.
+
+ 	2. GESTOR DE CLIENTES
+ 	Mostra a lista completa de clientes existentes.
+
+ 		1. CRIAR CLIENTE
+ 		Formata o nome do novo cliente para que comece com letra maiuscula e as restantes letras sejam minusculas.
+
+ 		2. REMOVER CLIENTE
+ 		Possibilidade de introduzir o nome ou o id;
+ 		Verifica se quer mesmo remover o cliente.
+
+ 		3. ALTERAR CLIENTE
+ 		Possibilidade de introduzir o nome ou o id;
+ 		Verifica se quer mesmo alterar o cliente.
+
+ 	3. EFETUAR COMPRA
+ 	Mostra a lista de produtos, a sua referência e o seu preço.
+
+ 		1. EFETUAR COMPRA
+ 		Verifica se quer mesmo comprar o produto;
+ 		Verifica se já é cliente, se sim há a possibilidade de introduzir o nome ou o id, se nao pode ser criado um novo cliente;
+ 		Mostra montante a pagar.
+
+ 	4. TRANSACOES
+ 	Mostra a lista completa de transações.
+
+ 		1. POR CLIENTE
+ 		Possibilidade de introduzir o nome ou o id;
+ 		Mostra todas as transações desse cliente.
+
+ 		2. ENTRE DUAS DATAS
+ 		Verifica se as datas existem;
+ 		Mostra todas as transações entre essas duas datas.
+
+ 		3. POR DIA
+ 		Verifica se a data existe;
+ 		Mostra todas as transações desse dia.
+
+ 	5. VISUALIZAR INFORMAÇÃO
+
+ 		1. CLIENTE
+ 		Possibilidade de introduzir o nome ou o id;
+ 		Mostra a informação desse cliente.
+
+ 		2. TODOS OS CLIENTES
+ 		Mostra a lista completa de clientes existentes.
+
+ 		3. BOTTOM 10
+ 		Mostra a lista dos 10 piores clientes ordenada de forma crescente do montante gasto.
+
+ 		4. CLIENTES (ORDEM ALFABÉTICA)
+ 		Mostra a lista completa de clientes existentes por ordem alfabética.
+
+ 		5. TRANSACOES
+ 		Mostra a lista completa de transações.
+
+ 	6. PUBLICIDADE PERSONALIZADA
+
+ 		1. INDIVIDUAL
+ 		Seleciona os clientes que compraram os mesmos produtos que o cliente alvo, dentro dos produtos que esses clientes compraram mostra o(s) mais comprado(s).
+ 		Se o cliente alvo tiver comprado esses produtos é recomendado o produto mais frequente no geral.
+ 		Caso nao exista nenhum cliente que tenha comprado os mesmos produtos que o cliente alvo, o programa recomenda o produto mais frequente entre todos os produtos que o cliente alvo nao comprou.
+ 		
+ 		2. BOTTOM10
+ 		Esta opção só funciona se existirem mais que 10 clientes.
+ 		Seleciona os produtos mais comprados pelos bottom10. Seleciona os clientes normais que compraram esses produtos. Dentro dos produtos que esses clientes compraram, sao selecionados os mais frequentes.
+ 		Se os bottom10 tiverem comprado esses produtos, mostra o produto dentro desses menos frequente nos bottom10.
+ 		Caso nao exista nenhum cliente normal que tenha comprado os produtos mais frequentes dos bottom10, o programa recomenda o produto menos frequente dos bottom10, se estiver presente nos produtos comprados pelos clientes normais. Se nao estiver, recomenda simplesmente o mais frequente dos clientes normais.
